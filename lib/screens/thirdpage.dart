@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/selectionpage.dart';
+import 'package:doctor/screens/selectionpage.dart';
 import 'package:flutter/material.dart';
 
 class ThirdPage extends StatelessWidget {
@@ -14,7 +14,7 @@ class ThirdPage extends StatelessWidget {
               // صورة الطبيب
               Image.asset(
                 'assets/images/welcometwo.png', // أضف مسار الصورة الصحيح
-                height: 150,
+                height: 200,
               ),
 
               SizedBox(height: 24.0),
@@ -59,7 +59,7 @@ class ThirdPage extends StatelessWidget {
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Color(0xFF007BFF),
+                    color: Color(0xff19649E),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(

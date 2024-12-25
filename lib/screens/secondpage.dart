@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:doctorapp/screens/thirdpage.dart';
+import 'package:doctor/screens/thirdpage.dart';
 
 class SecondPage extends StatelessWidget {
   @override
@@ -64,11 +64,11 @@ class SecondPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Color(0xFF007BFF), width: 2),
+                        border: Border.all(color: Color(0xff19649E), width: 2),
                       ),
                       child: Icon(
                         Icons.arrow_back,
-                        color: Color(0xFF007BFF),
+                        color: Color(0xff19649E),
                       ),
                     ),
                   ),

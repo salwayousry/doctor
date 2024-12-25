@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/welcomescreen.dart';
+import 'package:doctor/screens/welcomescreen.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 

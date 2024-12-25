@@ -1,6 +1,8 @@
+import 'package:doctor/make_email/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+
 
 class SignUpAsDoctorThirdScreen extends StatelessWidget {
   const SignUpAsDoctorThirdScreen({super.key});
@@ -8,11 +10,8 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(onPressed:(){}, icon: Icon(Icons.arrow_back_ios_new_outlined)),
-      ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(right: 15,left: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
         child: Container(
           height: Get.height * 0.91,
           child: Column(
@@ -240,7 +239,12 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
-                    onTap: (){},
+                    onTap: (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>LoginPage()),
+                      );
+                    },
                     child: Text(
                       'تسجيل الدخول ',
                       style: TextStyle(

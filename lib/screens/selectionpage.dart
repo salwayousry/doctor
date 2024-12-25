@@ -1,3 +1,5 @@
+import 'package:doctor/make_email/login.dart';
+import 'package:doctor/screens/sign_up_as_doctor_first_screen.dart';
 import 'package:flutter/material.dart';
 
 class SelectionPage extends StatelessWidget {
@@ -19,7 +21,7 @@ class SelectionPage extends StatelessWidget {
               SizedBox(height: 20),
               Text(
                 'اختر نوع حسابك',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle( fontSize: 24,fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 8),
@@ -31,18 +33,20 @@ class SelectionPage extends StatelessWidget {
               SizedBox(height: 40),
               // تعديل الأزرار لتكون متطابقة مع التصميم
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                 // أضف الوظيفة المناسبة هنا
+                },
                 child: Container(
                   width: double.infinity, // ملء العرض
                   height: 52, // ارتفاع الزر
                   alignment: Alignment.center, // مركز النص
                   child: Text(
                     'متابعة كمستفيد',
-                    style: TextStyle(fontSize: 16), // حجم النص
+                    style: TextStyle( fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF007BFF), // لون الزر
+                  primary: Color(0xff19649E), // لون الزر
                   onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // زوايا دائرية
@@ -51,18 +55,23 @@ class SelectionPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>SignUpAsDoctorFirstScreen()),
+                  );
+                },
                 child: Container(
                   width: double.infinity, // ملء العرض
                   height: 52, // ارتفاع الزر
                   alignment: Alignment.center, // مركز النص
                   child: Text(
                     'متابعة كأخصائي',
-                    style: TextStyle(fontSize: 16), // حجم النص
+                    style: TextStyle( fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF007BFF), // لون الزر
+                  primary: Color(0xff19649E), // لون الزر
                   onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -78,11 +87,11 @@ class SelectionPage extends StatelessWidget {
                   alignment: Alignment.center, // مركز النص
                   child: Text(
                     'متابعة كضيف',
-                    style: TextStyle(fontSize: 16), // حجم النص
+                    style: TextStyle( fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF007BFF), // لون الزر
+                  primary: Color(0xff19649E), // لون الزر
                   onPrimary: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
@@ -97,16 +106,19 @@ class SelectionPage extends StatelessWidget {
 
                   TextButton(
                     onPressed: () {
-                      // هنا يمكنك إضافة وظيفة تسجيل الدخول
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>LoginPage()),
+                      ); // هنا يمكنك إضافة وظيفة تسجيل الدخول
                     },
                     child: Text(
                       'تسجيل الدخول',
-                      style: TextStyle(color: Color(0xFF007BFF), fontSize: 16),
+                      style: TextStyle(color: Color(0xff19649E), fontSize: 16,fontWeight: FontWeight.w700),
                     ),
                   ),
                   Text(
                     'لديك حساب بالفعل؟',
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700),
                   ),
                 ],
               ),

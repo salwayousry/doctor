@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/sign_up_as_doctor_third_screen.dart';
+import 'package:doctor/screens/sign_up_as_doctor_third_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -276,7 +276,10 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap:(){
-                        Get.to(()=>SignUpAsDoctorThirdScreen());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) =>SignUpAsDoctorThirdScreen()),
+                        );
                       },
                       child: Container(
                         width: Get.width * 0.3,

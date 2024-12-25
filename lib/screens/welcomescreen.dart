@@ -1,4 +1,4 @@
-import 'package:doctorapp/screens/secondpage.dart';
+import 'package:doctor/screens/secondpage.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -17,7 +17,7 @@ class WelcomeScreen extends StatelessWidget {
                 child: Text(
                   'تخطي',
                   style: TextStyle(
-                    color: Color(0xFF007BFF),
+                    color: Color(0xff19649E),
                     fontSize: 16.0,
                   ),
                 ),
@@ -83,11 +83,11 @@ class WelcomeScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Color(0xFF007BFF), width: 2),
+                        border: Border.all(color: Color(0xff19649E), width: 2),
                       ),
                       child: Icon(
                         Icons.arrow_back,
-                        color: Color(0xFF007BFF),
+                        color: Color(0xff19649E),
                       ),
                     ),
                   ),
