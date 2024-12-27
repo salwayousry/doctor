@@ -1,10 +1,15 @@
+import 'package:doctorapp/screens/sign_up_as_client.dart';
+import 'package:doctorapp/screens/sign_up_as_doctor_first_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class SelectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center( // استخدام Center لمحاذاة العناصر في منتصف الصفحة
+      body: Center(
+        // استخدام Center لمحاذاة العناصر في منتصف الصفحة
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -31,7 +36,9 @@ class SelectionPage extends StatelessWidget {
               SizedBox(height: 40),
               // تعديل الأزرار لتكون متطابقة مع التصميم
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => SignUpAsClient());
+                },
                 child: Container(
                   width: double.infinity, // ملء العرض
                   height: 52, // ارتفاع الزر
@@ -42,8 +49,9 @@ class SelectionPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF007BFF), // لون الزر
-                  onPrimary: Colors.white,
+                  backgroundColor: Color(0xFF007BFF), // لون الزر
+                  foregroundColor:
+                      Colors.white, // لون النص أو الأيقونات داخل الزر
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
@@ -51,7 +59,9 @@ class SelectionPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => SignUpAsDoctorFirstScreen());
+                },
                 child: Container(
                   width: double.infinity, // ملء العرض
                   height: 52, // ارتفاع الزر
@@ -62,10 +72,11 @@ class SelectionPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF007BFF), // لون الزر
-                  onPrimary: Colors.white,
+                  backgroundColor: Color(0xFF007BFF), // لون الزر
+                  foregroundColor:
+                      Colors.white, // لون النص أو الأيقونات داخل الزر
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
                 ),
               ),
@@ -82,10 +93,11 @@ class SelectionPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xFF007BFF), // لون الزر
-                  onPrimary: Colors.white,
+                  backgroundColor: Color(0xFF007BFF), // لون الزر
+                  foregroundColor:
+                      Colors.white, // لون النص أو الأيقونات داخل الزر
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
                 ),
               ),
@@ -94,7 +106,6 @@ class SelectionPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   TextButton(
                     onPressed: () {
                       // هنا يمكنك إضافة وظيفة تسجيل الدخول
