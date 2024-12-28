@@ -35,6 +35,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get:
+  flutter_otp_text_field:
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,9 @@ flutter:
     - assets/images/doctor.png
     - assets/images/welcome.png
     - assets/images/welcometwo.png
+    - assets/images/lock.png
+    - assets/images/verify.png
+    - assets/images/newpassword.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

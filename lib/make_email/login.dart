@@ -1,4 +1,6 @@
 
+import 'package:doctor/make_email/reset_password.dart';
+import 'package:doctor/make_email/verify_email.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
@@ -65,7 +67,10 @@ class LoginPage extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: TextButton(
                   onPressed: () {
-                    // Handle forgot password
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ResetPassword()),
+                    );
                   },
                   child: const Text(
                     'هل نسيت الباسورد؟',
@@ -84,7 +89,7 @@ class LoginPage extends StatelessWidget {
                   // Handle login
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff19649E),
+                    primary: Color(0xff19649E),
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -99,19 +104,20 @@ class LoginPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('ليس لديك حساب؟',style: TextStyle( fontSize: 16,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,),),
+                  const  Text(
+                    'إنشاء حساب جديد',
+                    style: TextStyle( fontSize: 16,
+                      color: Color(0xFF007BFF),
+                      fontWeight: FontWeight.w700,),
+                  ),
+
                   TextButton(
                     onPressed: () {
                       // Handle create account
                     },
-                    child: const Text(
-                      'إنشاء حساب جديد',
-                      style: TextStyle( fontSize: 16,
-                        color: Color(0xff19649E),
-                        fontWeight: FontWeight.w700,),
-                    ),
+                    child:  Text('ليس لديك حساب؟',style: TextStyle( fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700,),),
                   ),
                 ],
               ),

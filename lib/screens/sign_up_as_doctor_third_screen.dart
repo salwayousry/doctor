@@ -10,6 +10,7 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
         child: Container(
@@ -249,7 +250,7 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                       'تسجيل الدخول ',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xff19649E),
+                        color: Color(0xFF007BFF),
                         fontWeight: FontWeight.w700,
                       ),
                     ),

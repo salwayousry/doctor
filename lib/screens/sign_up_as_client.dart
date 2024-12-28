@@ -1,7 +1,8 @@
-import 'package:doctorapp/screens/loginScreen.dart';
+import 'package:doctor/make_email/login.dart';
+import 'package:doctor/screens/loginScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:doctorapp/widgets/custom_text_field_for_sign_up.dart';
+import 'package:doctor/widgets/custom_text_field_for_sign_up.dart';
 import '../core/validators.dart';
 
 class SignUpAsClient extends StatelessWidget {
@@ -26,14 +27,7 @@ class SignUpAsClient extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(Icons.arrow_back_ios_new_outlined),
-        ),
-      ),
+ backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Form(
@@ -49,7 +43,7 @@ class SignUpAsClient extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 20,
-                      color: Color(0xff737373),
+                      color: Colors.black,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
@@ -141,7 +135,7 @@ class SignUpAsClient extends StatelessWidget {
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff19649E),
+                    primary: Color(0xff19649E),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(31),
                     ),
@@ -150,7 +144,7 @@ class SignUpAsClient extends StatelessWidget {
                     padding: EdgeInsets.symmetric(vertical: 12),
                     child: Text(
                       'انشاء حساب',
-                      style: TextStyle(fontSize: 24, color: Colors.white),
+                      style: TextStyle(fontSize: 24, color: Colors.white,fontWeight: FontWeight.w700),
                     ),
                   ),
                 ),
@@ -160,17 +154,20 @@ class SignUpAsClient extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () {
-                        Get.to(() => LoginScreen());
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                        );
                       },
                       child: Text(
                         'تسجيل الدخول',
                         style:
-                            TextStyle(color: Color(0xFF007BFF), fontSize: 16),
+                            TextStyle(color: Color(0xFF007BFF), fontWeight: FontWeight.w700),
                       ),
                     ),
                     Text(
                       'لديك حساب بالفعل؟',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),

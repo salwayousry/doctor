@@ -10,6 +10,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.only(top: 35,right: 15,left: 15),
         child: Container(
