@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:doctor/cubit/reset_password_cubit/reset_password_state.dart';
 import 'package:doctor/make_email/new_password.dart';
+import 'package:doctor/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -35,7 +36,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
           MaterialPageRoute(
             builder: (context) => BlocProvider(
                 create: (_) => ResetPasswordCubit(),
-                child: NewPasswordPage(email:email)
+                child: HomeScreen()
             ),
           ),
         );
