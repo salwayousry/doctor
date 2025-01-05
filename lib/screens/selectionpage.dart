@@ -28,7 +28,7 @@ class SelectionPage extends StatelessWidget {
               ),
               SizedBox(height: 8),
               Text(
-                'هل ستستمتع تجربتك أسهل',
+                'هل ستجعل تجربتك أسهل',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
