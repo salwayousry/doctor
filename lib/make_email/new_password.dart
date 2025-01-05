@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
-
-import '../controller/forget_password_controller.dart';
 import '../cubit/reset_password_cubit/reset_password_cubit.dart';
 
 class NewPasswordPage extends StatelessWidget {
