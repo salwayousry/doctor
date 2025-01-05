@@ -37,11 +37,11 @@ class SignUpAsClient extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Center(
+                const Center(
                   child: Text(
                     "اكتشف أخصائي الصحة النفسية والجسدية واحجز مواعيدك بسهولة",
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
                       fontWeight: FontWeight.w700,
@@ -131,11 +131,11 @@ class SignUpAsClient extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      Get.to(() => LoginScreen());
+                      Get.to(() => const LoginScreen());
                     }
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xff19649E),
+                    backgroundColor: const Color(0xff19649E),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(31),
                     ),
@@ -148,7 +148,7 @@ class SignUpAsClient extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -156,16 +156,16 @@ class SignUpAsClient extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'تسجيل الدخول',
                         style:
                             TextStyle(color: Color(0xFF007BFF), fontWeight: FontWeight.w700),
                       ),
                     ),
-                    Text(
+                    const Text(
                       'لديك حساب بالفعل؟',
                       style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700),
                     ),

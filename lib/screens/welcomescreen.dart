@@ -2,6 +2,8 @@ import 'package:doctor/screens/secondpage.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -10,8 +12,8 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           children: [
             // زر "تخطي" في أعلى الشاشة
-            Padding(
-              padding: const EdgeInsets.only(top: 10.0, right: 16.0),
+            const Padding(
+              padding: EdgeInsets.only(top: 10.0, right: 16.0),
               child: Align(
                 alignment: Alignment.topRight,
                 child: Text(
@@ -25,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
 
             // مسافة فارغة لتوسيط المحتوى في النصف السفلي
-            Spacer(flex: 2),
+            const Spacer(flex: 2),
 
             // الصورة والنصوص في النصف السفلي
             Expanded(
@@ -39,10 +41,10 @@ class WelcomeScreen extends StatelessWidget {
                     height: 200,
                   ),
 
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
 
                   // نص الترحيب
-                  Text(
+                  const Text(
                     'أهلًا',
                     style: TextStyle(
                       fontSize: 24.0,
@@ -50,11 +52,11 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
 
                   // النص الوصفي
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.0),
                     child: Text(
                       'أحيانًا، الخطوة الأولى هي الأصعب. لكن مع تطبيقنا، '
                           'تبدأ بالسفر نحو الدعم النفسي والشخصي والراحة بخطوات بسيطة',
@@ -67,14 +69,14 @@ class WelcomeScreen extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
 
                   // زر الانتقال للصفحة التالية
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SecondPage()),
+                        MaterialPageRoute(builder: (context) => const SecondPage()),
                       );
                     },
                     child: Container(
@@ -83,9 +85,9 @@ class WelcomeScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Color(0xff19649E), width: 2),
+                        border: Border.all(color: const Color(0xff19649E), width: 2),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back,
                         color: Color(0xff19649E),
                       ),
@@ -96,7 +98,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
 
             // مسافة فارغة بين النصف السفلي والنهاية
-            Spacer(flex: 2),
+            const Spacer(flex: 2),
           ],
         ),
       ),

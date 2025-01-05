@@ -1,21 +1,27 @@
 import 'package:doctor/make_email/new_password.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
+
+import '../cubit/verify_code_cubit/verify_code_cubit.dart';
 
 
 class VerifyScreenEmail extends StatefulWidget {
-  const VerifyScreenEmail({super.key});
+  final String email;
+  const VerifyScreenEmail({super.key,required this.email});
 
   @override
   State<VerifyScreenEmail> createState() => _VerifyScreenState();
 }
 
 class _VerifyScreenState extends State<VerifyScreenEmail> {
+  final TextEditingController codeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+        create: (_) => VerifyCodeCubit(),
+    child: Scaffold(
         backgroundColor: Colors.white,
-
         body: Padding(
             padding: const EdgeInsets.fromLTRB(25, 0, 25, 5),
             child: ListView(children: [
@@ -39,10 +45,13 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
 
               OtpTextField(
                 enabledBorderColor: const Color(0xFF19649E),
-                numberOfFields: 5,
+                numberOfFields: 6,
                 showFieldAsBox: false,
                 onCodeChanged: (String code) {
 
+                },
+                onSubmit: (String code){
+                  codeController.text= code;
                 },
               ),
 
@@ -54,7 +63,9 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+
+                      },
                       child: const Text("إعادة إرسال الرمز",
                           style: TextStyle(color: Color(0xFF19649E), fontWeight: FontWeight.bold, fontSize: 18))),
                   const Text("لم تتلق الرمز؟",
@@ -67,20 +78,21 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Color(0xff19649E),
+                      backgroundColor: const Color(0xff19649E),
                       shape: RoundedRectangleBorder(
                           borderRadius:
+
                           BorderRadius.circular(10))),
                   onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => NewPasswordPage()),
-                    );
+                    final code = int.tryParse(codeController.text);
+                    print(codeController.text);
+                    BlocProvider.of<VerifyCodeCubit>(context)
+                        .verifyCodeByEmail(context,widget.email,code??0);
                   }, child: const Text("التحقق", style: TextStyle(
                   fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),)),
 
             ]))
 
-    );
+    ));
   }
 }

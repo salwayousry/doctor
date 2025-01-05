@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../make_email/login.dart';
 
 class SelectionPage extends StatelessWidget {
+  const SelectionPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,19 +22,19 @@ class SelectionPage extends StatelessWidget {
                 width: 180, // تحديد العرض
                 height: 142.89, // تحديد الارتفاع
               ),
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 'اختر نوع حسابك',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 8),
-              Text(
+              const SizedBox(height: 8),
+              const Text(
                 'هل ستستمتع تجربتك أسهل',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               // تعديل الأزرار لتكون متطابقة مع التصميم
               ElevatedButton(
                 onPressed: () {
@@ -41,49 +43,47 @@ class SelectionPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SignUpAsClient()),
                   );
                 },
-                child: Container(
-                  width: double.infinity, // ملء العرض
-                  height: 52, // ارتفاع الزر
-                  alignment: Alignment.center, // مركز النص
-                  child: Text(
-                    'متابعة كمستفيد',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff19649E), // لون الزر
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
                 ),
-              ),
-              SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpAsDoctorFirstScreen()),
-                  );
-                },
                 child: Container(
                   width: double.infinity, // ملء العرض
                   height: 52, // ارتفاع الزر
                   alignment: Alignment.center, // مركز النص
-                  child: Text(
-                    'متابعة كأخصائي',
+                  child: const Text(
+                    'متابعة كمستفيد',
                     style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignUpAsDoctorFirstScreen()),
+                  );
+                },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff19649E), // لون الزر
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
+                child: Container(
+                  width: double.infinity, // ملء العرض
+                  height: 52, // ارتفاع الزر
+                  alignment: Alignment.center, // مركز النص
+                  child: const Text(
+                    'متابعة كأخصائي',
+                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
+                  ),
+                ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   Navigator.push(
@@ -91,24 +91,23 @@ class SelectionPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => SignUpAsClient()),
                   );
                 },
-                child: Container(
-                  width: double.infinity, // ملء العرض
-                  height: 52, // ارتفاع الزر
-                  alignment: Alignment.center, // مركز النص
-                  child: Text(
-                    'متابعة كضيف',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
-                  ),
-                ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff19649E), // لون الزر
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
+                child: Container(
+                  width: double.infinity, // ملء العرض
+                  height: 52, // ارتفاع الزر
+                  alignment: Alignment.center, // مركز النص
+                  child: const Text(
+                    'متابعة كضيف',
+                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
+                  ),
+                ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               // الجزء السفلي مع ترتيب النص وزر تسجيل الدخول
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -118,15 +117,15 @@ class SelectionPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'تسجيل الدخول',
                       style: TextStyle(color: Color(0xFF007BFF), fontSize: 16,fontWeight: FontWeight.w700),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'لديك حساب بالفعل؟',
                     style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700),
                   ),

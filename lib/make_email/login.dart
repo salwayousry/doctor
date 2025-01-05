@@ -1,9 +1,13 @@
 
 import 'package:doctor/make_email/reset_password.dart';
-import 'package:doctor/make_email/verify_email.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubit/forget_password_cubit/forget_password_cubit.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,8 +73,14 @@ class LoginPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ResetPassword()),
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (_) => ForgetPasswordCubit(),
+                          child: ResetPassword(),
+                        ),
+                      ),
                     );
+
                   },
                   child: const Text(
                     'هل نسيت الباسورد؟',
@@ -89,7 +99,7 @@ class LoginPage extends StatelessWidget {
                   // Handle login
                 },
                 style: ElevatedButton.styleFrom(
-                    primary: Color(0xff19649E),
+                    backgroundColor: const Color(0xff19649E),
                   minimumSize: const Size(double.infinity, 50),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
@@ -115,7 +125,7 @@ class LoginPage extends StatelessWidget {
                     onPressed: () {
                       // Handle create account
                     },
-                    child:  Text('ليس لديك حساب؟',style: TextStyle( fontSize: 16,
+                    child:  const Text('ليس لديك حساب؟',style: TextStyle( fontSize: 16,
                       color: Colors.black,
                       fontWeight: FontWeight.w700,),),
                   ),

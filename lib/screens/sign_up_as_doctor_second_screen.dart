@@ -1,8 +1,6 @@
 import 'package:doctor/screens/sign_up_as_doctor_third_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class SignUpAsDoctorSecondScreen extends StatelessWidget {
   const SignUpAsDoctorSecondScreen({super.key});
@@ -12,8 +10,8 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        padding: EdgeInsets.only(top: 35,right: 15,left: 15),
-        child: Container(
+        padding: const EdgeInsets.only(top: 35,right: 15,left: 15),
+        child: SizedBox(
           height: Get.height * 0.91,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,7 +23,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         "الجنسيه",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -46,7 +44,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 5,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -57,7 +55,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                               textAlign: TextAlign.right,
                               decoration: InputDecoration(
                                 contentPadding:
-                                    EdgeInsets.symmetric(horizontal: 16),
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(11),
                                   borderSide: BorderSide.none,
@@ -65,7 +63,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                                 filled: true,
                                 fillColor: Colors.white,
                               ),
-                              style: TextStyle(color: Colors.black),
+                              style: const TextStyle(color: Colors.black),
                             ),
                           ),
                         ),
@@ -76,7 +74,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         "عنوان السكن",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -97,7 +95,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 5,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -106,7 +104,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                             textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 16),
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(11),
                                 borderSide: BorderSide.none,
@@ -114,7 +112,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                               filled: true,
                               fillColor: Colors.white,
                             ),
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                       ),
@@ -124,7 +122,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         "عنوان العمل",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -145,7 +143,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 5,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -154,7 +152,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                             textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 16),
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(11),
                                 borderSide: BorderSide.none,
@@ -162,7 +160,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                               filled: true,
                               fillColor: Colors.white,
                             ),
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                       ),
@@ -172,7 +170,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         "العمل",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -193,7 +191,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 5,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -202,7 +200,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                             textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 16),
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(11),
                                 borderSide: BorderSide.none,
@@ -210,7 +208,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                               filled: true,
                               fillColor: Colors.white,
                             ),
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                       ),
@@ -220,7 +218,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         "السيره الذاتية",
                         textAlign: TextAlign.center,
                         style: TextStyle(
@@ -241,7 +239,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.3),
                                 spreadRadius: 2,
                                 blurRadius: 5,
-                                offset: Offset(0, 2),
+                                offset: const Offset(0, 2),
                               ),
                             ],
                           ),
@@ -250,7 +248,7 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                             textAlign: TextAlign.right,
                             decoration: InputDecoration(
                               contentPadding:
-                                  EdgeInsets.symmetric(horizontal: 16),
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(11),
                                 borderSide: BorderSide.none,
@@ -259,10 +257,10 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                               fillColor: Colors.white,
                               prefixIcon: IconButton(
                                   onPressed: () {},
-                                  icon: Icon(Icons.upload, size: 30),
+                                  icon: const Icon(Icons.upload, size: 30),
                                   color: Colors.grey),
                             ),
-                            style: TextStyle(color: Colors.black),
+                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                       ),
@@ -270,62 +268,60 @@ class SignUpAsDoctorSecondScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              Container(
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                      onTap:(){
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) =>SignUpAsDoctorThirdScreen()),
-                        );
-                      },
-                      child: Container(
-                        width: Get.width * 0.3,
-                        height: Get.height * 0.07,
-                        decoration: BoxDecoration(
-                          color: Color(0xff19649E),
-                          borderRadius: BorderRadius.circular(31),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'التالي',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                    onTap:(){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>const SignUpAsDoctorThirdScreen()),
+                      );
+                    },
+                    child: Container(
+                      width: Get.width * 0.3,
+                      height: Get.height * 0.07,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff19649E),
+                        borderRadius: BorderRadius.circular(31),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'التالي',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: (){
-                        Get.back();
-                      },
-                      child: Container(
-                        width: Get.width * 0.3,
-                        height: Get.height * 0.07,
-                        decoration: BoxDecoration(
-                          color: Color(0xff19649E),
-                          borderRadius: BorderRadius.circular(31),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'رجوع',
-                            style: TextStyle(
-                              fontSize: 24,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400,
-                            ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Get.back();
+                    },
+                    child: Container(
+                      width: Get.width * 0.3,
+                      height: Get.height * 0.07,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff19649E),
+                        borderRadius: BorderRadius.circular(31),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'رجوع',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w400,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
