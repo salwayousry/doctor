@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:doctor/screens/thirdpage.dart';
 
 class SecondPage extends StatelessWidget {
+  const SecondPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,10 +22,10 @@ class SecondPage extends StatelessWidget {
                     height: 200,
                   ),
 
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
 
                   // النص الرئيسي
-                  Text(
+                  const Text(
                     'سَهِّل على نفسك',
                     style: TextStyle(
                       fontSize: 24.0,
@@ -31,11 +33,11 @@ class SecondPage extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 16.0),
+                  const SizedBox(height: 16.0),
 
                   // النص الوصفي
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 32.0),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 32.0),
                     child: Text(
                       'معنا، لن تضطر للانتظار. احجز موعدك في أي وقت يناسبك، '
                           'بسرعة وسلاسة، وبدون أي قلق',
@@ -48,7 +50,7 @@ class SecondPage extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
 
                   // زر الانتقال للصفحة التالية
                   GestureDetector(
@@ -64,9 +66,9 @@ class SecondPage extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
-                        border: Border.all(color: Color(0xff19649E), width: 2),
+                        border: Border.all(color: const Color(0xff19649E), width: 2),
                       ),
-                      child: Icon(
+                      child: const Icon(
                         Icons.arrow_back,
                         color: Color(0xff19649E),
                       ),
@@ -87,7 +89,7 @@ class SecondPage extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => ThirdPage()),
                   );  // Add functionality for skip if needed
                 },
-                child: Text(
+                child: const Text(
                   'تخطي',
                   style: TextStyle(
                     color: Color(0xFF007BFF),

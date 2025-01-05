@@ -1,7 +1,6 @@
 import 'package:doctor/make_email/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 
 class SignUpAsDoctorThirdScreen extends StatelessWidget {
@@ -13,14 +12,14 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-        child: Container(
+        child: SizedBox(
           height: Get.height * 0.91,
           child: Column(
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     "صورة الهويه/ الباسبور",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -41,13 +40,13 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.3),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(11),
                             borderSide: BorderSide.none,
@@ -56,10 +55,10 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                           fillColor: Colors.white,
                           prefixIcon: IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.upload, size: 30),
+                              icon: const Icon(Icons.upload, size: 30),
                               color: Colors.grey),
                         ),
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
@@ -69,7 +68,7 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     "الشهادات",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -90,13 +89,13 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.3),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(11),
                             borderSide: BorderSide.none,
@@ -105,10 +104,10 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                           fillColor: Colors.white,
                           prefixIcon: IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.upload, size: 30),
+                              icon: const Icon(Icons.upload, size: 30),
                               color: Colors.grey),
                         ),
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
@@ -118,7 +117,7 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     "ترخيص أو إذن مزاولة المهنة",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -139,13 +138,13 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.3),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(11),
                             borderSide: BorderSide.none,
@@ -154,10 +153,10 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                           fillColor: Colors.white,
                           prefixIcon: IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.upload, size: 30),
+                              icon: const Icon(Icons.upload, size: 30),
                               color: Colors.grey),
                         ),
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
@@ -167,7 +166,7 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(
+                  const Text(
                     "عضوية النقابه أو الجمعيه",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -188,13 +187,13 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                             color: Colors.grey.withOpacity(0.3),
                             spreadRadius: 2,
                             blurRadius: 5,
-                            offset: Offset(0, 2),
+                            offset: const Offset(0, 2),
                           ),
                         ],
                       ),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(11),
                             borderSide: BorderSide.none,
@@ -203,10 +202,10 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                           fillColor: Colors.white,
                           prefixIcon: IconButton(
                               onPressed: () {},
-                              icon: Icon(Icons.upload, size: 30),
+                              icon: const Icon(Icons.upload, size: 30),
                               color: Colors.grey),
                         ),
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ),
@@ -219,10 +218,10 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                   width: Get.width * 0.9,
                   height: Get.height * 0.07,
                   decoration: BoxDecoration(
-                    color: Color(0xff19649E),
+                    color: const Color(0xff19649E),
                     borderRadius: BorderRadius.circular(11),
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'انشاء حساب',
                       style: TextStyle(
@@ -243,10 +242,10 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                     onTap: (){
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) =>LoginPage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'تسجيل الدخول ',
                       style: TextStyle(
                         fontSize: 16,
@@ -255,7 +254,7 @@ class SignUpAsDoctorThirdScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Text(
+                  const Text(
                     'لديك حساب بالفعل ؟ ',
                     style: TextStyle(
                       fontSize: 16,

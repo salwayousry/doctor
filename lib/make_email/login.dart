@@ -3,39 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:doctor/screens/homescreen.dart'; // استيراد HomeScreen
+import 'package:doctor/make_email/reset_password.dart';
+import '../cubit/forget_password_cubit/forget_password_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
 
+ LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => LoginCubit(),
-      child: Scaffold(
-        body: BlocConsumer<LoginCubit, LoginState>(
-          listener: (context, state) {
-            if (state is LoginSuccess) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.message)),
-              );
-            } else if (state is LoginError) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(state.error)),
-              );
-            }
-          },
-          builder: (context, state) {
-            if (state is LoginLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
+      child: BlocConsumer<LoginCubit, LoginState>(
+        listener: (context, state) {
+          if (state is LoginSuccess) {
+            // الانتقال إلى HomeScreen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => HomeScreen()),
+            );
+          } else if (state is LoginError) {
+            // عرض رسالة خطأ
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error)),
+            );
+          }
+        },
+        builder: (context, state) {
+          if (state is LoginLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-            if (state is LoginSuccess) {
-              return HomeScreen(); // عرض الصفحة الرئيسية بعد تسجيل الدخول بنجاح
-            }
-
-            return SingleChildScrollView(
+          return Scaffold(
+            body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
@@ -97,7 +100,15 @@ class LoginPage extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: TextButton(
                         onPressed: () {
-                          // التعامل مع نسيان كلمة المرور
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (_) => ForgetPasswordCubit(),
+                                child: ResetPassword(),
+                              ),
+                            ),
+                          );
                         },
                         child: const Text(
                           'هل نسيت الباسورد؟',
@@ -120,7 +131,7 @@ class LoginPage extends StatelessWidget {
                         context.read<LoginCubit>().login(email, password, role);
                       },
                       style: ElevatedButton.styleFrom(
-                        primary: Color(0xff19649E),
+                        primary: const Color(0xff19649E),
                         minimumSize: const Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
@@ -161,9 +172,9 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

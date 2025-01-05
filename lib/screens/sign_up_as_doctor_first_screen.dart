@@ -1,5 +1,4 @@
 import 'package:doctor/screens/sign_up_as_doctor_second_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
@@ -20,8 +19,8 @@ class SignUpAsDoctorFirstScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Top description
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
                   "انضم إلى فريقنا من الخبراء وابدأ في تقديم استشارات المرضى بكل خصوصية",
                   textAlign: TextAlign.center,
@@ -33,20 +32,20 @@ class SignUpAsDoctorFirstScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               // Form fields
               _buildTextField("الاسم الاول"),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildTextField("اسم العائله"),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildTextField("البريد الإلكتروني", icon: Icons.mail),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildTextField("كلمة المرور", icon: Icons.remove_red_eye),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildTextField("تأكيد كلمة المرور", icon: Icons.remove_red_eye),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildTextField("رقم الهاتف", icon: Icons.phone_android),
-              SizedBox(height: 32),
+              const SizedBox(height: 32),
               // Next button
               InkWell(
                 onTap: () {

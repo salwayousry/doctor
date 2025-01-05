@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 
 
+
 class VerifyScreenPhone extends StatefulWidget {
   const VerifyScreenPhone({super.key});
 
@@ -67,15 +68,15 @@ class _VerifyScreenState extends State<VerifyScreenPhone> {
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: Color(0xff19649E),
+                      primary: const Color(0xff19649E),
                       shape: RoundedRectangleBorder(
                           borderRadius:
                           BorderRadius.circular(10))),
                   onPressed: (){
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) =>NewPasswordPage()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) =>const NewPasswordPage(email: widget.email,)),
+                    // );
                   }, child: const Text("التحقق", style: TextStyle(
                   fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),)),
 
