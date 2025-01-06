@@ -78,7 +78,7 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: const Color(0xff19649E),
+                      backgroundColor: const Color(0xff19649E),
                       shape: RoundedRectangleBorder(
                           borderRadius:
 

@@ -51,8 +51,7 @@ class SelectionPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff19649E), // لون الزر
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white, backgroundColor: Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
@@ -76,8 +75,7 @@ class SelectionPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff19649E), // لون الزر
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white, backgroundColor: Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -101,8 +99,7 @@ class SelectionPage extends StatelessWidget {
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff19649E), // لون الزر
-                  onPrimary: Colors.white,
+                  foregroundColor: Colors.white, backgroundColor: Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

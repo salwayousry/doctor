@@ -1,24 +1,19 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:doctor/screens/home_second_screen.dart';
 import 'package:doctor/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'home_third_screen.dart';
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeThirdScreen extends StatefulWidget {
+  const HomeThirdScreen({super.key});
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeThirdScreenState createState() => _HomeThirdScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeThirdScreenState extends State<HomeThirdScreen> {
   List<String> categories = ["المجله", "تطوير مهارات", "صحه جسديه", "صحه نفسيه"];
-  RxInt selectedIndex = 3.obs;
+  RxInt selectedIndex = 1.obs;
   final List<String> images = [
     'assets/images/Frame 1000002843.png',
     'assets/images/Frame 1000002840.png',
@@ -45,31 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
   }
-  String userName = "soly"; // الاسم الافتراضي في حال لم يتم تحميل الاسم
-  File? _imageFile;
-  final ImagePicker _picker = ImagePicker();
 
-  @override
-  // void initState() {
-  //   super.initState();
-  //   _loadUserName();
-  // }
-
-  Future<void> _loadUserName() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      userName = prefs.getString('userName') ?? "soly"; // استرجاع الاسم
-    });
-  }
-
-  Future<void> _pickImage() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _imageFile = File(pickedFile.path);
-      });
-    }
-  }
   @override
   void dispose() {
     _timer.cancel();
@@ -308,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "برامج علاجيه",
+                        " ضبط\nالمشاعر",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -334,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "علاج جماعي",
+                        " تحمل\nالضغوط",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -360,7 +331,91 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "إضطرابات\n   نفسيه",
+                        "إسترخاء",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: screenHeight * 0.025),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: 100,
+                    height: 68,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0xff69B7F3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        " تحقيق\nالتوازن",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 68,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0xff69B7F3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        "العلاقات\n الفعاله",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 100,
+                    height: 68,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Color(0xff69B7F3),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 4,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Text(
+                        "إستراتيجيات\n     جدليه",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -392,7 +447,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "إرشادات\n وتوجيه",
+                        " تحقيق\n النجاح",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -418,7 +473,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "حل مشاكل",
+                        " تحقيق\nالأهداف",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
@@ -444,66 +499,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        "إضطراب\n  أطفال",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: screenHeight * 0.025),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-
-                  Container(
-                    width: 100,
-                    height: 68,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xff69B7F3),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        "وقايه ومتابعه\n      نفسيه",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    width: 100,
-                    height: 68,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Color(0xff69B7F3),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          spreadRadius: 2,
-                          blurRadius: 4,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Center(
-                      child: Text(
-                        "إعاده تأهيل\n    و دعم",
+                        "تحسين\n  الثقه",
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.white,
