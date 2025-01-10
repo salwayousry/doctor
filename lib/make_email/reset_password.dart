@@ -1,4 +1,4 @@
-import 'package:doctor/make_email/verify_phone.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,122 +46,17 @@ class _ResetPasswordState extends State<ResetPassword> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
-              Container(
-                decoration: BoxDecoration(
-                  color: const Color(0xFF19649E),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: NavigationBar(
-                  backgroundColor: Colors.transparent,
-                  height: 50,
-                  destinations: [
-                    TextButton(
-                      onPressed: () => _onItemTapped(0),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        backgroundColor: _currentPage == 0
-                            ? Colors.white
-                            : Colors.transparent,
-                      ),
-                      child: Text(
-                        'رقم التليفون',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: _currentPage == 0
-                              ? const Color(0xFF19649E)
-                              : Colors.white,
-                        ),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () => _onItemTapped(1),
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        backgroundColor: _currentPage == 1
-                            ? Colors.white
-                            : Colors.transparent,
-                      ),
-                      child: Text(
-                        'الإيميل',
-                        style: TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: _currentPage == 1
-                              ? const Color(0xFF19649E)
-                              : Colors.white,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 25),
+
+
 
               // Page content based on _currentPage
-              if (_currentPage == 0) ...[
-                // Phone number page
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text(
-                      "رقم التليفون",
-                      style: TextStyle(fontSize: 20, color: Color(0xFF19649E)),
-                    ),
-                    const SizedBox(height: 20),
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderSide:
-                          const BorderSide(width: 10, color: Color(0xFF19649E)),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        prefixIcon: const Icon(Icons.mobile_screen_share_outlined),
-                        hintText: "رقم التليفون",
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'من فضلك ادخل رقم التليفون';
-                        }
-                        return null;
-                      },
-                    ),
-                    const SizedBox(height: 25),
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const VerifyScreenPhone()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(700, 50),
-                         primary: const Color(0xff19649E),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: const Text(
-                          "إرسال",
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ] else if (_currentPage == 1) ...[
+
                 // Email page
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     const Text(
-                      "الإيميل",
+                      " البريد الإلكتروني",
                       style: TextStyle(fontSize: 20, color: Color(0xFF19649E)),
                     ),
                     const SizedBox(height: 20),
@@ -181,11 +76,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                           enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none),
                           prefixIcon: const Icon(Icons.email_outlined),
-                          hintText: "الإيميل",
+                          hintText: " البريد الإلكتروني",
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'من فضلك ادخل الإيميل';
+                            return 'من فضلك ادخل  البريد الإلكتروني';
                           }
                           return null;
                         },
@@ -199,14 +94,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                               .resetPasswordByEmail(context,emailController.text);
                         },
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(700, 50),
-                          primary: const Color(0xff19649E),
+                          minimumSize: const Size(700, 50), backgroundColor: const Color(0xff19649E),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                         child: const Text(
-                          "إرسال",
+                          "إعاده",
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -217,7 +111,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                   ],
                 ),
 
-              ],
+
             ],
           ),
         ),
