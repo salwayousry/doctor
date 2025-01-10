@@ -11,7 +11,7 @@ String responseModelToJson(ResponseModel data) => json.encode(data.toJson());
 class ResponseModel {
   String? code;
   String? message;
-  dynamic? data;
+  dynamic data;
 
   ResponseModel({
     this.code,
@@ -24,6 +24,7 @@ class ResponseModel {
     message: json["message"],
     data: json["data"],
   );
+
 
   Map<String, dynamic> toJson() => {
     "code": code,

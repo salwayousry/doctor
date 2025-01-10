@@ -1,274 +1,228 @@
-import 'package:doctor/make_email/login.dart';
+import 'package:doctor/screens/sign_up_as_doctor_fourth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 
-class SignUpAsDoctorThirdScreen extends StatelessWidget {
+class SignUpAsDoctorThirdScreen extends StatefulWidget {
   const SignUpAsDoctorThirdScreen({super.key});
 
   @override
+  State<SignUpAsDoctorThirdScreen> createState() => _SignUpAsDoctorThirdScreenState();
+}
+
+class _SignUpAsDoctorThirdScreenState extends State<SignUpAsDoctorThirdScreen> {
+
+
+  final Map<String, Map<String, bool>> _categories = {
+
+  'صحة نفسية': {
+    'اضطرابات نفسية': false,
+    'برامج علاجية': false,
+    'علاج جماعي': false,
+    'اضطراب الاطفال': false,
+    'حل مشاكل': false,
+    'ارشاد وتوجيه': false,
+    'وقاية ومتابعة نفسية': false,
+    'إعادة تأهيل ودعم': false,
+  },
+
+  'تطوير مهارات': {
+    'الاسترخاء': false,
+    'تحمل الضغوط': false,
+    'ضبط المشاعر': false,
+    'حل استراتيجيات جدلية': false,
+    'تحقيق التوازن': false,
+    'تحسين الثقة': false,
+    'تحقيق الأهداف': false,
+    'تحقيق النجاح': false,
+    'اضطراب الصدمة': false,
+  },
+
+  'اضطراب نفسي': {
+    'القلق': false,
+    'الاكتئاب': false,
+    'الرهاب': false,
+    'الوسواس': false,
+    'اضطراب جنسي': false,
+    'اضطراب الاكل': false,
+    'اضطراب شخصي': false,
+    'الإدمان': false,
+    'اضطراب الصدمة': false,
+  },
+
+  'صحة جسدية': {
+    'نظام غذائي': false,
+    'نظام رياضي': false,
+    'عناية صحية': false,
+    'فحوص دورية': false,
+  }
+  };
+
+
+  @override
   Widget build(BuildContext context) {
+
+    final rightColumnCategories = [
+      'اضطراب نفسي',
+      'صحة جسدية',
+    ];
+    final leftColumnCategories = [
+      'صحة نفسية',
+      'تطوير مهارات',
+    ];
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-        child: SizedBox(
-          height: Get.height * 0.91,
-          child: Column(
+
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+          child:
+          Column(
+
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    "صورة الهويه/ الباسبور",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xff19649E),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: Get.height * 0.01),
-                  Center(
-                    child: Container(
-                      width: Get.width * 0.9,
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
+              const Text("اختار تخصصك", textAlign: TextAlign.start,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xff19649E),
+                    fontWeight: FontWeight.bold,)),
+              const SizedBox(height: 20,),
+
+              Expanded(
+                child:
+                ListView(
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Right Column
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: rightColumnCategories
+                                .map((category) =>
+                                buildCategory(category, _categories[category]!))
+                                .toList(),
                           ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.upload, size: 30),
-                              color: Colors.grey),
                         ),
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    "الشهادات",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xff19649E),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: Get.height * 0.01),
-                  Center(
-                    child: Container(
-                      width: Get.width * 0.9,
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
+                        // Left Column
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: leftColumnCategories
+                                .map((category) =>
+                                buildCategory(category, _categories[category]!))
+                                .toList(),
                           ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.upload, size: 30),
-                              color: Colors.grey),
                         ),
-                        style: const TextStyle(color: Colors.black),
-                      ),
+                      ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              SizedBox(height: Get.height * 0.01),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    "ترخيص أو إذن مزاولة المهنة",
-                    textAlign: TextAlign.center,
+
+              Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+
+                  InkWell(
+                  onTap: (){
+                    Navigator.pop(context);
+                    },
+              child: Container(
+                width: Get.width * 0.3,
+                height: Get.height * 0.07,
+                decoration: BoxDecoration(
+                  color: const Color(0xff19649E),
+                  borderRadius: BorderRadius.circular(31),
+                ),
+                child: const Center(
+                  child: Text(
+                    'رجوع',
                     style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xff19649E),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: Get.height * 0.01),
-                  Center(
-                    child: Container(
-                      width: Get.width * 0.9,
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.upload, size: 30),
-                              color: Colors.grey),
-                        ),
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: Get.height * 0.01),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  const Text(
-                    "عضوية النقابه أو الجمعيه",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Color(0xff19649E),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  SizedBox(height: Get.height * 0.01),
-                  Center(
-                    child: Container(
-                      width: Get.width * 0.9,
-                      height: Get.height * 0.06,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(11),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.3),
-                            spreadRadius: 2,
-                            blurRadius: 5,
-                            offset: const Offset(0, 2),
-                          ),
-                        ],
-                      ),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(11),
-                            borderSide: BorderSide.none,
-                          ),
-                          filled: true,
-                          fillColor: Colors.white,
-                          prefixIcon: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(Icons.upload, size: 30),
-                              color: Colors.grey),
-                        ),
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: Get.height * 0.08),
-              InkWell(
-                onTap: (){},
-                child: Container(
-                  width: Get.width * 0.9,
-                  height: Get.height * 0.07,
-                  decoration: BoxDecoration(
-                    color: const Color(0xff19649E),
-                    borderRadius: BorderRadius.circular(11),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'انشاء حساب',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: Get.height * 0.02),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
-                    },
-                    child: const Text(
-                      'تسجيل الدخول ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xFF007BFF),
-                        fontWeight: FontWeight.w700,
-                      ),
                     ),
-                  ),
-                  const Text(
-                    'لديك حساب بالفعل ؟ ',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
 
-                ],
-              )
+                    InkWell(
+              onTap:(){
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>const SignUpAsDoctorFourth()),
+                );
+              },
+              child: Container(
+                width: Get.width * 0.3,
+                height: Get.height * 0.07,
+                decoration: BoxDecoration(
+                  color: const Color(0xff19649E),
+                  borderRadius: BorderRadius.circular(31),
+                ),
+                child: const Center(
+                  child: Text(
+                    'التالي',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+                    ),
+                    ],
+                    ),
             ],
           ),
         ),
       ),
     );
   }
+  Widget buildCategory(String category, Map<String, bool> subcategories) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Category Header
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Text(
+            category,
+            style: const TextStyle(color: Color(0xff19649E), fontSize: 18, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.right,
+          ),
+        ),
+        // Subcategories
+        Column(
+          children: subcategories.entries.map((entry) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Checkbox(
+
+                  activeColor: Colors.blue,
+                  value: entry.value,
+                  onChanged: (newValue) {
+                    setState(() {
+                      subcategories[entry.key] = newValue!;
+                    });
+                  },
+                ),
+                Text(entry.key, textAlign: TextAlign.right, style: const TextStyle(fontSize: 16),),
+
+              ],
+            );
+          }).toList(),
+        ),
+      ],
+    );
+  }
 }
+
+
+
