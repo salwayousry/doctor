@@ -139,6 +139,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         : null,
                     suffixIcon: Icons.location_city,
                   ),
+
 CustomTextField(
                     label: "العمل",
                     controller: workController,
