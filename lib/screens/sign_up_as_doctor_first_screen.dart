@@ -124,6 +124,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     validator: isSubmitted ? validatePhone : null,
                     suffixIcon: Icons.phone_android,
                   ),
+                  
                   CustomTextField(
                     label: "الجنسية",
                     controller: nationalityController,
@@ -138,6 +139,23 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         : null,
                     suffixIcon: Icons.location_city,
                   ),
+CustomTextField(
+                    label: "العمل",
+                    controller: workController,
+                    validator: isSubmitted ? validateName : null,
+                    suffixIcon: Icons.work,
+                  ),
+                  
+CustomTextField(
+                    label: "عنوان العمل",
+                    controller: workAddressController,
+                    validator: isSubmitted
+                        ? (value) => validateAddress(value, "عنوان العمل" )
+                        : null,
+                    suffixIcon: Icons.location_city,
+                  ),
+
+                  
                   CustomTextField(
                     label: "سنين الخبرة",
                     controller: exp_year_Controller,
