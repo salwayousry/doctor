@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
 
-class CustomTextField extends StatelessWidget {
+class CustomUploadFile extends StatelessWidget {
   final String label;
+  final Function(PlatformFile?) onFilePicked;
   final TextEditingController controller;
-  final TextInputType keyboardType;
-  final bool obscureText;
-  final String? Function(String?)? validator;
-  final IconData? suffixIcon;
-  final VoidCallback? onSuffixIconTap;
-  final bool isMultiline;
-  const CustomTextField({
+  final IconData? uploadIcon;
+  final FormFieldValidator<String>? validator; // Added validator parameter
+
+  const CustomUploadFile({
     Key? key,
     required this.label,
+    required this.onFilePicked,
     required this.controller,
-    this.keyboardType = TextInputType.text,
-    this.obscureText = false,
-    this.validator,
-    this.suffixIcon,
-    this.onSuffixIconTap,
-    this.isMultiline = false,
+    this.uploadIcon = Icons.upload_file,
+    this.validator, // Initialize validator
   }) : super(key: key);
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'doc', 'docx'], // Specify allowed file types
+    );
+    if (result != null) {
+      PlatformFile file = result.files.first;
+      onFilePicked(file);
+      controller.text = file.name; // Set the file name in the text field.
+    } else {
+      onFilePicked(null); // Handle file picking cancellation.
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Check validation status by running the validator
-    final isValid = validator == null || validator!(controller.text) == null;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -50,32 +58,23 @@ class CustomTextField extends StatelessWidget {
           ),
           child: TextFormField(
             controller: controller,
-            keyboardType: keyboardType,
-            obscureText: obscureText,
+            readOnly: true, // Prevent user from typing manually.
             textAlign: TextAlign.right,
-            maxLines: isMultiline ? 3 : 1,
             textDirection: TextDirection.rtl,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(11),
-                borderSide: BorderSide(
-                  color: isValid
-                      ? Colors.grey
-                      : Colors.red, // Dynamic border color
-                ),
+                borderSide: BorderSide.none,
               ),
               filled: true,
               fillColor: Colors.white,
-              suffixIcon: suffixIcon != null
-                  ? GestureDetector(
-                      onTap: onSuffixIconTap,
-                      child: Icon(suffixIcon, color: const Color(0xff737373)),
-                    )
-                  : null,
-              errorText: validator != null ? validator!(controller.text) : null,
+              suffixIcon: GestureDetector(
+                onTap: _pickFile,
+                child: Icon(uploadIcon, color: const Color(0xff737373)),
+              ),
             ),
-            validator: validator,
+            validator: validator, // Apply the validator
           ),
         ),
         const SizedBox(height: 16),

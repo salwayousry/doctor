@@ -27,7 +27,7 @@ class SignUpAsClient extends StatelessWidget {
   // حفظ اسم المستخدم في SharedPreferences
   Future<void> _saveUserName(String firstName) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userName', '$firstName' );
+    await prefs.setString('userName', '$firstName');
   }
 
   @override
@@ -81,20 +81,24 @@ class SignUpAsClient extends StatelessWidget {
                         label: "الاسم الأول",
                         suffixIcon: Icons.person,
                         controller: firstNameController,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال الاسم الأول' : null,
+                        validator: (value) =>
+                            value!.isEmpty ? 'يرجى إدخال الاسم الأول' : null,
                       ),
                       CustomTextField(
                         label: "اسم العائلة",
                         suffixIcon: Icons.family_restroom,
                         controller: lastNameController,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال اسم العائلة' : null,
+                        validator: (value) =>
+                            value!.isEmpty ? 'يرجى إدخال اسم العائلة' : null,
                       ),
                       CustomTextField(
                         label: "البريد الإلكتروني",
                         suffixIcon: Icons.email,
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال البريد الإلكتروني' : null,
+                        validator: (value) => value!.isEmpty
+                            ? 'يرجى إدخال البريد الإلكتروني'
+                            : null,
                       ),
                       CustomTextField(
                         label: "كلمة المرور",
@@ -110,13 +114,13 @@ class SignUpAsClient extends StatelessWidget {
                           return null;
                         },
                       ),
-
                       CustomTextField(
                         label: "رقم الهاتف",
                         suffixIcon: Icons.phone_android,
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال رقم الهاتف' : null,
+                        validator: (value) =>
+                            value!.isEmpty ? 'يرجى إدخال رقم الهاتف' : null,
                       ),
                       CustomTextField(
                         label: "العمر",
@@ -125,38 +129,45 @@ class SignUpAsClient extends StatelessWidget {
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           final age = int.tryParse(value!);
-                          return (age == null || age <= 18) ? 'يجب أن يكون العمر أكبر من 18' : null;
+                          return (age == null || age <= 18)
+                              ? 'يجب أن يكون العمر أكبر من 18'
+                              : null;
                         },
                       ),
                       CustomTextField(
                         label: "الجنسية",
                         suffixIcon: Icons.flag,
                         controller: nationalityController,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال الجنسية' : null,
+                        validator: (value) =>
+                            value!.isEmpty ? 'يرجى إدخال الجنسية' : null,
                       ),
                       CustomTextField(
                         label: "عنوان المنزل",
                         suffixIcon: Icons.home,
                         controller: addressController,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال عنوان المنزل' : null,
+                        validator: (value) =>
+                            value!.isEmpty ? 'يرجى إدخال عنوان المنزل' : null,
                       ),
                       CustomTextField(
                         label: "المنطقة",
                         suffixIcon: Icons.location_on,
                         controller: regionController,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال المنطقة' : null,
+                        validator: (value) =>
+                            value!.isEmpty ? 'يرجى إدخال المنطقة' : null,
                       ),
                       CustomTextField(
                         label: "المهنة",
                         suffixIcon: Icons.work,
                         controller: professionController,
-                        validator: (value) => value!.isEmpty ? 'يرجى إدخال المهنة' : null,
+                        validator: (value) =>
+                            value!.isEmpty ? 'يرجى إدخال المهنة' : null,
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             cubit.registerUser(
+                              //
                               firstName: firstNameController.text,
                               lastName: lastNameController.text,
                               email: emailController.text,
@@ -177,15 +188,16 @@ class SignUpAsClient extends StatelessWidget {
                           ),
                         ),
                         child: state is SignUpLoading
-                            ? const CircularProgressIndicator(color: Colors.white)
+                            ? const CircularProgressIndicator(
+                                color: Colors.white)
                             : const Text(
-                          'إنشاء حساب',
-                          style: TextStyle(
-                            fontSize: 24,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+                                'إنشاء حساب',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
                       ),
                       const SizedBox(height: 10),
                       Row(
@@ -195,7 +207,8 @@ class SignUpAsClient extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => LoginPage()),
+                                MaterialPageRoute(
+                                    builder: (context) => LoginPage()),
                               );
                             },
                             child: const Text(
@@ -246,7 +259,8 @@ class SignUpCubit extends Cubit<SignUpStateClient> {
     required String nationality,
   }) async {
     emit(SignUpLoading());
-    final String url = "https://scopey.onrender.com/api/auth/register/beneficiary";
+    final String url =
+        "https://scopey.onrender.com/api/auth/register/beneficiary";
 
     try {
       final response = await http.post(

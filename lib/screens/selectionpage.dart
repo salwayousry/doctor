@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 import '../make_email/login.dart';
 
 class SelectionPage extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center( // استخدام Center لمحاذاة العناصر في منتصف الصفحة
+      body: Center(
+        // استخدام Center لمحاذاة العناصر في منتصف الصفحة
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -44,7 +44,8 @@ class SelectionPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
@@ -55,7 +56,8 @@ class SelectionPage extends StatelessWidget {
                   alignment: Alignment.center, // مركز النص
                   child: const Text(
                     'متابعة كمستفيد',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
               ),
@@ -64,11 +66,13 @@ class SelectionPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SignUpAsDoctorFirstScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => SignUpAsDoctorFirstScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
+                  foregroundColor: Colors.white,
+                  backgroundColor: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -79,7 +83,8 @@ class SelectionPage extends StatelessWidget {
                   alignment: Alignment.center, // مركز النص
                   child: const Text(
                     'متابعة كأخصائي',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
               ),
@@ -90,12 +95,10 @@ class SelectionPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   const Text(
                     'لديك حساب بالفعل؟',
-                    style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   ),
-
                   TextButton(
                     onPressed: () {
                       Navigator.push(
@@ -105,10 +108,12 @@ class SelectionPage extends StatelessWidget {
                     },
                     child: const Text(
                       'تسجيل الدخول',
-                      style: TextStyle(color: Color(0xff19649E), fontSize: 16,fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          color: Color(0xff19649E),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
                     ),
                   ),
-
                 ],
               ),
             ],

@@ -1,34 +1,70 @@
 import 'package:dio/dio.dart';
-import 'package:doctor/screens/sign_up_as_doctor_second_screen.dart';
+import 'package:doctor/screens/sign_up_as_doctor_third_screen.dart';
+import 'package:doctor/widgets/custom_text_field_for_sign_up.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../api/dio_consumer.dart';
 import '../api/user_repository.dart';
+import '../core/validators.dart';
 import '../cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
+import '../widgets/custom_upload_file.dart';
 
-
-class SignUpAsDoctorFirstScreen extends StatelessWidget {
+class SignUpAsDoctorFirstScreen extends StatefulWidget {
   const SignUpAsDoctorFirstScreen({super.key});
 
   @override
+  _SignUpAsDoctorFirstScreenState createState() =>
+      _SignUpAsDoctorFirstScreenState();
+}
+
+class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
+  bool isSubmitted = false;
+
+  GlobalKey<FormState> signUpFormKey = GlobalKey();
+
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController nationalityController = TextEditingController();
+  TextEditingController homeAddressController = TextEditingController();
+  TextEditingController workAddressController = TextEditingController();
+  TextEditingController workController = TextEditingController();
+  TextEditingController about_doctor_Controller = TextEditingController();
+  TextEditingController exp_year_Controller = TextEditingController();
+  TextEditingController session_time_Controller = TextEditingController();
+  TextEditingController session_price_Controller = TextEditingController();
+
+  final TextEditingController resumeController = TextEditingController();
+  final TextEditingController idOrPassportController = TextEditingController();
+  final TextEditingController certificatesController = TextEditingController();
+  final TextEditingController licenseController = TextEditingController();
+  final TextEditingController associationMembershipController =
+      TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(create: (context) => SignUpCubit(UserRepository(api: DioConsumer(dio: Dio()))),
+    return BlocProvider(
+      create: (context) =>
+          SignUpCubit(UserRepository(api: DioConsumer(dio: Dio()))),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
           backgroundColor: Colors.white,
         ),
         body: Form(
-          key: context.read<SignUpCubit>().signUpFormKey,
-
+          key: signUpFormKey,
           child: SingleChildScrollView(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Top description
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.0),
                     child: Text(
@@ -43,29 +79,173 @@ class SignUpAsDoctorFirstScreen extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  // Form fields
-                  _buildTextField("الاسم الاول", controller: context.read<SignUpCubit>().firstNameController),
-                  const SizedBox(height: 16),
-                  _buildTextField("اسم العائله", controller: context.read<SignUpCubit>().lastNameController),
-                  const SizedBox(height: 16),
-                  _buildTextField("البريد الإلكتروني", icon: Icons.mail, controller: context.read<SignUpCubit>().emailController),
-                  const SizedBox(height: 16),
-                  _buildTextField("كلمة المرور", icon: Icons.remove_red_eye, controller: context.read<SignUpCubit>().passwordController),
-                  const SizedBox(height: 16),
-                  _buildTextField("تأكيد كلمة المرور", icon: Icons.remove_red_eye, controller: context.read<SignUpCubit>().confirmPasswordController),
-                  const SizedBox(height: 16),
-                  _buildTextField("رقم الهاتف", icon: Icons.phone_android, controller: context.read<SignUpCubit>().phoneController),
-                  const SizedBox(height: 32),
-                  // Next button
+                  CustomTextField(
+                    label: "الاسم الاول",
+                    controller: firstNameController,
+                    validator: (value) =>
+                        isSubmitted ? validateName(value, "الاسم الاول") : null,
+                  ),
+                  CustomTextField(
+                    label: "اسم العائله",
+                    controller: lastNameController,
+                    validator: (value) =>
+                        isSubmitted ? validateName(value, "اسم العائله") : null,
+                  ),
+                  CustomTextField(
+                    label: "البريد الإلكتروني",
+                    controller: emailController,
+                    validator: isSubmitted ? validateEmail : null,
+                    suffixIcon: Icons.mail,
+                  ),
+                  CustomTextField(
+                    label: "كلمة المرور",
+                    controller: passwordController,
+                    validator: isSubmitted ? validatePassword : null,
+                    suffixIcon: Icons.remove_red_eye,
+                  ),
+                  CustomTextField(
+                    label: "تأكيد كلمة المرور",
+                    controller: confirmPasswordController,
+                    validator: isSubmitted
+                        ? (value) => validateConfirmPassword(
+                            value, passwordController.text)
+                        : null,
+                    suffixIcon: Icons.remove_red_eye,
+                  ),
+                  CustomTextField(
+                    label: "رقم الهاتف",
+                    controller: phoneController,
+                    validator: isSubmitted ? validatePhone : null,
+                    suffixIcon: Icons.phone_android,
+                  ),
+                  CustomTextField(
+                    label: "الجنسية",
+                    controller: nationalityController,
+                    validator: isSubmitted ? validateNationality : null,
+                    suffixIcon: Icons.person,
+                  ),
+                  CustomTextField(
+                    label: "عنوان السكن",
+                    controller: homeAddressController,
+                    validator: isSubmitted
+                        ? (value) => validateAddress(value, "عنوان السكن")
+                        : null,
+                    suffixIcon: Icons.location_city,
+                  ),
+                  CustomTextField(
+                    label: "سنين الخبرة",
+                    controller: exp_year_Controller,
+                    validator: isSubmitted ? validateYearsOfExperience : null,
+                    suffixIcon: Icons.work_history,
+                  ),
+                  CustomTextField(
+                    label: "مدة الجلسة",
+                    controller: session_time_Controller,
+                    validator: isSubmitted
+                        ? (value) => validateSessionDetails(value, "مدة الجلسة")
+                        : null,
+                    suffixIcon: Icons.timer,
+                  ),
+                  CustomTextField(
+                    label: "سعر الجلسة",
+                    controller: session_price_Controller,
+                    validator: isSubmitted
+                        ? (value) => validateSessionDetails(value, "سعر الجلسة")
+                        : null,
+                    suffixIcon: Icons.price_check_sharp,
+                  ),
+                  CustomUploadFile(
+                    label: "السيرة الذاتية",
+                    controller: resumeController,
+                    validator: (value) =>
+                        validateUpload(value, "السيرة الذاتية"),
+                    onFilePicked: (PlatformFile? file) {
+                      if (file != null) {
+                        // Handle the picked file (e.g., upload it to the server).
+                        print("Picked file: ${file.name}");
+                        print("File size: ${file.size} bytes");
+                      } else {
+                        print("File picking canceled.");
+                      }
+                    },
+                  ),
+                  CustomUploadFile(
+                    label: "صورة الهوية /الباسورد",
+                    controller: idOrPassportController,
+                    validator: (value) =>
+                        validateUpload(value, "صورة الهوية /الباسورد"),
+                    onFilePicked: (PlatformFile? file) {
+                      if (file != null) {
+                        // Handle the picked file (e.g., upload it to the server).
+                        print("Picked file: ${file.name}");
+                        print("File size: ${file.size} bytes");
+                      } else {
+                        print("File picking canceled.");
+                      }
+                    },
+                  ),
+                  CustomUploadFile(
+                    label: "الشهادات",
+                    controller: certificatesController,
+                    validator: (value) => validateUpload(value, "الشهادات"),
+                    onFilePicked: (PlatformFile? file) {
+                      if (file != null) {
+                        // Handle the picked file (e.g., upload it to the server).
+                        print("Picked file: ${file.name}");
+                        print("File size: ${file.size} bytes");
+                      } else {
+                        print("File picking canceled.");
+                      }
+                    },
+                  ),
+
+                  CustomUploadFile(
+                    label: "ترخيص أو إذن مزاولة المهنة",
+                    validator: (value) =>
+                        validateUpload(value, "ترخيص أو إذن مزاولة المهنة"),
+                    controller: licenseController,
+                    onFilePicked: (PlatformFile? file) {
+                      if (file != null) {
+                        // Handle the picked file (e.g., upload it to the server).
+                        print("Picked file: ${file.name}");
+                        print("File size: ${file.size} bytes");
+                      } else {
+                        print("File picking canceled.");
+                      }
+                    },
+                  ),
+                  CustomUploadFile(
+                    label: "عضوية النقابه أو الجمعيه",
+                    validator: (value) =>
+                        validateUpload(value, "عضوية النقابه أو الجمعيه"),
+                    controller: associationMembershipController,
+                    onFilePicked: (PlatformFile? file) {
+                      if (file != null) {
+                        // Handle the picked file (e.g., upload it to the server).
+                        print("Picked file: ${file.name}");
+                        print("File size: ${file.size} bytes");
+                      } else {
+                        print("File picking canceled.");
+                      }
+                    },
+                  ),
+                  // Add more CustomUploadFile widgets as needed...
+
                   InkWell(
                     onTap: () {
-
-                      Navigator.push(
+                      setState(() {
+                        isSubmitted =
+                            true; // Set to true when submit button is clicked
+                      });
+                      if (signUpFormKey.currentState?.validate() ?? false) {
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>
-                              const SignUpAsDoctorSecondScreen()));
-
+                            builder: (context) =>
+                                const SignUpAsDoctorThirdScreen(),
+                          ),
+                        );
+                      } else {}
                     },
                     child: Container(
                       width: 140,
@@ -92,61 +272,6 @@ class SignUpAsDoctorFirstScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-
-  }
-
-
-  Widget _buildTextField(String label, {IconData? icon, required TextEditingController controller}) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            color: Color(0xff19649E),
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.3),
-                spreadRadius: 2,
-                blurRadius: 5,
-                offset: const Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: controller,
-            textDirection: TextDirection.rtl,
-            textAlign: TextAlign.right,
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
-              ),
-              filled: true,
-              fillColor: Colors.white,
-              suffixIcon:
-              icon != null
-                  ? Icon(
-                icon,
-                color: Colors.grey,
-              )
-                  : null,
-
-            ),
-            style: const TextStyle(color: Colors.black),
-          ),
-        ),
-      ],
     );
   }
 }
