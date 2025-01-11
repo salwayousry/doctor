@@ -4,10 +4,14 @@ import 'package:get/get.dart';
 
 import '../cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
 import '../make_email/login.dart';
+import '../models/doctor.dart';
 
 class SignUpAsDoctorThirdScreen extends StatefulWidget {
-  const SignUpAsDoctorThirdScreen({Key? key}) : super(key: key);
+  final Doctor doctor;
 
+  // Constructor to accept the Doctor object
+  const SignUpAsDoctorThirdScreen({Key? key, required this.doctor})
+      : super(key: key);
   @override
   State<SignUpAsDoctorThirdScreen> createState() =>
       _SignUpAsDoctorThirdScreenState();
@@ -120,7 +124,13 @@ class _SignUpAsDoctorThirdScreenState extends State<SignUpAsDoctorThirdScreen> {
               ),
               InkWell(
                 onTap: () {
-                  context.read<SignUpCubit>().signUp();
+                  // context.read<SignUpCubit>().signUp();
+                  String selectedSpecialities = getSelectedSpecialities();
+
+                  // Set the speciality of the doctor
+                  widget.doctor.specialties = selectedSpecialities;
+                  context.read<SignUpCubit>().SignUp(widget.doctor);
+
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => LoginPage()),
@@ -180,6 +190,20 @@ class _SignUpAsDoctorThirdScreenState extends State<SignUpAsDoctorThirdScreen> {
         ),
       ),
     );
+  }
+
+  String getSelectedSpecialities() {
+    List<String> selectedCategories = [];
+
+    _categories.forEach((category, subcategories) {
+      subcategories.forEach((subcategory, isSelected) {
+        if (isSelected) {
+          selectedCategories.add(subcategory);
+        }
+      });
+    });
+
+    return selectedCategories.join('; ');
   }
 
   Widget buildCategory(String category, Map<String, bool> subcategories) {

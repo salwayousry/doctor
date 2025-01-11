@@ -9,6 +9,7 @@ import '../api/dio_consumer.dart';
 import '../api/user_repository.dart';
 import '../core/validators.dart';
 import '../cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
+import '../models/doctor.dart';
 import '../widgets/custom_upload_file.dart';
 
 class SignUpAsDoctorFirstScreen extends StatefulWidget {
@@ -23,6 +24,11 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
   bool isSubmitted = false;
 
   GlobalKey<FormState> signUpFormKey = GlobalKey();
+  late PlatformFile cvFile;
+  late PlatformFile idOrPassport;
+  late PlatformFile certificates;
+  late PlatformFile ministryLicense;
+  late PlatformFile associationMembership;
 
   TextEditingController firstNameController = TextEditingController();
   TextEditingController lastNameController = TextEditingController();
@@ -161,6 +167,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         validateUpload(value, "السيرة الذاتية"),
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
+                        cvFile = file;
                         // Handle the picked file (e.g., upload it to the server).
                         print("Picked file: ${file.name}");
                         print("File size: ${file.size} bytes");
@@ -176,9 +183,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         validateUpload(value, "صورة الهوية /الباسورد"),
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
-                        // Handle the picked file (e.g., upload it to the server).
-                        print("Picked file: ${file.name}");
-                        print("File size: ${file.size} bytes");
+                        idOrPassport = file;
                       } else {
                         print("File picking canceled.");
                       }
@@ -190,15 +195,12 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     validator: (value) => validateUpload(value, "الشهادات"),
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
-                        // Handle the picked file (e.g., upload it to the server).
-                        print("Picked file: ${file.name}");
-                        print("File size: ${file.size} bytes");
+                        certificates = file;
                       } else {
                         print("File picking canceled.");
                       }
                     },
                   ),
-
                   CustomUploadFile(
                     label: "ترخيص أو إذن مزاولة المهنة",
                     validator: (value) =>
@@ -206,9 +208,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     controller: licenseController,
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
-                        // Handle the picked file (e.g., upload it to the server).
-                        print("Picked file: ${file.name}");
-                        print("File size: ${file.size} bytes");
+                        ministryLicense = file;
                       } else {
                         print("File picking canceled.");
                       }
@@ -221,31 +221,50 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     controller: associationMembershipController,
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
-                        // Handle the picked file (e.g., upload it to the server).
-                        print("Picked file: ${file.name}");
-                        print("File size: ${file.size} bytes");
+                        associationMembership = file;
                       } else {
                         print("File picking canceled.");
                       }
                     },
                   ),
-                  // Add more CustomUploadFile widgets as needed...
-
                   InkWell(
                     onTap: () {
                       setState(() {
                         isSubmitted =
                             true; // Set to true when submit button is clicked
                       });
+
                       if (signUpFormKey.currentState?.validate() ?? false) {
+                        Doctor doctor = Doctor.withoutSpeciality(
+                          firstName: firstNameController.text,
+                          lastName: lastNameController.text,
+                          email: emailController.text,
+                          password: passwordController.text,
+                          nationality: nationalityController.text,
+                          work: workController.text,
+                          workAddress: workAddressController.text,
+                          homeAddress: homeAddressController.text,
+                          bio: about_doctor_Controller.text,
+                          sessionPrice: session_price_Controller.text,
+                          sessionDuration: session_time_Controller.text,
+                          idOrPassport: idOrPassport,
+                          resume: cvFile,
+                          certificates: certificates,
+                          ministryLicense: ministryLicense,
+                          associationMembership: associationMembership,
+                        );
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) =>
-                                const SignUpAsDoctorThirdScreen(),
+                            builder: (context) => SignUpAsDoctorThirdScreen(
+                              doctor: doctor,
+                            ),
                           ),
                         );
-                      } else {}
+                      } else {
+                        // Handle form validation failure
+                      }
                     },
                     child: Container(
                       width: 140,
