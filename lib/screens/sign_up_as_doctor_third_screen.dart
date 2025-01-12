@@ -3,15 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
 import '../cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
+import '../cubit/doctor_sign_up_cubit/doctor_sign_up_state.dart';
 import '../make_email/login.dart';
 import '../models/doctor.dart';
 
 class SignUpAsDoctorThirdScreen extends StatefulWidget {
   final Doctor doctor;
 
-  // Constructor to accept the Doctor object
   const SignUpAsDoctorThirdScreen({Key? key, required this.doctor})
       : super(key: key);
+
   @override
   State<SignUpAsDoctorThirdScreen> createState() =>
       _SignUpAsDoctorThirdScreenState();
@@ -73,120 +74,134 @@ class _SignUpAsDoctorThirdScreenState extends State<SignUpAsDoctorThirdScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                "اختار تخصصك",
-                textAlign: TextAlign.start,
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Color(0xff19649E),
-                  fontWeight: FontWeight.bold,
+        child: BlocBuilder<SignUpCubit, SignUpState>(
+          builder: (context, state) {
+            if (state is SignUpLoading) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is SignUpFailure) {
+              return Center(
+                child: Text(
+                  state.errMessage,
+                  style: const TextStyle(color: Colors.red, fontSize: 18),
                 ),
-              ),
-              SizedBox(height: 20),
-              Expanded(
-                child: ListView(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+              );
+            } else if (state is SignUpSuccess) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              });
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Text(
+                    "اختار تخصصك",
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xff19649E),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Expanded(
+                    child: ListView(
                       children: [
-                        // Right Column
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: rightColumnCategories
-                                .map((category) => buildCategory(
-                                    category, _categories[category]!))
-                                .toList(),
-                          ),
-                        ),
-                        // Left Column
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: leftColumnCategories
-                                .map((category) => buildCategory(
-                                    category, _categories[category]!))
-                                .toList(),
-                          ),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Right Column
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: rightColumnCategories
+                                    .map((category) => buildCategory(
+                                        category, _categories[category]!))
+                                    .toList(),
+                              ),
+                            ),
+                            // Left Column
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: leftColumnCategories
+                                    .map((category) => buildCategory(
+                                        category, _categories[category]!))
+                                    .toList(),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 32,
-              ),
-              InkWell(
-                onTap: () {
-                  // context.read<SignUpCubit>().signUp();
-                  String selectedSpecialities = getSelectedSpecialities();
-
-                  // Set the speciality of the doctor
-                  widget.doctor.specialties = selectedSpecialities;
-                  context.read<SignUpCubit>().SignUp(widget.doctor);
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
-                  );
-                },
-                child: Container(
-                  width: Get.width * 0.9,
-                  height: Get.height * 0.07,
-                  decoration: BoxDecoration(
-                    color: Color(0xff19649E),
-                    borderRadius: BorderRadius.circular(11),
                   ),
-                  child: Center(
-                    child: Text(
-                      'انشاء حساب',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: Get.height * 0.02),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'لديك حساب بالفعل ؟ ',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  const SizedBox(height: 32),
                   InkWell(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                      );
+                      String selectedSpecialities = getSelectedSpecialities();
+                      widget.doctor.specialties = selectedSpecialities;
+                      context.read<SignUpCubit>().signUp(widget.doctor);
                     },
-                    child: Text(
-                      'تسجيل الدخول ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Color(0xff19649E),
-                        fontWeight: FontWeight.w700,
+                    child: Container(
+                      width: Get.width * 0.9,
+                      height: Get.height * 0.07,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff19649E),
+                        borderRadius: BorderRadius.circular(11),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'انشاء حساب',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
                     ),
+                  ),
+                  SizedBox(height: Get.height * 0.02),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'لديك حساب بالفعل ؟ ',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
+                          );
+                        },
+                        child: const Text(
+                          'تسجيل الدخول ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff19649E),
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -214,7 +229,7 @@ class _SignUpAsDoctorThirdScreenState extends State<SignUpAsDoctorThirdScreen> {
           padding: const EdgeInsets.symmetric(vertical: 8.0),
           child: Text(
             category,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xff19649E),
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -239,7 +254,7 @@ class _SignUpAsDoctorThirdScreenState extends State<SignUpAsDoctorThirdScreen> {
                 Text(
                   entry.key,
                   textAlign: TextAlign.right,
-                  style: TextStyle(fontSize: 16),
+                  style: const TextStyle(fontSize: 16),
                 ),
               ],
             );

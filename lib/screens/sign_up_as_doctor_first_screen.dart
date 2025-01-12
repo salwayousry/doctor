@@ -124,7 +124,6 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     validator: isSubmitted ? validatePhone : null,
                     suffixIcon: Icons.phone_android,
                   ),
-                  
                   CustomTextField(
                     label: "الجنسية",
                     controller: nationalityController,
@@ -139,7 +138,6 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         : null,
                     suffixIcon: Icons.location_city,
                   ),
-
                   CustomTextField(
                     label: "العمل",
                     controller: workController,
@@ -148,17 +146,23 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         : null,
                     suffixIcon: Icons.work,
                   ),
-                  
-CustomTextField(
+                  CustomTextField(
                     label: "عنوان العمل",
                     controller: workAddressController,
                     validator: isSubmitted
-                        ? (value) => validateAddress(value, "عنوان العمل" )
+                        ? (value) => validateAddress(value, "عنوان العمل")
                         : null,
                     suffixIcon: Icons.location_city,
                   ),
-
-                  
+                  CustomTextField(
+                    label: "عن الأخصائي",
+                    isMultiline: true,
+                    controller: about_doctor_Controller,
+                    validator: isSubmitted
+                        ? (value) => validateName(value, "عن الأخصائي")
+                        : null,
+                    suffixIcon: Icons.work_history,
+                  ),
                   CustomTextField(
                     label: "سنين الخبرة",
                     controller: exp_year_Controller,
@@ -257,6 +261,7 @@ CustomTextField(
 
                       if (signUpFormKey.currentState?.validate() ?? false) {
                         Doctor doctor = Doctor.withoutSpeciality(
+                          phone: phoneController.text,
                           firstName: firstNameController.text,
                           lastName: lastNameController.text,
                           email: emailController.text,
@@ -266,6 +271,8 @@ CustomTextField(
                           workAddress: workAddressController.text,
                           homeAddress: homeAddressController.text,
                           bio: about_doctor_Controller.text,
+                          yearOfExperience:
+                              int.tryParse(exp_year_Controller.text)!,
                           sessionPrice: session_price_Controller.text,
                           sessionDuration: session_time_Controller.text,
                           idOrPassport: idOrPassport,

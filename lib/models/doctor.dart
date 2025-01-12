@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
@@ -15,6 +16,9 @@ class Doctor {
   String sessionPrice;
   String sessionDuration;
   String specialties;
+  int yearOfExperience;
+  String phone;
+
   PlatformFile? idOrPassport;
   PlatformFile? resume;
   PlatformFile? certificates;
@@ -34,6 +38,8 @@ class Doctor {
     required this.sessionPrice,
     required this.sessionDuration,
     required this.specialties,
+    required this.yearOfExperience,
+    required this.phone,
     this.idOrPassport,
     this.resume,
     this.certificates,
@@ -49,8 +55,10 @@ class Doctor {
     required this.nationality,
     required this.work,
     required this.workAddress,
+    required this.yearOfExperience,
     required this.homeAddress,
     required this.bio,
+    required this.phone,
     required this.sessionPrice,
     required this.sessionDuration,
     this.idOrPassport,
@@ -75,6 +83,8 @@ class Doctor {
       sessionPrice: json['sessionPrice'],
       sessionDuration: json['sessionDuration'],
       specialties: json['specialties'],
+      phone: json['phone'],
+      yearOfExperience: json['yearsExperience'],
       idOrPassport: json['idOrPassport'] != null
           ? PlatformFile(
               path: json['idOrPassport'],
@@ -125,6 +135,7 @@ class Doctor {
       'workAddress': workAddress,
       'homeAddress': homeAddress,
       'bio': bio,
+      'yearsExperience': yearOfExperience,
       'sessionPrice': sessionPrice,
       'sessionDuration': sessionDuration,
       'specialties': specialties,
