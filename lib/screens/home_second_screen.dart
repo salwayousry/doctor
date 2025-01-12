@@ -1,7 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+import '../cubit/user_profile_cubit/user_profile_cubit.dart';
+import '../cubit/user_profile_cubit/user_profile_state.dart';
+import '../models/user_profile_model.dart';
+import 'client_profile_screen.dart';
 import 'home_third_screen.dart';
 import 'homescreen.dart';
 
@@ -12,7 +18,8 @@ class HomeSecondScreen extends StatefulWidget {
   _HomeSecondScreenState createState() => _HomeSecondScreenState();
 }
 
-class _HomeSecondScreenState extends State<HomeSecondScreen> {
+class _HomeSecondScreenState extends State<HomeSecondScreen>
+    with SingleTickerProviderStateMixin {
   List<String> categories = ["المجله", "تطوير مهارات", "صحه جسديه", "صحه نفسيه"];
   RxInt selectedIndex = 2.obs;
   final List<String> images = [
@@ -22,11 +29,32 @@ class _HomeSecondScreenState extends State<HomeSecondScreen> {
   ];
   PageController _pageController = PageController();
   late Timer _timer;
+  late UserProfileCubit userProfileCubit;
+  late AnimationController _fadeController;
+  late Animation<double> _fadeAnimation;
 
   @override
   void initState() {
     super.initState();
+    userProfileCubit = BlocProvider.of<UserProfileCubit>(context); // Initialize the cubit
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 500),
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _fadeController,
+      curve: Curves.easeInOut,
+    );
+    _loadUserProfile();
     _startAutoPageSwitch();
+  }
+
+  Future<void> _loadUserProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    String id = prefs.getString('userId') ?? "";
+
+    // Trigger data fetch and fade-in animation
+    userProfileCubit.getUserProfile(context, id);
   }
 
   void _startAutoPageSwitch() {
@@ -45,6 +73,8 @@ class _HomeSecondScreenState extends State<HomeSecondScreen> {
   @override
   void dispose() {
     _timer.cancel();
+    _fadeController.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,27 +82,88 @@ class _HomeSecondScreenState extends State<HomeSecondScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
-        selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'الرئيسية',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'الملف الشخصي',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'القائمة',
-          ),
-        ],
-      ),
-      body: Column(
+    return BlocProvider(
+        create: (_) => userProfileCubit, // Use the same cubit instance
+        child: BlocBuilder<UserProfileCubit, UserProfileState>(
+          builder: (context, state) {
+            if (state is UserProfileLoading) {
+              // Trigger fade-in animation when loading starts
+              _fadeController.forward();
+              return Scaffold(body: Center(child: CircularProgressIndicator(),),
+              );
+            } else if (state is UserProfileFailure) {
+              return Center(
+                child: Text("Error loading profile: ${state.error}"),
+              );
+            } else if (state is UserProfileSuccess) {
+              UserProfileModel userProfile = state.userProfile;
+              // Trigger fade-in animation when data is loaded
+              _fadeController.forward();
+              return FadeTransition(
+                  opacity: _fadeAnimation,
+                  child: Scaffold(
+                    bottomNavigationBar: BottomNavigationBar(
+                      backgroundColor: Color(0xff19649E),
+                      selectedItemColor: Colors.white,
+                      unselectedItemColor: Colors.black,
+                      showSelectedLabels: false,
+                      showUnselectedLabels: false,
+                      iconSize: 25,
+                      currentIndex: 1,
+                      items: [
+                        BottomNavigationBarItem(
+                          icon: Icon(
+                            Icons.person_2_outlined,
+                            size: 28,
+                          ),
+                          label: 'الملف الشخصي',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(
+                            Icons.dashboard_outlined,
+                            size: 28,
+                          ),
+                          label: 'القائمة',
+                        ),
+                        BottomNavigationBarItem(
+                          icon: Icon(
+                            Icons.home_outlined,
+                            size: 28,
+                          ),
+                          label: 'الرئيسية',
+                        ),
+                      ],
+                      onTap: (index) {
+                        switch (index) {
+                          case 0:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (_) => UserProfileCubit(),
+                                  child: const ClientProfileScreen(),
+                                ),
+                              ),
+                            );
+                            break;
+                          case 1:
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BlocProvider(
+                                  create: (_) => UserProfileCubit(),
+                                  child: const HomeSecondScreen(),
+                                ),
+                              ),
+                            );
+                            break;
+                          case 2:
+                          // Stay on the current screen, no action needed for 'الرئيسية'
+                            break;
+                        }
+                      },
+                    ),
+                    body: Column(
         children: [
           Container(
             height: screenHeight * 0.2,
@@ -124,7 +215,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen> {
                     ),
                     SizedBox(width: 28),
                     Text(
-                      'مرحباً عمر',
+                      '${userProfile.firstName} مرحباً',
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xff19649E),
@@ -164,10 +255,14 @@ class _HomeSecondScreenState extends State<HomeSecondScreen> {
                       Navigator.push(
                         context,
                         PageRouteBuilder(
-                          pageBuilder: (context, animation, secondaryAnimation) => page,
-                          transitionDuration: Duration(milliseconds: 1),
+                          pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
+                            create: (_) => UserProfileCubit(),
+                            child: page,
+                          ),
+                          transitionDuration: Duration(milliseconds: 1), // Custom animation duration
                         ),
                       );
+
                     },
 
                     child: Obx(() {
@@ -371,6 +466,11 @@ class _HomeSecondScreenState extends State<HomeSecondScreen> {
           ),
         ],
       ),
-    );
+    ));
   }
+  return Container(); // Default return in case no state matches
+},
+));
+}
+
 }

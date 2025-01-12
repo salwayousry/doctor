@@ -1,17 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:doctor/screens/homescreen.dart'; // استيراد HomeScreen
+import 'package:doctor/screens/homescreen.dart'; // Import HomeScreen
 import 'package:doctor/make_email/reset_password.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../api/cache_helper.dart';
 import '../cubit/forget_password_cubit/forget_password_cubit.dart';
+import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController roleController = TextEditingController();
 
- LoginPage({super.key});
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,13 +24,16 @@ class LoginPage extends StatelessWidget {
       child: BlocConsumer<LoginCubit, LoginState>(
         listener: (context, state) {
           if (state is LoginSuccess) {
-            // الانتقال إلى HomeScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (_) => UserProfileCubit(),
+                  child: const HomeScreen(),
+                ),
+              ),
             );
           } else if (state is LoginError) {
-            // عرض رسالة خطأ
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.error)),
             );
@@ -34,7 +41,7 @@ class LoginPage extends StatelessWidget {
         },
         builder: (context, state) {
           if (state is LoginLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return Center(child: CircularProgressIndicator());
           }
 
           return Scaffold(
@@ -127,7 +134,7 @@ class LoginPage extends StatelessWidget {
                       onPressed: () {
                         final email = emailController.text;
                         final password = passwordController.text;
-                        final role = roleController.text.trim(); // إزالة المسافات الزائدة
+                        final role = roleController.text.trim();
                         context.read<LoginCubit>().login(email, password, role);
                       },
                       style: ElevatedButton.styleFrom(
@@ -216,6 +223,11 @@ class LoginCubit extends Cubit<LoginState> {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
+        var userId = data['user']['id'];
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('userId', userId);
+
+
         emit(LoginSuccess(message: 'تم تسجيل الدخول بنجاح'));
       } else {
         emit(LoginError(error: 'البريد الإلكتروني أو كلمة المرور أو الدور غير صحيح.'));

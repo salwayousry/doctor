@@ -81,6 +81,7 @@ flutter:
     - assets/images/profile.jpg
     - assets/images/family.png
     - assets/translations/
+    - assets/images/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

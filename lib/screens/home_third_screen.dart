@@ -2,7 +2,14 @@ import 'dart:async';
 import 'package:doctor/screens/home_second_screen.dart';
 import 'package:doctor/screens/homescreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../cubit/user_profile_cubit/user_profile_cubit.dart';
+import '../cubit/user_profile_cubit/user_profile_state.dart';
+import '../models/user_profile_model.dart';
+import 'client_profile_screen.dart';
 
 class HomeThirdScreen extends StatefulWidget {
   const HomeThirdScreen({super.key});
@@ -21,11 +28,22 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
   ];
   PageController _pageController = PageController();
   late Timer _timer;
+  late UserProfileCubit userProfileCubit;
 
   @override
   void initState() {
     super.initState();
-    _startAutoPageSwitch();
+    userProfileCubit = BlocProvider.of<UserProfileCubit>(context); // Initialize the cubit
+    _loadUserProfile();
+    _startAutoPageSwitch();// Call the asynchronous method here
+  }
+
+  Future<void> _loadUserProfile() async {
+    final prefs = await SharedPreferences.getInstance();
+    String id = prefs.getString('userId') ?? "";
+
+    // Set the state once the user profile data is fetched
+    userProfileCubit.getUserProfile(context, id);
   }
 
   void _startAutoPageSwitch() {
@@ -51,25 +69,70 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
+    return BlocProvider(
+        create: (_) => userProfileCubit,  // Use the same cubit instance
+        child: BlocBuilder<UserProfileCubit, UserProfileState>(
+          builder: (context, state) {
+            if (state is UserProfileLoading) {
+              return Scaffold(body: Center(child: CircularProgressIndicator(),));
+            } else if (state is UserProfileFailure) {
+              return Center(child: Text("Error loading profile: ${state.error}"));
+            } else if (state is UserProfileSuccess) {
+              // Once the profile is loaded, show the actual UI
+              UserProfileModel userProfile = state.userProfile;
+              return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.blue,
+        backgroundColor:  Color(0xff19649E),
         selectedItemColor: Colors.white,
-        unselectedItemColor: Colors.white70,
+        unselectedItemColor: Colors.black,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        iconSize: 25,
+        currentIndex: 1,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'الرئيسية',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_2_outlined,size: 28,),
             label: 'الملف الشخصي',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
+            icon: Icon(Icons.dashboard_outlined,size: 28,),
             label: 'القائمة',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home_outlined,size: 28,),
+            label: 'الرئيسية',
+          ),
         ],
+        onTap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                    create: (_) => UserProfileCubit(),
+                    child: const ClientProfileScreen(),
+                  ),
+                ),
+              );
+              break;
+            case 1:
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                    create: (_) => UserProfileCubit(),
+                    child: const HomeSecondScreen(),
+                  ),
+                ),
+              );
+              break;
+            case 2:
+            // Stay on the current screen, no action needed for 'الرئيسية'
+              break;
+          }
+        },
+
       ),
       body: Column(
         children: [
@@ -123,7 +186,7 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
                     ),
                     SizedBox(width: 28),
                     Text(
-                      'مرحباً عمر',
+                      'مرحباً"${userProfileCubit.userData?.firstName}"',
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xff19649E),
@@ -164,10 +227,14 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
                     Navigator.push(
                       context,
                       PageRouteBuilder(
-                        pageBuilder: (context, animation, secondaryAnimation) => page,
-                        transitionDuration: Duration(milliseconds: 1),
+                        pageBuilder: (context, animation, secondaryAnimation) => BlocProvider(
+                          create: (_) => UserProfileCubit(),
+                          child: page,
+                        ),
+                        transitionDuration: Duration(milliseconds: 1), // Custom animation duration
                       ),
                     );
+
                   },
 
 
@@ -517,4 +584,9 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
 
     );
   }
+  return Container(); // Default return in case no state matches
+},
+));
+}
+
 }

@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:doctor/screens/client_profile_details.dart';
+import 'package:doctor/screens/client_profile_screen.dart';
+import 'package:doctor/screens/settings_screen.dart';
 import 'package:doctor/screens/splashscreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';

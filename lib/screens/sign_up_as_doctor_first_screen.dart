@@ -140,10 +140,12 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     suffixIcon: Icons.location_city,
                   ),
 
-CustomTextField(
+                  CustomTextField(
                     label: "العمل",
                     controller: workController,
-                    validator: isSubmitted ? validateName : null,
+                    validator: isSubmitted
+                        ? (value) => validateName(value, "العمل")
+                        : null,
                     suffixIcon: Icons.work,
                   ),
                   

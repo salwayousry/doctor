@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:doctor/cubit/reset_password_cubit/reset_password_state.dart';
+import 'package:doctor/cubit/update_user_cubit/update_user_state.dart';
 import 'package:doctor/cubit/user_profile_cubit/user_profile_cubit.dart';
 import 'package:doctor/make_email/new_password.dart';
+import 'package:doctor/models/update_user_profile_model.dart';
 import 'package:doctor/screens/client_change_password.dart';
+import 'package:doctor/screens/client_profile_details.dart';
 import 'package:doctor/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,51 +13,53 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../api/end_points.dart';
 import '../../models/forget_password_model.dart';
 
-class ResetPasswordCubit extends Cubit<ResetPasswordState> {
-  ResetPasswordCubit() : super(ResetPasswordInitial());
+class UpdateUserCubit extends Cubit<UpdateUserState> {
+  UpdateUserCubit() : super(UpdateUserInitial());
 
-  Future<void> resetPasswordByEmail(BuildContext context, String email,String password,String whereNext) async {
-    emit(ResetPasswordLoading());
+  Future<void> updateUser(BuildContext context, String firstName,String lastName,
+      String email,String phone,
+  String homeAddress,String region,String nationality
+      ,String gender,String userId) async {
+    emit(UpdateUserLoading());
     try {
       final dio = Dio(BaseOptions(baseUrl: EndPoint.baseUrl,
         validateStatus: (status) {
           return status != null && status < 500;
         },));
-      final response = await dio.post(
-        "/resetPassword/reset-password",
-        data: {
-          "email": email.trim(),
-          "password":password.trim()
+      final response = await dio.patch(
+        "/beneficiaries/update/$userId",
+        data:{
+          "firstName":firstName,
+          "lastName":lastName,
+          "email":email,
+          "phone":phone,
+          "homeAddress":homeAddress,
+          "region":region,
+          "nationality":nationality,
+          "gender":gender
+
         },
       );
       if (response.statusCode == 200) {
-        final forgetPasswordModel = ForgetPasswordModel.fromJson(response.data);
-        emit(ResetPasswordSuccess(forgetPasswordModel.message??""));
+        final forgetPasswordModel = UpdateUserProfileModel.fromJson(response.data);
+        emit(UpdateUserSuccess("profile updated successfully"));
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(forgetPasswordModel.message??"")),
+          SnackBar(content: Text("profile updated successfully")),
         );
-        whereNext=="home"?
-        Navigator.push(
+
+       Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => BlocProvider(
                 create: (_) => UserProfileCubit(),
-                child: HomeScreen()
-            ),
-          ),
-        ):Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                create: (_) => UserProfileCubit(),
-                child: ClientChangePassword()
+                child: ClientProfileDetails()
             ),
           ),
         );
 
       } else {
         final forgetPasswordModel = ForgetPasswordModel.fromJson(response.data);
-        emit(ResetPasswordFailure(forgetPasswordModel.message??""));
+        emit(UpdateUserFailure(forgetPasswordModel.message??""));
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(forgetPasswordModel.message??"")),
         );
