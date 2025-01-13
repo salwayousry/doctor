@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:doctor/cubit/user_profile_cubit/user_profile_cubit.dart';
 import 'package:doctor/screens/client_profile_details.dart';
 import 'package:doctor/screens/client_profile_screen.dart';
 import 'package:doctor/screens/settings_screen.dart';
@@ -13,7 +14,6 @@ import 'api/user_repository.dart';
 import 'cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
 
 Future<void> main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
@@ -23,16 +23,24 @@ Future<void> main() async {
           Locale('en'), // English
           Locale('ar'), // Arabic
         ],
-        path: 'assets/translations', // <-- change the path of the translation files
+        path:
+            'assets/translations', // <-- change the path of the translation files
         // fallbackLocale: Locale('en', 'ar'),
-        child: BlocProvider(
-          create: (context) => SignUpCubit(UserRepository(api: DioConsumer(dio: Dio()))),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => SignUpSpecialistCubit(),
+            ),
+            BlocProvider(
+              create: (context) => UserProfileCubit(),
+            ),
+          ],
           child: const GetMaterialApp(
             home: MyApp(),
           ),
         )),
-
-  );}
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -49,7 +57,6 @@ class MyApp extends StatelessWidget {
 
       title: 'doctorapp',
       theme: ThemeData(
-
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -60,10 +67,8 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.blue,
-
       ),
       home: SplashScreen(),
     );
   }
 }
-

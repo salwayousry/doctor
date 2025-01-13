@@ -1,16 +1,20 @@
-abstract class SignUpState {}
+abstract class SignUpSpecialistState {}
 
-final class SignUpInitial extends SignUpState {}
+final class SignUpSpecialistInitial extends SignUpSpecialistState {}
 
-final class SignUpLoading extends SignUpState {}
-
-final class SignUpSuccess extends SignUpState {
+final class SignUpSpecialistLoading extends SignUpSpecialistState {
   final String message;
 
-  SignUpSuccess({required this.message});
+  SignUpSpecialistLoading({required this.message});
 }
 
-final class SignUpFailure extends SignUpState {
+final class SignUpSpecialistSuccess extends SignUpSpecialistState {
+  final String message;
+
+  SignUpSpecialistSuccess({required this.message});
+}
+
+final class SignUpSpecialistFailure extends SignUpSpecialistState {
   final String errMessage;
-  SignUpFailure({required this.errMessage});
+  SignUpSpecialistFailure({required this.errMessage});
 }

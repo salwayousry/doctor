@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 
-class Doctor {
+class Specialist {
   String firstName;
   String lastName;
   String email;
@@ -25,7 +25,7 @@ class Doctor {
   PlatformFile? ministryLicense;
   PlatformFile? associationMembership;
 
-  Doctor({
+  Specialist({
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -47,7 +47,7 @@ class Doctor {
     this.associationMembership,
   });
 
-  Doctor.withoutSpeciality({
+  Specialist.withoutSpeciality({
     required this.firstName,
     required this.lastName,
     required this.email,
@@ -69,8 +69,8 @@ class Doctor {
   }) : specialties = '';
 
   // From JSON
-  factory Doctor.fromJson(Map<String, dynamic> json) {
-    return Doctor(
+  factory Specialist.fromJson(Map<String, dynamic> json) {
+    return Specialist(
       firstName: json['firstName'],
       lastName: json['lastName'],
       email: json['email'],

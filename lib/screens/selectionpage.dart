@@ -1,5 +1,5 @@
 import 'package:doctor/screens/sign_up_as_client.dart';
-import 'package:doctor/screens/sign_up_as_doctor_first_screen.dart';
+import 'package:doctor/screens/specialist/sign_up_specialist_info_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../make_email/login.dart';

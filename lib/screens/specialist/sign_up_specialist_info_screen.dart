@@ -1,16 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:doctor/screens/sign_up_as_doctor_third_screen.dart';
+import 'package:doctor/screens/specialist/repo/SpecialistRepository.dart';
+import 'package:doctor/screens/specialist/sign_up_specialist_spcalize_screen.dart.dart';
 import 'package:doctor/widgets/custom_text_field_for_sign_up.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../api/dio_consumer.dart';
-import '../api/user_repository.dart';
-import '../core/validators.dart';
-import '../cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
-import '../models/doctor.dart';
-import '../widgets/custom_upload_file.dart';
+import '../../api/dio_consumer.dart';
+import '../../api/user_repository.dart';
+import '../../core/validators.dart';
+import '../../cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
+import '../../models/Specialist.dart';
+import '../../widgets/custom_snake_bar.dart';
+import '../../widgets/custom_upload_file.dart';
 
 class SignUpAsDoctorFirstScreen extends StatefulWidget {
   const SignUpAsDoctorFirstScreen({super.key});
@@ -55,8 +57,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) =>
-          SignUpCubit(UserRepository(api: DioConsumer(dio: Dio()))),
+      create: (context) => SignUpSpecialistCubit(),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -119,6 +120,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     suffixIcon: Icons.remove_red_eye,
                   ),
                   CustomTextField(
+                    keyboardType: TextInputType.number,
                     label: "رقم الهاتف",
                     controller: phoneController,
                     validator: isSubmitted ? validatePhone : null,
@@ -164,12 +166,14 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     suffixIcon: Icons.work_history,
                   ),
                   CustomTextField(
+                    keyboardType: TextInputType.number,
                     label: "سنين الخبرة",
                     controller: exp_year_Controller,
                     validator: isSubmitted ? validateYearsOfExperience : null,
                     suffixIcon: Icons.work_history,
                   ),
                   CustomTextField(
+                    keyboardType: TextInputType.number,
                     label: "مدة الجلسة",
                     controller: session_time_Controller,
                     validator: isSubmitted
@@ -178,6 +182,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     suffixIcon: Icons.timer,
                   ),
                   CustomTextField(
+                    keyboardType: TextInputType.number,
                     label: "سعر الجلسة",
                     controller: session_price_Controller,
                     validator: isSubmitted
@@ -260,7 +265,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                       });
 
                       if (signUpFormKey.currentState?.validate() ?? false) {
-                        Doctor doctor = Doctor.withoutSpeciality(
+                        Specialist doctor = Specialist.withoutSpeciality(
                           phone: phoneController.text,
                           firstName: firstNameController.text,
                           lastName: lastNameController.text,
@@ -291,7 +296,14 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                           ),
                         );
                       } else {
-                        // Handle form validation failure
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          customSnackBar(
+                            context: context,
+                            message: "الرجاء تعبئة الحقول المطلوبة",
+                            backgroundColor: Colors.red,
+                            icon: Icons.error,
+                          ),
+                        );
                       }
                     },
                     child: Container(

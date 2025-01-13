@@ -1,9 +1,9 @@
 class EndPoint {
-  static String baseUrl="https://scopey.onrender.com/api";
+  static String baseUrl = "https://scopey.onrender.com/api";
   static String signIn = "/nectar/login";
   static String signUp = "/nectar/signUp";
   static String doctorSignUp = "auth/register/specialist";
-
+  static String signUpSpecialist = "/specialist/register";
 }
 
 class ApiKey {
@@ -38,5 +38,4 @@ class ApiKey {
   static String sessionPrice = "sessionPrice";
   static String yearsExperience = "yearsExperience";
   static String sessionDuration = "sessionDuration";
-
 }

@@ -146,7 +146,8 @@ class LoginPage extends StatelessWidget {
                       ),
                       child: const Text(
                         'تسجيل الدخول',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -187,7 +188,10 @@ class LoginPage extends StatelessWidget {
   }
 
   Widget buildTextField(BuildContext context,
-      {required String label, required IconData icon, bool isPassword = false, required TextEditingController controller}) {
+      {required String label,
+      required IconData icon,
+      bool isPassword = false,
+      required TextEditingController controller}) {
     return TextField(
       controller: controller,
       obscureText: isPassword,
@@ -227,10 +231,10 @@ class LoginCubit extends Cubit<LoginState> {
         final prefs = await SharedPreferences.getInstance();
         prefs.setString('userId', userId);
 
-
         emit(LoginSuccess(message: 'تم تسجيل الدخول بنجاح'));
       } else {
-        emit(LoginError(error: 'البريد الإلكتروني أو كلمة المرور أو الدور غير صحيح.'));
+        emit(LoginError(
+            error: 'البريد الإلكتروني أو كلمة المرور أو الدور غير صحيح.'));
       }
     } catch (e) {
       emit(LoginError(error: 'حدث خطأ أثناء تسجيل الدخول.'));
