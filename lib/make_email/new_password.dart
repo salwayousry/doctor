@@ -74,11 +74,17 @@ class NewPasswordPage extends StatelessWidget {
                         if (formKey.currentState!.validate()) {
                           BlocProvider.of<ResetPasswordCubit>(context)
                               .resetPasswordByEmail(context, email,
-                              passwordController.text);
+                              passwordController.text,"home");
+                          passwordController.clear();
+                          confirmPasswordController.clear();
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF19649E),
+                        primary: const Color(0xFF19649E),
                         minimumSize: const Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

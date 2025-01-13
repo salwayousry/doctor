@@ -1,0 +1,25 @@
+{
+  "chooseYourAccount" : "Choose your account",
+  "makeYourExperienceEasier" : "Make your experience easier",
+  "continueAsUser" : "Continue as User",
+  "continueAsDoctor" : "Continue as Doctor",
+  "continueAsGuest" : "Continue as Guest",
+  "alreadyHaveAnAccount" : "Already have an account?",
+  "signIn" : "Sign In",
+
+  "resetPassword" : "Reset Password",
+  "phoneNumber" : "Phone Number",
+  "email" : "Email",
+  "pleaseEnterYourPhone" : "Please Enter Your Phone Number",
+  "send" : "Send",
+  "pleaseEnterYourEmail" : "Please Enter Your Email",
+
+  "verifyCode" : "Verify Code",
+  "pleaseEnterCodeSentToYourEmail" : "Please Enter the Code We sent to Your Email",
+  "resendCode" : "Resend Code",
+  "notReceivedCode" : "Didn't Receive the Code?",
+  "verify" : "Verify",
+
+  "pleaseEnterCodeSentToYourPhone" : "Please Enter the Code We sent to Your Phone Number"
+
+}

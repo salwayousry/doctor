@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../api/end_points.dart';
 import '../../make_email/verify_email.dart';
-import '../../make_email/verify_phone.dart';
 import '../../models/forget_password_model.dart';
 import '../verify_code_cubit/verify_code_cubit.dart';
 import 'forget_password_state.dart';
@@ -54,44 +53,4 @@ class ForgetPasswordCubit extends Cubit<ForgetPasswordState> {
     }
   }
 
-  // Future<void> resetPasswordByPhone(BuildContext context, String phone) async {
-  //   emit(ForgetPasswordLoading());
-  //   try {
-  //     final dio = Dio(BaseOptions(baseUrl: EndPoint.baseUrl));
-  //     final response = await dio.post(
-  //       "/resetPassword/forget-password",
-  //       data: {"phone": phone.trim()},
-  //     );
-  //
-  //     if (response.statusCode == 200) {
-  //       final forgetPasswordModel = ForgetPasswordModel.fromJson(response.data);
-  //       emit(ForgetPasswordSuccess(forgetPasswordModel.message??""));
-  //
-  //
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text(forgetPasswordModel.message??"")),
-  //       );
-  //
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(builder: (context) => const VerifyScreenPhone()),
-  //       );
-  //     } else {
-  //       final forgetPasswordModel = ForgetPasswordModel.fromJson(response.data);
-  //       emit(ForgetPasswordFailure(forgetPasswordModel.message??""));
-  //
-  //
-  //       ScaffoldMessenger.of(context).showSnackBar(
-  //         SnackBar(content: Text(forgetPasswordModel.message??"")),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     emit(ForgetPasswordFailure('Error connecting to the API'));
-  //
-  //
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(content: Text('Error occurred while connecting to the API')),
-  //     );
-  //   }
-  // }
 }

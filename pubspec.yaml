@@ -41,6 +41,11 @@ dependencies:
   flutter_bloc:
   equatable:
   flutter_otp_text_field:
+  file_picker:
+  http:
+  image_picker:
+  easy_localization:
+
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +78,14 @@ flutter:
     - assets/images/lock.png
     - assets/images/verify.png
     - assets/images/newpassword.png
+    - assets/images/familyyy.png
+    - assets/images/family.png
+    - assets/images/familyy.png
+    - assets/images/profile.jpg
+    - assets/images/loading.gif
+    - assets/images/omar.png
+    - assets/translations/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

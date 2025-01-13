@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:doctor/cubit/reset_password_cubit/reset_password_state.dart';
+import 'package:doctor/cubit/user_profile_cubit/user_profile_cubit.dart';
 import 'package:doctor/make_email/new_password.dart';
+import 'package:doctor/screens/client_change_password.dart';
+import 'package:doctor/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +13,7 @@ import '../../models/forget_password_model.dart';
 class ResetPasswordCubit extends Cubit<ResetPasswordState> {
   ResetPasswordCubit() : super(ResetPasswordInitial());
 
-  Future<void> resetPasswordByEmail(BuildContext context, String email,String password) async {
+  Future<void> resetPasswordByEmail(BuildContext context, String email,String password,String whereNext) async {
     emit(ResetPasswordLoading());
     try {
       final dio = Dio(BaseOptions(baseUrl: EndPoint.baseUrl,
@@ -30,12 +33,21 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(forgetPasswordModel.message??"")),
         );
+        whereNext=="home"?
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => BlocProvider(
-                create: (_) => ResetPasswordCubit(),
-                child: NewPasswordPage(email:email)
+                create: (_) => UserProfileCubit(),
+                child: HomeScreen()
+            ),
+          ),
+        ):Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+                create: (_) => UserProfileCubit(),
+                child: ClientChangePassword()
             ),
           ),
         );
@@ -55,44 +67,4 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     }
   }
 
-// Future<void> resetPasswordByPhone(BuildContext context, String phone) async {
-//   emit(ForgetPasswordLoading());
-//   try {
-//     final dio = Dio(BaseOptions(baseUrl: EndPoint.baseUrl));
-//     final response = await dio.post(
-//       "/resetPassword/forget-password",
-//       data: {"phone": phone.trim()},
-//     );
-//
-//     if (response.statusCode == 200) {
-//       final forgetPasswordModel = ForgetPasswordModel.fromJson(response.data);
-//       emit(ForgetPasswordSuccess(forgetPasswordModel.message??""));
-//
-//
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text(forgetPasswordModel.message??"")),
-//       );
-//
-//       Navigator.pushReplacement(
-//         context,
-//         MaterialPageRoute(builder: (context) => const VerifyScreenPhone()),
-//       );
-//     } else {
-//       final forgetPasswordModel = ForgetPasswordModel.fromJson(response.data);
-//       emit(ForgetPasswordFailure(forgetPasswordModel.message??""));
-//
-//
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text(forgetPasswordModel.message??"")),
-//       );
-//     }
-//   } catch (e) {
-//     emit(ForgetPasswordFailure('Error connecting to the API'));
-//
-//
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       const SnackBar(content: Text('Error occurred while connecting to the API')),
-//     );
-//   }
-// }
 }

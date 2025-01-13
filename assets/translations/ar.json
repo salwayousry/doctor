@@ -1,0 +1,27 @@
+{
+
+  "chooseYourAccount" : "اختر نوع حسابك",
+  "makeYourExperienceEasier" : "هل ستجعل تجربتك أسهل",
+  "continueAsUser" : "متابعة كمستفيد",
+  "continueAsDoctor" : "متابعة كأخصائي",
+  "continueAsGuest" : "متابعة كضيف",
+  "alreadyHaveAnAccount" : "لديك حساب بالفعل؟",
+  "signIn" : "تسجيل الدخول",
+
+  "resetPassword" : "إعادة تعيين كلمة المرور",
+  "phoneNumber" : "رقم التليفون",
+  "email" : "الإيميل",
+  "pleaseEnterYourPhone" : "من فضلك ادخل رقم التليفون",
+  "send" : "إرسال",
+  "pleaseEnterYourEmail" : "من فضلك ادخل الإيميل",
+
+  "verifyCode" : "التحقق من الرمز",
+  "pleaseEnterCodeSentToYourEmail" : "الرجاء إدخال الرمز الذي أرسلناه للتو إلى الإيميل",
+  "resendCode" : "إعادة إرسال الرمز",
+  "notReceivedCode" : "لم تتلق الرمز؟",
+  "verify" : "التحقق",
+
+  "pleaseEnterCodeSentToYourPhone" : "الرجاء إدخال الرمز الذي أرسلناه للتو إلى التليفون"
+
+
+}

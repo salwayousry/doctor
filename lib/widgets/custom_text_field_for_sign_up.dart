@@ -8,7 +8,7 @@ class CustomTextField extends StatelessWidget {
   final String? Function(String?)? validator;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixIconTap;
-
+  final bool isMultiline;
   const CustomTextField({
     Key? key,
     required this.label,
@@ -18,10 +18,13 @@ class CustomTextField extends StatelessWidget {
     this.validator,
     this.suffixIcon,
     this.onSuffixIconTap,
+    this.isMultiline = false,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    // Check validation status by running the validator
+    final isValid = validator == null || validator!(controller.text) == null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -50,12 +53,17 @@ class CustomTextField extends StatelessWidget {
             keyboardType: keyboardType,
             obscureText: obscureText,
             textAlign: TextAlign.right,
+            maxLines: isMultiline ? 3 : 1,
             textDirection: TextDirection.rtl,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(11),
-                borderSide: BorderSide.none,
+                borderSide: BorderSide(
+                  color: isValid
+                      ? Colors.grey
+                      : Colors.red, // Dynamic border color
+                ),
               ),
               filled: true,
               fillColor: Colors.white,
@@ -65,6 +73,7 @@ class CustomTextField extends StatelessWidget {
                       child: Icon(suffixIcon, color: const Color(0xff737373)),
                     )
                   : null,
+              errorText: validator != null ? validator!(controller.text) : null,
             ),
             validator: validator,
           ),

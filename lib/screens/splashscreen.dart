@@ -1,6 +1,13 @@
+import 'package:doctor/screens/home_second_screen.dart';
 import 'package:doctor/screens/welcomescreen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:async';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../cubit/user_profile_cubit/user_profile_cubit.dart';
+import 'homescreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,8 +40,19 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
     _animationController.forward();
 
     // Navigate to the next screen after some time
-    Timer(const Duration(seconds: 3), () {
-      Navigator.pushReplacement(
+    Timer(const Duration(seconds: 3), () async{
+      final prefs = await SharedPreferences.getInstance();
+      prefs.containsKey("userId")?
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => BlocProvider(
+              create: (_) => UserProfileCubit(),
+              child:HomeScreen()
+          ),
+        ),
+      )
+      :Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const WelcomeScreen()),
       );

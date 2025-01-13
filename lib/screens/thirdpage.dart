@@ -54,7 +54,7 @@ class ThirdPage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SelectionPage()),
+                    MaterialPageRoute(builder: (context) =>  SelectionPage()),
                   );  // أضف الوظيفة المناسبة هنا
                 },
                 child: Container(

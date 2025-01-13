@@ -1,16 +1,16 @@
 import 'package:doctor/screens/sign_up_as_client.dart';
-import 'package:doctor/screens/sign_up_as_doctor_first_screen.dart';
+import 'package:doctor/screens/specialist/sign_up_specialist_info_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../make_email/login.dart';
 
 class SelectionPage extends StatelessWidget {
-  const SelectionPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center( // استخدام Center لمحاذاة العناصر في منتصف الصفحة
+      backgroundColor: Colors.white,
+      body: Center(
+        // استخدام Center لمحاذاة العناصر في منتصف الصفحة
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -30,7 +30,7 @@ class SelectionPage extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               const Text(
-                'هل ستستمتع تجربتك أسهل',
+                'هل ستجعل تجربتك أسهل',
                 style: TextStyle(fontSize: 16),
                 textAlign: TextAlign.center,
               ),
@@ -44,7 +44,8 @@ class SelectionPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
+
+                  primary: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
@@ -55,7 +56,8 @@ class SelectionPage extends StatelessWidget {
                   alignment: Alignment.center, // مركز النص
                   child: const Text(
                     'متابعة كمستفيد',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
               ),
@@ -64,11 +66,13 @@ class SelectionPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const SignUpAsDoctorFirstScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => SignUpAsDoctorFirstScreen()),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
+
+               primary: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
@@ -79,55 +83,36 @@ class SelectionPage extends StatelessWidget {
                   alignment: Alignment.center, // مركز النص
                   child: const Text(
                     'متابعة كأخصائي',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
+                    style: TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w700), // حجم النص
                   ),
                 ),
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpAsClient()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white, backgroundColor: const Color(0xff19649E),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: Container(
-                  width: double.infinity, // ملء العرض
-                  height: 52, // ارتفاع الزر
-                  alignment: Alignment.center, // مركز النص
-                  child: const Text(
-                    'متابعة كضيف',
-                    style: TextStyle(fontSize: 18,fontWeight: FontWeight.w700), // حجم النص
-                  ),
-                ),
-              ),
+
               const SizedBox(height: 40),
               // الجزء السفلي مع ترتيب النص وزر تسجيل الدخول
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
+                  const Text(
+                    'لديك حساب بالفعل؟',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     child: const Text(
                       'تسجيل الدخول',
-                      style: TextStyle(color: Color(0xFF007BFF), fontSize: 16,fontWeight: FontWeight.w700),
+                      style: TextStyle(
+                          color: Color(0xff19649E),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700),
                     ),
-                  ),
-                  const Text(
-                    'لديك حساب بالفعل؟',
-                    style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
