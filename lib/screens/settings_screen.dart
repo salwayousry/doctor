@@ -1,4 +1,5 @@
 import 'package:doctor/cubit/delete_account_cubit/delete_account_cubit.dart';
+import 'package:doctor/screens/change_language.dart';
 import 'package:doctor/screens/client_change_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -241,6 +242,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
           Column(
             children: [
               GestureDetector(
+                onTap: (){
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ChangeLanguage()));
+
+                },
                 child: Container(
                   margin:
                   EdgeInsets.only(bottom: 15, top: 25, left: 20, right: 20),
