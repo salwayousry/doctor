@@ -23,9 +23,9 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
   List<String> categories = ["المجله", "تطوير مهارات", "صحه جسديه", "صحه نفسيه"];
   RxInt selectedIndex = 2.obs;
   final List<String> images = [
-    'assets/images/Frame 1000002843.png',
-    'assets/images/Frame 1000002840.png',
-    'assets/images/Frame 1000002841.png',
+    'assets/images/family.png',
+    'assets/images/familyy.png',
+    'assets/images/familyyy.png',
   ];
   PageController _pageController = PageController();
   late Timer _timer;
@@ -113,7 +113,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                       items: [
                         BottomNavigationBarItem(
                           icon: Icon(
-                            Icons.person_2_outlined,
+                            Icons.person,
                             size: 28,
                           ),
                           label: 'الملف الشخصي',

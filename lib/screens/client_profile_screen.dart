@@ -68,7 +68,7 @@ class _ClientProfileScreenState extends State<ClientProfileScreen> {
         iconSize: 25,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined,size: 28,),
+            icon: Icon(Icons.person,size: 28,),
             label: 'الملف الشخصي',
           ),
           BottomNavigationBarItem(

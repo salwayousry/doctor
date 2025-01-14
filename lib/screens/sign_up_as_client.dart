@@ -5,7 +5,8 @@ import 'package:doctor/make_email/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'homescreen.dart';
+
+import '../make_email/login.dart';
 
 // صفحة تسجيل المستخدم
 class SignUpAsClient extends StatelessWidget {
@@ -16,7 +17,6 @@ class SignUpAsClient extends StatelessWidget {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
@@ -24,10 +24,13 @@ class SignUpAsClient extends StatelessWidget {
   final TextEditingController regionController = TextEditingController();
   final TextEditingController professionController = TextEditingController();
 
+  // متغير لتحديد الجنس
+  String? selectedGender;
+
   // حفظ اسم المستخدم في SharedPreferences
   Future<void> _saveUserName(String firstName) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userName', '$firstName');
+    await prefs.setString('userName', firstName);
   }
 
   @override
@@ -51,7 +54,7 @@ class SignUpAsClient extends StatelessWidget {
                     _saveUserName(firstNameController.text);
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   } else if (state is SignUpError) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -82,14 +85,14 @@ class SignUpAsClient extends StatelessWidget {
                         suffixIcon: Icons.person,
                         controller: firstNameController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال الاسم الأول' : null,
+                        value!.isEmpty ? 'يرجى إدخال الاسم الأول' : null,
                       ),
                       CustomTextField(
                         label: "اسم العائلة",
                         suffixIcon: Icons.family_restroom,
                         controller: lastNameController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال اسم العائلة' : null,
+                        value!.isEmpty ? 'يرجى إدخال اسم العائلة' : null,
                       ),
                       CustomTextField(
                         label: "البريد الإلكتروني",
@@ -120,7 +123,7 @@ class SignUpAsClient extends StatelessWidget {
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال رقم الهاتف' : null,
+                        value!.isEmpty ? 'يرجى إدخال رقم الهاتف' : null,
                       ),
                       CustomTextField(
                         label: "العمر",
@@ -134,40 +137,57 @@ class SignUpAsClient extends StatelessWidget {
                               : null;
                         },
                       ),
+                      DropdownButtonFormField<String>(
+                        decoration: const InputDecoration(
+                          labelText: 'الجنس',
+                          border: OutlineInputBorder(),
+                        ),
+                        value: selectedGender,
+                        items: ['male', 'female']
+                            .map((gender) => DropdownMenuItem(
+                          value: gender,
+                          child: Text(gender),
+                        ))
+                            .toList(),
+                        onChanged: (value) {
+                          selectedGender = value!;
+                        },
+                        validator: (value) =>
+                        value == null ? 'يرجى اختيار الجنس' : null,
+                      ),
                       CustomTextField(
                         label: "الجنسية",
                         suffixIcon: Icons.flag,
                         controller: nationalityController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال الجنسية' : null,
+                        value!.isEmpty ? 'يرجى إدخال الجنسية' : null,
                       ),
                       CustomTextField(
                         label: "عنوان المنزل",
                         suffixIcon: Icons.home,
                         controller: addressController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال عنوان المنزل' : null,
+                        value!.isEmpty ? 'يرجى إدخال عنوان المنزل' : null,
                       ),
                       CustomTextField(
                         label: "المنطقة",
                         suffixIcon: Icons.location_on,
                         controller: regionController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال المنطقة' : null,
+                        value!.isEmpty ? 'يرجى إدخال المنطقة' : null,
                       ),
                       CustomTextField(
                         label: "المهنة",
                         suffixIcon: Icons.work,
                         controller: professionController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال المهنة' : null,
+                        value!.isEmpty ? 'يرجى إدخال المهنة' : null,
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             cubit.registerUser(
-                              //
                               firstName: firstNameController.text,
                               lastName: lastNameController.text,
                               email: emailController.text,
@@ -178,26 +198,27 @@ class SignUpAsClient extends StatelessWidget {
                               age: int.tryParse(ageController.text) ?? 0,
                               region: regionController.text,
                               nationality: nationalityController.text,
+                              gender: selectedGender!,
                             );
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff19649E),
+                          primary: const Color(0xff19649E),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(31),
                           ),
                         ),
                         child: state is SignUpLoading
                             ? const CircularProgressIndicator(
-                                color: Colors.white)
+                            color: Colors.white)
                             : const Text(
-                                'إنشاء حساب',
-                                style: TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
+                          'إنشاء حساب',
+                          style: TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Row(
@@ -257,10 +278,11 @@ class SignUpCubit extends Cubit<SignUpStateClient> {
     required int age,
     required String region,
     required String nationality,
+    required String gender,
   }) async {
     emit(SignUpLoading());
     final String url =
-        "https://scopey.onrender.com/api/auth/register/beneficiary";
+        "https://scopey.onrender.com/api/beneficiaries/register/beneficiary";
 
     try {
       final response = await http.post(
@@ -277,16 +299,15 @@ class SignUpCubit extends Cubit<SignUpStateClient> {
           "age": age,
           "region": region,
           "nationality": nationality,
+          "gender": gender,
         }),
       );
 
       if (response.statusCode == 201) {
-        // تحليل الاستجابة كنص عادي
         final responseString = response.body;
-        print("Response: $responseString"); // طباعة الاستجابة
-        emit(SignUpSuccess(responseString)); // مرّر النص العادي
+        print("Response: $responseString");
+        emit(SignUpSuccess(responseString));
       } else {
-        // إذا كان هناك خطأ في الاستجابة
         final error = jsonDecode(response.body)["error"] ?? "حدث خطأ غير متوقع";
         emit(SignUpError(error));
       }

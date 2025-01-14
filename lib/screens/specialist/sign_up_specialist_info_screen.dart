@@ -60,9 +60,6 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
       create: (context) => SignUpSpecialistCubit(),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-        ),
         body: Form(
           key: signUpFormKey,
           child: SingleChildScrollView(

@@ -22,9 +22,9 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
   List<String> categories = ["المجله", "تطوير مهارات", "صحه جسديه", "صحه نفسيه"];
   RxInt selectedIndex = 1.obs;
   final List<String> images = [
-    'assets/images/Frame 1000002843.png',
-    'assets/images/Frame 1000002840.png',
-    'assets/images/Frame 1000002841.png',
+    'assets/images/family.png',
+    'assets/images/familyyyfamilyy.png',
+    'assets/images/familyy.png',
   ];
   PageController _pageController = PageController();
   late Timer _timer;
@@ -91,7 +91,7 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
         currentIndex: 1,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined,size: 28,),
+            icon: Icon(Icons.person,size: 28,),
             label: 'الملف الشخصي',
           ),
           BottomNavigationBarItem(

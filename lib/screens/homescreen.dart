@@ -30,9 +30,9 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
   RxInt selectedIndex = 3.obs;
   final List<String> images = [
-    'assets/images/Frame 1000002843.png',
-    'assets/images/Frame 1000002840.png',
-    'assets/images/Frame 1000002841.png',
+    'assets/images/family.png',
+    'assets/images/familyy.png',
+    'assets/images/familyyy.png',
   ];
   PageController _pageController = PageController();
   late Timer _timer;
@@ -118,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   iconSize: 25,
                   items: [
                     BottomNavigationBarItem(
-                      icon: Icon(Icons.person_2_outlined, size: 28),
+                      icon: Icon(Icons.person, size: 28),
                       label: 'الملف الشخصي',
                     ),
                     BottomNavigationBarItem(
@@ -209,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
-                                    image: AssetImage('assets/images/omar.png'),
+                                    image: AssetImage('assets/images/profile.jpg'),
                                     fit: BoxFit.fill,
                                   ),
                                 ),

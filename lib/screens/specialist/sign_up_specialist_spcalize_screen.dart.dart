@@ -275,7 +275,7 @@
 //     );
 //   }
 // }
-import 'package:doctor/screens/homescreen.dart';
+import 'package:doctor/make_email/login.dart';
 import 'package:doctor/screens/specialist/choose_specialty.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -338,7 +338,7 @@ class _SignUpAsDoctorThirdScreenState extends State<SignUpAsDoctorThirdScreen> {
   void navigateToHomeScreen(BuildContext context) {
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => const HomeScreen()),
+      MaterialPageRoute(builder: (context) =>  LoginPage()),
     );
   }
 
