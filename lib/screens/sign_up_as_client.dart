@@ -215,7 +215,7 @@ class SignUpAsClient extends StatelessWidget {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: const Color(0xff19649E),
+                          backgroundColor: const Color(0xff19649E),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(31),
                           ),
