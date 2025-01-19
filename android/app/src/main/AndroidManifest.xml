@@ -1,25 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.doctorapp">
 
-    <!-- Camera permission -->
+    <!-- أذونات الكاميرا والمعرض -->
     <uses-permission android:name="android.permission.CAMERA" />
-
-    <!-- Permissions for external storage -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- Required for Android 13+ -->
+    <!-- إذا كنت تستهدف Android 13 أو أعلى -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
-
-    <!-- Add MANAGE_EXTERNAL_STORAGE for broader access (Android 11+) -->
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage" />
 
     <application
         android:requestLegacyExternalStorage="true"
         android:label="doctorapp"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        tools:targetApi="30">
+        android:icon="@mipmap/ic_launcher">
 
         <activity
             android:name=".MainActivity"
@@ -30,16 +24,20 @@
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
 
+            <!-- تخصيص الثيم للمقدمة -->
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
 
+            <!-- فلتر ال intent لفتح الكاميرا -->
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.media.action.IMAGE_CAPTURE" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
+        <!-- لا تحذف هذه الـ meta-data، فهي تستخدم من قبل Flutter -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />

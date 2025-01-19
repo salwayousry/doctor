@@ -16,14 +16,14 @@ import 'add_image_to_profile_state.dart';
 class AddImageToProfileCubit extends Cubit<AddImageToProfileState> {
   AddImageToProfileCubit() : super(AddImageToProfileInitial());
 
-
   File? imageFile;
   final ImagePicker picker = ImagePicker();
 
+  // Function to request permission and pick an image
   Future<void> pickImage(BuildContext context, String id) async {
-    print(id);
+    // Request gallery permission for Android 13+, 11, 10, and below
+    PermissionStatus status = await _requestGalleryPermission();
 
-    PermissionStatus status = await Permission.photos.request();
     if (status.isGranted) {
       final XFile? pickedFile =
       await picker.pickImage(source: ImageSource.gallery);
@@ -40,6 +40,51 @@ class AddImageToProfileCubit extends Cubit<AddImageToProfileState> {
         SnackBar(content: Text('Gallery permission is required to pick an image.')),
       );
     }
+  }
+
+  // Function to request gallery permission for both Android 13+, 11, 10, and below
+  Future<PermissionStatus> _requestGalleryPermission() async {
+    PermissionStatus status;
+
+    // For Android 13+, request photos permission
+    if (await Permission.photos.isGranted) {
+      return PermissionStatus.granted;
+    }
+
+    // For Android 10 (API 29) and below, request storage permission
+    if (await Permission.storage.isGranted) {
+      return PermissionStatus.granted;
+    }
+
+    // For Android 11 (API 30), request manageExternalStorage permission for full access
+    if (Platform.isAndroid && await Permission.manageExternalStorage.isGranted) {
+      return PermissionStatus.granted;
+    }
+
+    // Request appropriate permissions based on Android version
+    if (await Permission.photos.isDenied) {
+      await Permission.photos.request();
+    }
+
+    if (await Permission.storage.isDenied) {
+      await Permission.storage.request();
+    }
+
+    if (Platform.isAndroid && await Permission.manageExternalStorage.isDenied) {
+      await Permission.manageExternalStorage.request();
+    }
+
+    // Return the status of the permission request
+    status = await Permission.photos.status;
+    if (!status.isGranted) {
+      status = await Permission.storage.status;
+    }
+
+    if (!status.isGranted && Platform.isAndroid) {
+      status = await Permission.manageExternalStorage.status;
+    }
+
+    return status;
   }
 
   Future<void> addImageToProfile(BuildContext context, File image, String id) async {
@@ -108,8 +153,4 @@ class AddImageToProfileCubit extends Cubit<AddImageToProfileState> {
       );
     }
   }
-
-
-
-
 }
