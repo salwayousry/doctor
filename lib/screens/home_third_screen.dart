@@ -30,9 +30,9 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
   int selectedIndex = 2;
 
   final List<String> images = [
-    'assets/images/Frame 1000002843.png',
-    'assets/images/Frame 1000002840.png',
-    'assets/images/Frame 1000002841.png',
+    'assets/images/family.png',
+    'assets/images/familyy.png',
+    'assets/images/familyyy.png',
   ];
   PageController _pageController = PageController();
   late Timer _timer;
@@ -75,6 +75,7 @@ class _HomeThirdScreenState extends State<HomeThirdScreen> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
+
 
     return WillPopScope(
       onWillPop: () async {

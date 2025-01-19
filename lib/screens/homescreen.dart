@@ -33,9 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
   final List<String> images = [
-    'assets/images/Frame 1000002843.png',
-    'assets/images/Frame 1000002840.png',
-    'assets/images/Frame 1000002841.png',
+    'assets/images/family.png',
+    'assets/images/familyy.png',
+    'assets/images/familyyy.png',
   ];
   PageController _pageController = PageController();
   late Timer _timer;
@@ -145,6 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ],
                               child: const ClientProfileScreen(),
                             ),
+
                           ),
                               (route) => false,
                         );

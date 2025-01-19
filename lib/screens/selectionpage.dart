@@ -47,8 +47,8 @@ class SelectionPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color(0xff19649E),
+
+                  primary: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30), // زوايا دائرية
                   ),
@@ -74,8 +74,8 @@ class SelectionPage extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.white,
-                  backgroundColor: const Color(0xff19649E),
+
+                  primary: const Color(0xff19649E),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

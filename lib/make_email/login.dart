@@ -135,7 +135,7 @@ class LoginPage extends StatelessWidget {
                         context.read<LoginCubit>().login(email, password, role);
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff19649E),
+                       primary: const Color(0xff19649E),
                         minimumSize: const Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),

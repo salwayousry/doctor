@@ -1,12 +1,15 @@
+import 'package:doctor/screens/homescreen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doctor/widgets/custom_text_field_for_sign_up.dart';
-import 'package:doctor/make_email/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:doctor/make_email/login.dart'; // هنا تم إضافة السطر
+
+import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 import '../make_email/login.dart';
 
 // صفحة تسجيل المستخدم
@@ -40,28 +43,25 @@ class SignUpAsClient extends StatelessWidget {
       create: (_) => SignUpCubit(context),
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          toolbarHeight: 35,
-          backgroundColor: Colors.white,
-        ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
           child: Form(
             key: _formKey,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: BlocConsumer<SignUpCubit, SignUpStateClient>(
+              child: BlocConsumer<SignUpCubit, SignupState>(
                 listener: (context, state) {
-                  if (state is SignUpSuccess) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.message)),
-                    );
-                    _saveUserName(firstNameController.text);
+                  if (state is SignupSuccess) {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (_) => UserProfileCubit(),
+                          child: const HomeScreen(),
+                        ),
+                      ),
                     );
-                  } else if (state is SignUpError) {
+                  } else if (state is SignupError) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text(state.error)),
                     );
@@ -90,14 +90,14 @@ class SignUpAsClient extends StatelessWidget {
                         suffixIcon: Icons.person,
                         controller: firstNameController,
                         validator: (value) =>
-                            value!.isEmpty ? "firstNameValidator".tr() : null,
+                        value!.isEmpty ? "firstNameValidator".tr() : null,
                       ),
                       CustomTextField(
                         label: "lastName".tr(),
                         suffixIcon: Icons.family_restroom,
                         controller: lastNameController,
                         validator: (value) =>
-                            value!.isEmpty ? "lastNameValidator".tr() : null,
+                        value!.isEmpty ? "lastNameValidator".tr() : null,
                       ),
                       CustomTextField(
                         label: "email".tr(),
@@ -128,7 +128,7 @@ class SignUpAsClient extends StatelessWidget {
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
                         validator: (value) =>
-                            value!.isEmpty ? "phoneNumberValidator".tr() : null,
+                        value!.isEmpty ? "phoneNumberValidator".tr() : null,
                       ),
                       CustomTextField(
                         label: "age".tr(),
@@ -147,7 +147,7 @@ class SignUpAsClient extends StatelessWidget {
                         color: Color(0xff19649E),
                         fontWeight: FontWeight.w500,
                       )),
-                      const SizedBox(height: 5,),
+                      const SizedBox(height: 5),
                       DropdownButtonFormField<String>(
                         decoration: InputDecoration(
                           labelText: "gender".tr(),
@@ -156,44 +156,44 @@ class SignUpAsClient extends StatelessWidget {
                         value: selectedGender,
                         items: ['male', 'female']
                             .map((gender) => DropdownMenuItem(
-                                  value: gender,
-                                  child: Text(gender),
-                                ))
+                          value: gender,
+                          child: Text(gender),
+                        ))
                             .toList(),
                         onChanged: (value) {
                           selectedGender = value!;
                         },
                         validator: (value) =>
-                            value == null ? "genderValidator".tr() : null,
+                        value == null ? "genderValidator".tr() : null,
                       ),
-                      const SizedBox(height: 10,),
+                      const SizedBox(height: 10),
                       CustomTextField(
                         label: "nationality".tr(),
                         suffixIcon: Icons.flag,
                         controller: nationalityController,
                         validator: (value) =>
-                            value!.isEmpty ? "nationalityValidator".tr() : null,
+                        value!.isEmpty ? "nationalityValidator".tr() : null,
                       ),
                       CustomTextField(
                         label: "homeAddress".tr(),
                         suffixIcon: Icons.home,
                         controller: addressController,
                         validator: (value) =>
-                            value!.isEmpty ? "homeAddressValidator".tr() : null,
+                        value!.isEmpty ? "homeAddressValidator".tr() : null,
                       ),
                       CustomTextField(
                         label: "region".tr(),
                         suffixIcon: Icons.location_on,
                         controller: regionController,
                         validator: (value) =>
-                            value!.isEmpty ? "regionValidator".tr() : null,
+                        value!.isEmpty ? "regionValidator".tr() : null,
                       ),
                       CustomTextField(
                         label: "profession".tr(),
                         suffixIcon: Icons.work,
                         controller: professionController,
                         validator: (value) =>
-                            value!.isEmpty ? "professionValidator".tr() : null,
+                        value!.isEmpty ? "professionValidator".tr() : null,
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
@@ -215,22 +215,22 @@ class SignUpAsClient extends StatelessWidget {
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff19649E),
+                          primary: const Color(0xff19649E),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(31),
                           ),
                         ),
-                        child: state is SignUpLoading
+                        child: state is SignupLoading
                             ? const CircularProgressIndicator(
-                                color: Colors.white)
+                            color: Colors.white)
                             : Text(
-                                "createAccount".tr(),
-                                style: const TextStyle(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
+                          "createAccount".tr(),
+                          style: const TextStyle(
+                            fontSize: 24,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 10),
                       Row(
@@ -251,14 +251,16 @@ class SignUpAsClient extends StatelessWidget {
                                     builder: (context) => LoginPage()),
                               );
                             },
-                            child: Text(
-                              "signIn".tr(),
-                              style: const TextStyle(
-                                color: Color(0xff19649E),
-                                fontWeight: FontWeight.w700,
+
+                              child: Text(
+                                "signIn".tr(),
+                                style: const TextStyle(
+                                  color: Color(0xff19649E),
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
                             ),
-                          ),
+
                         ],
                       ),
                     ],
@@ -274,10 +276,10 @@ class SignUpAsClient extends StatelessWidget {
 }
 
 // الكلاس الخاص بـ Cubit لتسجيل المستخدم
-class SignUpCubit extends Cubit<SignUpStateClient> {
+class SignUpCubit extends Cubit<SignupState> {
   final BuildContext context;
 
-  SignUpCubit(this.context) : super(SignUpInitial());
+  SignUpCubit(this.context) : super(SignupInitial());
 
   Future<void> registerUser({
     required String firstName,
@@ -292,9 +294,8 @@ class SignUpCubit extends Cubit<SignUpStateClient> {
     required String nationality,
     required String gender,
   }) async {
-    emit(SignUpLoading());
-    final String url =
-        "https://scopey.onrender.com/api/beneficiaries/register/beneficiary";
+    emit(SignupLoading());
+    final String url = "https://scopey.onrender.com/api/beneficiaries/register/beneficiary";
 
     try {
       final response = await http.post(
@@ -316,32 +317,39 @@ class SignUpCubit extends Cubit<SignUpStateClient> {
       );
 
       if (response.statusCode == 201) {
-        final responseString = response.body;
-        print("Response: $responseString");
-        emit(SignUpSuccess(responseString));
+        print("Response status: ${response.statusCode}");
+        print("Response body: ${response.body}");
+
+        final data = json.decode(response.body);
+        var userId = data['newBeneficiary']['_id']; // Correct path for user ID
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('userId', userId); // Store userId
+
+        emit(SignupSuccess(message: 'تم تسجيل الدخول بنجاح'));
       } else {
-        final error = jsonDecode(response.body)["error"] ?? "حدث خطأ غير متوقع";
-        emit(SignUpError(error));
+        emit(SignupError(
+            error: 'البريد الإلكتروني أو كلمة المرور أو الدور غير صحيح.'));
       }
     } catch (e) {
-      emit(SignUpError("فشل الاتصال بالسيرفر: $e"));
+      emit(SignupError(error: 'حدث خطأ أثناء تسجيل الدخول.'));
     }
   }
 }
 
-// حالات تسجيل المستخدم
-abstract class SignUpStateClient {}
+abstract class SignupState {}
 
-class SignUpInitial extends SignUpStateClient {}
+class SignupInitial extends SignupState {}
 
-class SignUpLoading extends SignUpStateClient {}
+class SignupLoading extends SignupState {}
 
-class SignUpSuccess extends SignUpStateClient {
+class SignupSuccess extends SignupState {
   final String message;
-  SignUpSuccess(this.message);
+
+  SignupSuccess({required this.message});
 }
 
-class SignUpError extends SignUpStateClient {
+class SignupError extends SignupState {
   final String error;
-  SignUpError(this.error);
+
+  SignupError({required this.error});
 }

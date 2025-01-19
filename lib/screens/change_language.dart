@@ -210,7 +210,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(700, 50),
-                        backgroundColor: const Color(0xFF19649E),
+                        primary: const Color(0xFF19649E),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
                     child: Text(
