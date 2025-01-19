@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../cubit/add_image_to_profile/add_image_to_profile_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_state.dart';
 import '../models/user_profile_model.dart';
@@ -18,12 +19,12 @@ class ClientProfileDetails extends StatefulWidget {
 
 class _ClientProfileDetailsState extends State<ClientProfileDetails> {
   late UserProfileCubit userProfileCubit;
-
+  late AddImageToProfileCubit addImageToProfileCubit;
   @override
   void initState() {
     super.initState();
-    userProfileCubit =
-        BlocProvider.of<UserProfileCubit>(context); // Initialize the cubit
+    userProfileCubit = BlocProvider.of<UserProfileCubit>(context);
+    addImageToProfileCubit = BlocProvider.of<AddImageToProfileCubit>(context); // Initialize the cubit
     _loadUserProfile();
     // Call the asynchronous method here
   }
@@ -58,6 +59,10 @@ class _ClientProfileDetailsState extends State<ClientProfileDetails> {
               return Scaffold(
                 backgroundColor: Colors.white,
                 appBar: AppBar(
+                  leading: BackButton(onPressed: ()async{
+                   await BlocProvider.of<UserProfileCubit>(context).getUserProfile(context, userProfile.id??"");
+                  Navigator.pop(context);
+                   },),
                   backgroundColor: const Color(0xff19649E),
                   iconTheme: const IconThemeData(
                     color: Colors.white,
@@ -84,7 +89,7 @@ class _ClientProfileDetailsState extends State<ClientProfileDetails> {
                               Container(
                                 width: screenWidth,
                                 height: screenHeight *
-                                    0.21, // Adjust height proportionally
+                                    0.22, // Adjust height proportionally
                                 decoration: BoxDecoration(
                                   color: Color(0xff19649E),
                                   borderRadius: BorderRadius.only(
@@ -92,11 +97,37 @@ class _ClientProfileDetailsState extends State<ClientProfileDetails> {
                                     bottomRight: Radius.circular(30),
                                   ),
                                 ),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 16.0, top: 40),
-
-                                ),
+                                // child: Padding(
+                                //   padding: const EdgeInsets.only(
+                                //       right: 16.0, top: 40),
+                                //   child: Container(
+                                //     width: screenWidth * 0.9,
+                                //     child: Row(
+                                //       crossAxisAlignment:
+                                //       CrossAxisAlignment.start,
+                                //       mainAxisAlignment: MainAxisAlignment.end,
+                                //       children: [
+                                //         Text(
+                                //           "ملفك الشخصي",
+                                //           textAlign: TextAlign.center,
+                                //           style: TextStyle(
+                                //             fontSize: screenWidth * 0.06,
+                                //             // Adjust font size proportionally
+                                //             color: Colors.white,
+                                //             fontWeight: FontWeight.bold,
+                                //           ),
+                                //         ),
+                                //         SizedBox(width: 90),
+                                //         GestureDetector(
+                                //             onTap: () {
+                                //               Navigator.pop(context);
+                                //             },
+                                //             child: Icon(Icons.arrow_forward,
+                                //                 color: Colors.white)),
+                                //       ],
+                                //     ),
+                                //   ),
+                                // ),
                               ),
                               Positioned(
                                 bottom: -50,
@@ -107,38 +138,56 @@ class _ClientProfileDetailsState extends State<ClientProfileDetails> {
                                     Stack(
                                       alignment: Alignment.bottomLeft,
                                       children: [
-                                        Container(
-                                          height: screenWidth * 0.3,
-                                          // Adjust size proportionally
-                                          width: screenWidth * 0.3,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(40),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10.0),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      'assets/images/omar.png'),
-                                                  fit: BoxFit.fill,
+                                        InkWell(
+                                          onTap: (){
+                                            setState(() {
+                                              addImageToProfileCubit.pickImage(context,userProfile.id??"");
+                                              BlocProvider.of<UserProfileCubit>(context).getUserProfile(context, userProfile.id??"");
+                                            });
+                                          },
+                                          child: Container(
+                                            height: screenWidth * 0.3,
+                                            // Adjust size proportionally
+                                            width: screenWidth * 0.3,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                              BorderRadius.circular(40),
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10.0),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(30),
+
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius: BorderRadius.circular(50), // زاوية الإطار
+                                                  child: userProfile.imageUrl==""||userProfile.imageUrl==null?Image.asset("assets/images/profile.jpg",fit: BoxFit.fill,):Image.network(
+                                                    userProfile.imageUrl ?? "", // رابط الصورة
+                                                    fit: BoxFit.fill, // ملء الصورة
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        Positioned(
-                                          bottom: 10,
-                                          left: 10,
-                                          child: CircleAvatar(
-                                            radius: 16,
-                                            backgroundColor: Color(0xff19649E),
-                                            child: Icon(Icons.edit,
-                                                size: 16, color: Colors.white),
+                                        IconButton(
+                                          onPressed: (){
+                                            setState(() {
+                                              addImageToProfileCubit.pickImage(context,userProfile.id??"");
+                                              BlocProvider.of<UserProfileCubit>(context).getUserProfile(context, userProfile.id??"");
+                                            });
+                                          },
+                                          icon: Positioned(
+                                            bottom: 10,
+                                            left: 10,
+                                            child: CircleAvatar(
+                                              radius: 16,
+                                              backgroundColor: Color(0xff19649E),
+                                              child: Icon(Icons.edit, size: 16, color: Colors.white),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -580,32 +629,35 @@ class _ClientProfileDetailsState extends State<ClientProfileDetails> {
                               child: GestureDetector(
                                 onTap: () async {
                                   final prefs =
-                                      await SharedPreferences.getInstance();
+                                  await SharedPreferences.getInstance();
                                   String id = prefs.getString('userId') ?? "";
                                   BlocProvider.of<UpdateUserCubit>(context)
                                       .updateUser(
-                                          context,
-                                          userProfileCubit
-                                              .firstNameController.text
-                                              .trim(),
-                                          userProfileCubit
-                                              .lastNameController.text
-                                              .trim(),
-                                          userProfileCubit.emailController.text
-                                              .trim(),
-                                          userProfileCubit.phoneController.text
-                                              .trim(),
-                                          userProfileCubit
-                                              .addressController.text
-                                              .trim(),
-                                          userProfileCubit.regionController.text
-                                              .trim(),
-                                          userProfileCubit
-                                              .nationalityController.text
-                                              .trim(),
-                                          userProfileCubit.genderController.text
-                                              .trim(),
-                                          id);
+                                      context,
+                                      userProfileCubit
+                                          .firstNameController.text
+                                          .trim(),
+                                      userProfileCubit
+                                          .lastNameController.text
+                                          .trim(),
+                                      userProfileCubit.emailController.text
+                                          .trim(),
+                                      userProfileCubit.phoneController.text
+                                          .trim(),
+                                      userProfileCubit
+                                          .addressController.text
+                                          .trim(),
+                                      userProfileCubit.regionController.text
+                                          .trim(),
+                                      userProfileCubit
+                                          .nationalityController.text
+                                          .trim(),
+                                      userProfileCubit.genderController.text
+                                          .trim(),
+                                      id);
+                                  setState(() {
+                                    BlocProvider.of<UserProfileCubit>(context).getUserProfile(context, userProfile.id??"");
+                                  });
                                 },
                                 child: Container(
                                   width: screenWidth * 0.9,

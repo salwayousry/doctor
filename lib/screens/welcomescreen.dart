@@ -32,7 +32,7 @@ class WelcomeScreen extends StatelessWidget {
 
             // الصورة والنصوص في النصف السفلي
             Expanded(
-              flex: 6,
+              flex: 8,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
