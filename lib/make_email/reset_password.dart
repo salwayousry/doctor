@@ -1,4 +1,5 @@
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,9 +38,9 @@ class _ResetPasswordState extends State<ResetPassword> {
           child: ListView(
             children: [
               Image.asset("assets/images/lock.png"),
-              const Text(
-                "إعادة تعيين كلمة المرور",
-                style: TextStyle(
+              Text(
+                "resetPassword".tr(),
+                style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF19649E)),
@@ -53,13 +54,14 @@ class _ResetPasswordState extends State<ResetPassword> {
 
                 // Email page
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      " البريد الإلكتروني",
-                      style: TextStyle(fontSize: 20, color: Color(0xFF19649E)),
+                    Text(
+                      "email".tr(),
+                      textAlign: TextAlign.start,
+                      style: const TextStyle(fontSize: 20, color: Color(0xff19649E)),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 10),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
@@ -76,11 +78,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                           enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide.none),
                           prefixIcon: const Icon(Icons.email_outlined),
-                          hintText: " البريد الإلكتروني",
+                          hintText: "email".tr(),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'من فضلك ادخل  البريد الإلكتروني';
+                            return "emailValidator".tr();
                           }
                           return null;
                         },
@@ -99,9 +101,9 @@ class _ResetPasswordState extends State<ResetPassword> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        child: const Text(
-                          "إعاده",
-                          style: TextStyle(
+                        child: Text(
+                          "send".tr(),
+                          style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
                               color: Colors.white),

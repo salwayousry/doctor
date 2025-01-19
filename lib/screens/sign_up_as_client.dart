@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:doctor/widgets/custom_text_field_for_sign_up.dart';
@@ -5,7 +6,8 @@ import 'package:doctor/make_email/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'homescreen.dart';
+
+import '../make_email/login.dart';
 
 // صفحة تسجيل المستخدم
 class SignUpAsClient extends StatelessWidget {
@@ -16,7 +18,6 @@ class SignUpAsClient extends StatelessWidget {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController nationalityController = TextEditingController();
@@ -24,10 +25,13 @@ class SignUpAsClient extends StatelessWidget {
   final TextEditingController regionController = TextEditingController();
   final TextEditingController professionController = TextEditingController();
 
+  // متغير لتحديد الجنس
+  String? selectedGender;
+
   // حفظ اسم المستخدم في SharedPreferences
   Future<void> _saveUserName(String firstName) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('userName', '$firstName');
+    await prefs.setString('userName', firstName);
   }
 
   @override
@@ -36,8 +40,12 @@ class SignUpAsClient extends StatelessWidget {
       create: (_) => SignUpCubit(context),
       child: Scaffold(
         backgroundColor: Colors.white,
+        appBar: AppBar(
+          toolbarHeight: 35,
+          backgroundColor: Colors.white,
+        ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
           child: Form(
             key: _formKey,
             child: Padding(
@@ -51,7 +59,7 @@ class SignUpAsClient extends StatelessWidget {
                     _saveUserName(firstNameController.text);
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
+                      MaterialPageRoute(builder: (context) => LoginPage()),
                     );
                   } else if (state is SignUpError) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -67,7 +75,7 @@ class SignUpAsClient extends StatelessWidget {
                     children: [
                       Center(
                         child: Text(
-                          "اكتشف أخصائي الصحة النفسية والجسدية واحجز مواعيدك بسهولة",
+                          "discoverSpecialist".tr(),
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 20,
@@ -78,96 +86,120 @@ class SignUpAsClient extends StatelessWidget {
                       ),
                       const SizedBox(height: 16),
                       CustomTextField(
-                        label: "الاسم الأول",
+                        label: "firstName".tr(),
                         suffixIcon: Icons.person,
                         controller: firstNameController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال الاسم الأول' : null,
+                            value!.isEmpty ? "firstNameValidator".tr() : null,
                       ),
                       CustomTextField(
-                        label: "اسم العائلة",
+                        label: "lastName".tr(),
                         suffixIcon: Icons.family_restroom,
                         controller: lastNameController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال اسم العائلة' : null,
+                            value!.isEmpty ? "lastNameValidator".tr() : null,
                       ),
                       CustomTextField(
-                        label: "البريد الإلكتروني",
+                        label: "email".tr(),
                         suffixIcon: Icons.email,
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) => value!.isEmpty
-                            ? 'يرجى إدخال البريد الإلكتروني'
+                            ? "emailValidator".tr()
                             : null,
                       ),
                       CustomTextField(
-                        label: "كلمة المرور",
+                        label: "password".tr(),
                         suffixIcon: Icons.remove_red_eye_outlined,
                         controller: passwordController,
                         obscureText: true,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'يرجى إدخال كلمة المرور';
+                            return "passwordValidator".tr();
                           } else if (value.length < 8) {
-                            return 'يجب أن تكون كلمة المرور على الأقل 8 أحرف';
+                            return "passwordLength".tr();
                           }
                           return null;
                         },
                       ),
                       CustomTextField(
-                        label: "رقم الهاتف",
+                        label: "phoneNumber".tr(),
                         suffixIcon: Icons.phone_android,
                         controller: phoneController,
                         keyboardType: TextInputType.phone,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال رقم الهاتف' : null,
+                            value!.isEmpty ? "phoneNumberValidator".tr() : null,
                       ),
                       CustomTextField(
-                        label: "العمر",
+                        label: "age".tr(),
                         suffixIcon: Icons.cake,
                         controller: ageController,
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           final age = int.tryParse(value!);
                           return (age == null || age <= 18)
-                              ? 'يجب أن يكون العمر أكبر من 18'
+                              ? "ageValidator".tr()
                               : null;
                         },
                       ),
+                      Text("gender".tr(), style: const TextStyle(
+                        fontSize: 16,
+                        color: Color(0xff19649E),
+                        fontWeight: FontWeight.w500,
+                      )),
+                      const SizedBox(height: 5,),
+                      DropdownButtonFormField<String>(
+                        decoration: InputDecoration(
+                          labelText: "gender".tr(),
+                          border: const OutlineInputBorder(),
+                        ),
+                        value: selectedGender,
+                        items: ['male', 'female']
+                            .map((gender) => DropdownMenuItem(
+                                  value: gender,
+                                  child: Text(gender),
+                                ))
+                            .toList(),
+                        onChanged: (value) {
+                          selectedGender = value!;
+                        },
+                        validator: (value) =>
+                            value == null ? "genderValidator".tr() : null,
+                      ),
+                      const SizedBox(height: 10,),
                       CustomTextField(
-                        label: "الجنسية",
+                        label: "nationality".tr(),
                         suffixIcon: Icons.flag,
                         controller: nationalityController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال الجنسية' : null,
+                            value!.isEmpty ? "nationalityValidator".tr() : null,
                       ),
                       CustomTextField(
-                        label: "عنوان المنزل",
+                        label: "homeAddress".tr(),
                         suffixIcon: Icons.home,
                         controller: addressController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال عنوان المنزل' : null,
+                            value!.isEmpty ? "homeAddressValidator".tr() : null,
                       ),
                       CustomTextField(
-                        label: "المنطقة",
+                        label: "region".tr(),
                         suffixIcon: Icons.location_on,
                         controller: regionController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال المنطقة' : null,
+                            value!.isEmpty ? "regionValidator".tr() : null,
                       ),
                       CustomTextField(
-                        label: "المهنة",
+                        label: "profession".tr(),
                         suffixIcon: Icons.work,
                         controller: professionController,
                         validator: (value) =>
-                            value!.isEmpty ? 'يرجى إدخال المهنة' : null,
+                            value!.isEmpty ? "professionValidator".tr() : null,
                       ),
                       const SizedBox(height: 24),
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             cubit.registerUser(
-                              //
                               firstName: firstNameController.text,
                               lastName: lastNameController.text,
                               email: emailController.text,
@@ -178,6 +210,7 @@ class SignUpAsClient extends StatelessWidget {
                               age: int.tryParse(ageController.text) ?? 0,
                               region: regionController.text,
                               nationality: nationalityController.text,
+                              gender: selectedGender!,
                             );
                           }
                         },
@@ -190,9 +223,9 @@ class SignUpAsClient extends StatelessWidget {
                         child: state is SignUpLoading
                             ? const CircularProgressIndicator(
                                 color: Colors.white)
-                            : const Text(
-                                'إنشاء حساب',
-                                style: TextStyle(
+                            : Text(
+                                "createAccount".tr(),
+                                style: const TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
@@ -203,6 +236,13 @@ class SignUpAsClient extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Text(
+                            "alreadyHaveAnAccount".tr(),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                           TextButton(
                             onPressed: () {
                               Navigator.push(
@@ -211,19 +251,12 @@ class SignUpAsClient extends StatelessWidget {
                                     builder: (context) => LoginPage()),
                               );
                             },
-                            child: const Text(
-                              'تسجيل الدخول',
-                              style: TextStyle(
-                                color: Color(0xFF007BFF),
+                            child: Text(
+                              "signIn".tr(),
+                              style: const TextStyle(
+                                color: Color(0xff19649E),
                                 fontWeight: FontWeight.w700,
                               ),
-                            ),
-                          ),
-                          const Text(
-                            'لديك حساب بالفعل؟',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
                             ),
                           ),
                         ],
@@ -257,10 +290,11 @@ class SignUpCubit extends Cubit<SignUpStateClient> {
     required int age,
     required String region,
     required String nationality,
+    required String gender,
   }) async {
     emit(SignUpLoading());
     final String url =
-        "https://scopey.onrender.com/api/auth/register/beneficiary";
+        "https://scopey.onrender.com/api/beneficiaries/register/beneficiary";
 
     try {
       final response = await http.post(
@@ -277,16 +311,15 @@ class SignUpCubit extends Cubit<SignUpStateClient> {
           "age": age,
           "region": region,
           "nationality": nationality,
+          "gender": gender,
         }),
       );
 
       if (response.statusCode == 201) {
-        // تحليل الاستجابة كنص عادي
         final responseString = response.body;
-        print("Response: $responseString"); // طباعة الاستجابة
-        emit(SignUpSuccess(responseString)); // مرّر النص العادي
+        print("Response: $responseString");
+        emit(SignUpSuccess(responseString));
       } else {
-        // إذا كان هناك خطأ في الاستجابة
         final error = jsonDecode(response.body)["error"] ?? "حدث خطأ غير متوقع";
         emit(SignUpError(error));
       }

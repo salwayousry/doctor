@@ -291,7 +291,7 @@ class SignUpAsDoctorThirdScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _SignUpAsDoctorThirdScreenState createState() =>
+  State<SignUpAsDoctorThirdScreen> createState() =>
       _SignUpAsDoctorThirdScreenState();
 }
 

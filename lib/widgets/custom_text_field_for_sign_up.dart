@@ -23,10 +23,10 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Check validation status by running the validator
-    final isValid = validator == null || validator!(controller.text) == null;
+    // final isValid = validator == null || validator!(controller.text) == null;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
@@ -59,11 +59,11 @@ class CustomTextField extends StatelessWidget {
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(11),
-                borderSide: BorderSide(
-                  color: isValid
-                      ? Colors.grey
-                      : Colors.red, // Dynamic border color
-                ),
+                // borderSide: BorderSide(
+                //   color: isValid
+                //       ? Colors.grey
+                //       : Colors.red, // Dynamic border color
+                // ),
               ),
               filled: true,
               fillColor: Colors.white,
@@ -73,7 +73,7 @@ class CustomTextField extends StatelessWidget {
                       child: Icon(suffixIcon, color: const Color(0xff737373)),
                     )
                   : null,
-              errorText: validator != null ? validator!(controller.text) : null,
+              // errorText: validator != null ? validator!(controller.text) : null,
             ),
             validator: validator,
           ),

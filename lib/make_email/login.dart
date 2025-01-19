@@ -1,12 +1,11 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:doctor/screens/homescreen.dart'; // Import HomeScreen
 import 'package:doctor/make_email/reset_password.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../api/cache_helper.dart';
 import '../cubit/forget_password_cubit/forget_password_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 
@@ -45,6 +44,7 @@ class LoginPage extends StatelessWidget {
           }
 
           return Scaffold(
+            backgroundColor: Colors.white,
             body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -52,14 +52,11 @@ class LoginPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const SizedBox(height: 50),
-                    const Align(
-                      alignment: Alignment.topRight,
-                      child: Text(
-                        'مرحباً بعودتك',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    Text(
+                      "welcomeBack".tr(),
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 20),
@@ -90,14 +87,14 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 30),
                     buildTextField(
                       context,
-                      label: 'الإيميل',
+                      label: "email".tr(),
                       icon: Icons.email_outlined,
                       controller: emailController,
                     ),
                     const SizedBox(height: 16),
                     buildTextField(
                       context,
-                      label: 'الباسورد',
+                      label: "password".tr(),
                       icon: Icons.visibility_off_outlined,
                       isPassword: true,
                       controller: passwordController,
@@ -117,15 +114,15 @@ class LoginPage extends StatelessWidget {
                             ),
                           );
                         },
-                        child: const Text(
-                          'هل نسيت الباسورد؟',
-                          style: TextStyle(color: Color(0xff19649E)),
+                        child: Text(
+                          "forgetPassword".tr(),
+                          style: const TextStyle(color: Color(0xff19649E)),
                         ),
                       ),
                     ),
                     buildTextField(
                       context,
-                      label: 'الدور',
+                      label: "role".tr(),
                       icon: Icons.person,
                       controller: roleController,
                     ),
@@ -144,35 +141,37 @@ class LoginPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        'تسجيل الدخول',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.w700),
+                      child: Text(
+                        "signIn".tr(),
+                        style: const TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
-                          'إنشاء حساب جديد',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Color(0xFF007BFF),
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
+
                         TextButton(
                           onPressed: () {
                             // Handle create account
                           },
-                          child: const Text(
-                            'ليس لديك حساب؟',
-                            style: TextStyle(
+                          child: Text(
+                            "notHaveAccount".tr(),
+                            style: const TextStyle(
                               fontSize: 16,
                               color: Colors.black,
                               fontWeight: FontWeight.w700,
                             ),
+                          ),
+                        ),
+
+                        Text(
+                          "createAccount".tr(),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Color(0xff19649E),
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
@@ -197,12 +196,12 @@ class LoginPage extends StatelessWidget {
       obscureText: isPassword,
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon),
+        suffixIcon: Icon(icon),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),
         ),
       ),
-      textAlign: TextAlign.right,
+      // textAlign: TextAlign.right,
     );
   }
 }

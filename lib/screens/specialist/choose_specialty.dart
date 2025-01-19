@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-
+// import 'package:get/get.dart';
 import '../../cubit/doctor_sign_up_cubit/doctor_sign_up_cubit.dart';
 import '../../make_email/login.dart';
 import '../../models/Specialist.dart';
@@ -18,70 +18,77 @@ class ChooseSpecialty extends StatefulWidget {
 
 class _ChooseSpecialtyState extends State<ChooseSpecialty> {
   final Map<String, Map<String, bool>> _categories = {
-    'صحة نفسية': {
-      'اضطرابات نفسية': false,
-      'برامج علاجية': false,
-      'علاج جماعي': false,
-      'اضطراب الاطفال': false,
-      'حل مشاكل': false,
-      'ارشاد وتوجيه': false,
-      'وقاية ومتابعة نفسية': false,
-      'إعادة تأهيل ودعم': false,
+    'mentalHealth'.tr(): {
+      'psychologicalDisorders'.tr(): false,
+      'therapeuticPrograms'.tr(): false,
+      'groupTherapy'.tr(): false,
+      'childrenDisorder'.tr(): false,
+      'solveProblems'.tr(): false,
+      'guidanceAndInstructions'.tr(): false,
+      'PsychologicalPreventionAndFollowUp'.tr(): false,
+      'rehabilitation'.tr(): false,
     },
-    'تطوير مهارات': {
-      'الاسترخاء': false,
-      'تحمل الضغوط': false,
-      'ضبط المشاعر': false,
-      'حل استراتيجيات جدلية': false,
-      'تحقيق التوازن': false,
-      'تحسين الثقة': false,
-      'تحقيق الأهداف': false,
-      'تحقيق النجاح': false,
-      'اضطراب الصدمة': false,
+    'skillDevelopment'.tr(): {
+      'relax'.tr(): false,
+      'stressManagement'.tr(): false,
+      'emotionalControl'.tr(): false,
+      'dialecticalStrategies'.tr(): false,
+      'achievingBalance'.tr(): false,
+      'improvingTrust'.tr(): false,
+      'achievingGoals'.tr(): false,
+      'achievingSuccess'.tr(): false,
+      'traumaDisorder'.tr(): false,
     },
-    'اضطراب نفسي': {
-      'القلق': false,
-      'الاكتئاب': false,
-      'الرهاب': false,
-      'الوسواس': false,
-      'اضطراب جنسي': false,
-      'اضطراب الاكل': false,
-      'اضطراب شخصي': false,
-      'الإدمان': false,
-      'اضطراب الصدمة': false,
+    'mentalDisorder'.tr(): {
+      'anxiety'.tr(): false,
+      'depression'.tr(): false,
+      'phobia'.tr(): false,
+      'obsessiveDisorder'.tr(): false,
+      'sexualDisorder'.tr(): false,
+      'eatingDisorder'.tr(): false,
+      'personalityDisorder'.tr(): false,
+      'addiction'.tr(): false,
+      'traumaDisorder'.tr(): false,
     },
-    'صحة جسدية': {
-      'نظام غذائي': false,
-      'نظام رياضي': false,
-      'عناية صحية': false,
-      'فحوص دورية': false,
+    'physicalHealth'.tr(): {
+      'diet'.tr(): false,
+      'SportsSystem'.tr(): false,
+      'HealthCare'.tr(): false,
+      'examinations'.tr(): false,
     }
   };
 
   final List<String> rightColumnCategories = [
-    'اضطراب نفسي',
-    'صحة جسدية',
+    'mentalDisorder'.tr(),
+    'physicalHealth'.tr(),
   ];
 
   final List<String> leftColumnCategories = [
-    'صحة نفسية',
-    'تطوير مهارات',
+    'mentalHealth'.tr(),
+    'skillDevelopment'.tr(),
   ];
 
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 20),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
+
         children: [
-          const Text(
-            "اختار تخصصك",
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              fontSize: 18,
-              color: Color(0xff19649E),
-              fontWeight: FontWeight.bold,
+          Center(
+            child: Text(
+              "pickYour".tr(),
+              textAlign: TextAlign.start,
+              style: const TextStyle(
+                fontSize: 18,
+                color: Color(0xff19649E),
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const SizedBox(height: 20),
@@ -124,7 +131,7 @@ class _ChooseSpecialtyState extends State<ChooseSpecialty> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   customSnackBar(
                     context: context,
-                    message: "يجب اختيار تخصص واحد على الاقل",
+                    message: "chooseOneChoice".tr(),
                     backgroundColor: Colors.red,
                     icon: Icons.error,
                   ),
@@ -135,16 +142,16 @@ class _ChooseSpecialtyState extends State<ChooseSpecialty> {
               }
             },
             child: Container(
-              width: Get.width * 0.9,
-              height: Get.height * 0.07,
+              width: screenWidth * 0.9,
+              height: screenHeight * 0.07,
               decoration: BoxDecoration(
                 color: const Color(0xff19649E),
                 borderRadius: BorderRadius.circular(11),
               ),
-              child: const Center(
+              child: Center(
                 child: Text(
-                  'انشاء حساب',
-                  style: TextStyle(
+                  'createAccount'.tr(),
+                  style: const TextStyle(
                     fontSize: 24,
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
@@ -153,18 +160,19 @@ class _ChooseSpecialtyState extends State<ChooseSpecialty> {
               ),
             ),
           ),
-          SizedBox(height: Get.height * 0.02),
+          SizedBox(height: screenHeight * 0.02),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'لديك حساب بالفعل ؟ ',
-                style: TextStyle(
+              Text(
+                'alreadyHaveAnAccount'.tr(),
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black,
                   fontWeight: FontWeight.w700,
                 ),
               ),
+              SizedBox(width: 10,),
               InkWell(
                 onTap: () {
                   Navigator.push(
@@ -172,9 +180,9 @@ class _ChooseSpecialtyState extends State<ChooseSpecialty> {
                     MaterialPageRoute(builder: (context) => LoginPage()),
                   );
                 },
-                child: const Text(
-                  'تسجيل الدخول ',
-                  style: TextStyle(
+                child: Text(
+                  'signIn'.tr(),
+                  style: const TextStyle(
                     fontSize: 16,
                     color: Color(0xff19649E),
                     fontWeight: FontWeight.w700,
