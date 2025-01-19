@@ -96,7 +96,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                               .resetPasswordByEmail(context,emailController.text);
                         },
                         style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(700, 50), primary: const Color(0xff19649E),
+                          minimumSize: const Size(700, 50), backgroundColor: const Color(0xff19649E),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
