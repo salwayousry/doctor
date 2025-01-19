@@ -6,12 +6,14 @@ import 'package:doctor/make_email/new_password.dart';
 import 'package:doctor/models/update_user_profile_model.dart';
 import 'package:doctor/screens/client_change_password.dart';
 import 'package:doctor/screens/client_profile_details.dart';
+import 'package:doctor/screens/client_profile_screen.dart';
 import 'package:doctor/screens/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../api/end_points.dart';
 import '../../models/forget_password_model.dart';
+import '../add_image_to_profile/add_image_to_profile_cubit.dart';
 
 class UpdateUserCubit extends Cubit<UpdateUserState> {
   UpdateUserCubit() : super(UpdateUserInitial());
@@ -47,14 +49,19 @@ class UpdateUserCubit extends Cubit<UpdateUserState> {
           SnackBar(content: Text("profile updated successfully")),
         );
 
-       Navigator.push(
+       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-            builder: (context) => BlocProvider(
-                create: (_) => UserProfileCubit(),
-                child: ClientProfileDetails()
+            builder: (context) => MultiBlocProvider(
+                providers: [
+                  BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                  BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                  BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                ],
+                child: ClientProfileScreen()
             ),
           ),
+             (route) => false,
         );
 
       } else {
