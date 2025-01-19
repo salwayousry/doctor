@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../cubit/add_image_to_profile/add_image_to_profile_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_cubit.dart';
+import '../cubit/user_profile_cubit/user_profile_state.dart';
+import '../models/user_profile_model.dart';
 
 class ChangeLanguage extends StatefulWidget {
   const ChangeLanguage({super.key});
@@ -15,7 +18,7 @@ class ChangeLanguage extends StatefulWidget {
 class _ChangeLanguageState extends State<ChangeLanguage> {
 
 
-  late UserProfileCubit userProfileCubit;
+
 
   int _currentPage = 0;
   final int totalPages = 2;
@@ -26,19 +29,22 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
     });
   }
 
+  late UserProfileCubit userProfileCubit;
+  late AddImageToProfileCubit addImageToProfileCubit;
   @override
   void initState() {
     super.initState();
-    userProfileCubit = BlocProvider.of<UserProfileCubit>(context); // Initialize the cubit
+    userProfileCubit = BlocProvider.of<UserProfileCubit>(context);
+    addImageToProfileCubit = BlocProvider.of<AddImageToProfileCubit>(context);// Initialize the cubit
     _loadUserProfile();
-
+    // Call the asynchronous method here
   }
-
 
   Future<void> _loadUserProfile() async {
     final prefs = await SharedPreferences.getInstance();
     String id = prefs.getString('userId') ?? "";
 
+    // Set the state once the user profile data is fetched
     userProfileCubit.getUserProfile(context, id);
   }
 
@@ -47,7 +53,22 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
 
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
+    return WillPopScope(
+        onWillPop: () async {
+      // Return false to disable the back button
+      return false;
+    },
+    child: BlocProvider(
+    create: (_) => userProfileCubit,  // Use the same cubit instance
+    child: BlocBuilder<UserProfileCubit, UserProfileState>(
+    builder: (context, state) {
+    if (state is UserProfileLoading) {
+    return Scaffold(body: Center(child: CircularProgressIndicator(),));
+    } else if (state is UserProfileFailure) {
+    return Center(child: Text("Error loading profile: ${state.error}"));
+    } else if (state is UserProfileSuccess) {
+    // Once the profile is loaded, show the actual UI
+    UserProfileModel userProfile = state.userProfile;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -92,35 +113,57 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                     Stack(
                       alignment: Alignment.bottomLeft,
                       children: [
-                        Container(
-                          height: screenWidth * 0.3,
-                          width: screenWidth * 0.3,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(40),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(10.0),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30),
-                                image: const DecorationImage(
-                                  image:
-                                  AssetImage('assets/images/omar.png'),
-                                  fit: BoxFit.fill,
+                        InkWell(
+                          onTap: (){
+                            setState(() {
+                              addImageToProfileCubit.pickImage(context,userProfile.id??"");
+                              BlocProvider.of<UserProfileCubit>(context).getUserProfile(context, userProfile.id??"");
+                            });
+
+                          },
+                          child: Container(
+                            height: screenWidth * 0.3,
+                            // Adjust size proportionally
+                            width: screenWidth * 0.3,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                              BorderRadius.circular(40),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(30),
+
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(50), // زاوية الإطار
+                                  child: userProfile.imageUrl==""||userProfile.imageUrl==null?Image.asset("assets/images/profile.jpg",fit: BoxFit.fill,):Image.network(
+                                    userProfile.imageUrl ?? "", // رابط الصورة
+                                    fit: BoxFit.fill, // ملء الصورة
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        const Positioned(
-                          bottom: 10,
-                          left: 10,
-                          child: CircleAvatar(
-                            radius: 16,
-                            backgroundColor:  Color(0xff19649E),
-                            child: Icon(Icons.edit,
-                                size: 16, color: Colors.white),
+                        IconButton(
+                          onPressed: (){
+                            setState(() {
+                              addImageToProfileCubit.pickImage(context,userProfile.id??"");
+                              BlocProvider.of<UserProfileCubit>(context).getUserProfile(context, userProfile.id??"");
+                            });
+                          },
+                          icon: Positioned(
+                            bottom: 10,
+                            left: 10,
+                            child: CircleAvatar(
+                              radius: 16,
+                              backgroundColor: Color(0xff19649E),
+                              child: Icon(Icons.edit, size: 16, color: Colors.white),
+                            ),
                           ),
                         ),
                       ],
@@ -227,5 +270,11 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
         ],
       ),
     );
+    }
+    return Container(); // Default return in case no state matches
+    },
+    )),
+    );
   }
+
 }
