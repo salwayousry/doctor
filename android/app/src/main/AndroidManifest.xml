@@ -1,12 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.doctorapp">
 
-    <!-- أذونات الكاميرا والمعرض -->
+    
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-    <!-- إذا كنت تستهدف Android 13 أو أعلى -->
+
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
