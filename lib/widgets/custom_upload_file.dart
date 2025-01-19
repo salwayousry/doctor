@@ -34,7 +34,7 @@ class CustomUploadFile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
@@ -59,8 +59,8 @@ class CustomUploadFile extends StatelessWidget {
           child: TextFormField(
             controller: controller,
             readOnly: true, // Prevent user from typing manually.
-            textAlign: TextAlign.right,
-            textDirection: TextDirection.rtl,
+            textAlign: TextAlign.start,
+            // textDirection: TextDirection.rtl,
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.symmetric(horizontal: 16),
               border: OutlineInputBorder(

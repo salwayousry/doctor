@@ -1,6 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
+// import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../cubit/reset_password_cubit/reset_password_cubit.dart';
@@ -55,6 +56,22 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
               return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.white,
+                appBar: AppBar(
+                  backgroundColor: const Color(0xff19649E),
+                  iconTheme: const IconThemeData(
+                    color: Colors.white,
+                  ),
+                  centerTitle: true,
+                  title: Text(
+                    "passwordManager".tr(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.06,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: Column(
@@ -67,7 +84,7 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                   children: [
                     Container(
                       width: screenWidth,
-                      height: screenHeight * 0.3, // Adjust height proportionally
+                      height: screenHeight * 0.21, // Adjust height proportionally
                       decoration: BoxDecoration(
                         color: Color(0xff19649E),
                         borderRadius: BorderRadius.only(
@@ -75,33 +92,33 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                           bottomRight: Radius.circular(30),
                         ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 16.0, top: 40),
-                        child: Container(
-                          width: screenWidth * 0.9,
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                "الاعدادات",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: screenWidth * 0.06,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              SizedBox(width: 120),
-                              GestureDetector(
-                                  onTap: (){
-                                    Navigator.pop(context);
-                                  },
-                                  child: Icon(Icons.arrow_forward, color: Colors.white)),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // child: Padding(
+                      //   padding: const EdgeInsets.only(right: 16.0, top: 40),
+                      //   child: Container(
+                      //     width: screenWidth * 0.9,
+                      //     child: Row(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         Text(
+                      //           "settings".tr(),
+                      //           textAlign: TextAlign.center,
+                      //           style: TextStyle(
+                      //             fontSize: screenWidth * 0.06,
+                      //             color: Colors.white,
+                      //             fontWeight: FontWeight.bold,
+                      //           ),
+                      //         ),
+                      //         SizedBox(width: 120),
+                      //         GestureDetector(
+                      //             onTap: (){
+                      //               Navigator.pop(context);
+                      //             },
+                      //             child: Icon(Icons.arrow_forward, color: Colors.white)),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                     ),
                     Positioned(
                       bottom: -50,
@@ -171,29 +188,29 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(10.0),
+                      padding: const EdgeInsets.all(20.0),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Form(
                             key:formKey,
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "كلمه المرور الجديده",
-                                  textAlign: TextAlign.center,
+                                  "newPassword".tr(),
+                                  // textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: Color(0xff19649E),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                SizedBox(height: Get.height * 0.01),
+                                SizedBox(height: screenHeight * 0.01),
                                 Center(
                                   child: Container(
-                                    width: Get.width * 0.9,
-                                    height: Get.height * 0.06,
+                                    width: screenWidth * 0.9,
+                                    height: screenHeight * 0.06,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(11),
                                       boxShadow: [
@@ -209,13 +226,13 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                                       controller: passwordController,
                                       validator:  (String? value) {
                                         value = passwordController.text;
-                                        if (value == null || value.length < 6) {
-                                          return "يجب أن تكون كلمة المرور 6 أحرف على الأقل";
+                                        if (value == null || value.length < 8) {
+                                          return "passwordLength".tr();
                                         }
                                         return null;
                                       },
-                                      textDirection: TextDirection.rtl,
-                                      textAlign: TextAlign.right,
+                                      // textDirection: TextDirection.rtl,
+                                      // textAlign: TextAlign.right,
                                       obscureText: _isObscure1,
                                       decoration: InputDecoration(
                                         contentPadding:
@@ -226,7 +243,7 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                                         ),
                                         filled: true,
                                         fillColor: Colors.white,
-                                        prefixIcon: IconButton(
+                                        suffixIcon: IconButton(
                                           icon: Icon(
                                             _isObscure1
                                                 ? Icons.visibility_off_rounded
@@ -247,24 +264,24 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                               ],
                             ),
                           ),
-                          SizedBox(height: Get.height * 0.01),
+                          SizedBox(height: screenHeight * 0.01),
                           Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "تأكيد كلمه المرور",
-                                textAlign: TextAlign.center,
+                                "confirmPassword".tr(),
+                                // textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontSize: 16,
                                   color: Color(0xff19649E),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
-                              SizedBox(height: Get.height * 0.01),
+                              SizedBox(height: screenHeight * 0.01),
                               Center(
                                 child: Container(
-                                  width: Get.width * 0.9,
-                                  height: Get.height * 0.06,
+                                  width: screenWidth * 0.9,
+                                  height: screenHeight * 0.06,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(11),
                                     boxShadow: [
@@ -278,13 +295,13 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                                   ),
                                   child: TextFormField(
                                     controller: confirmPasswordController,
-                                    textDirection: TextDirection.rtl,
-                                    textAlign: TextAlign.right,
+                                    // textDirection: TextDirection.rtl,
+                                    // textAlign: TextAlign.right,
                                     obscureText: _isObscure2,
                                     validator: (String? value) {
                                       value = passwordController.text;
                                       if (value != confirmPasswordController.text) {
-                                        return "كلمتا المرور غير متطابقتين";
+                                        return "matchPassword".tr();
                                       }
                                       return null;
                                     },
@@ -297,7 +314,7 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                                       ),
                                       filled: true,
                                       fillColor: Colors.white,
-                                      prefixIcon: IconButton(
+                                      suffixIcon: IconButton(
                                         icon: Icon(
                                           _isObscure2
                                               ? Icons.visibility_off_rounded
@@ -320,7 +337,7 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
                         ],
                       ),
                     ),
-                    SizedBox(height: Get.height * 0.09),
+                    SizedBox(height: screenHeight * 0.09),
                     Center(
                       child: GestureDetector(
                         onTap: (){
@@ -338,15 +355,15 @@ class _ClientChangePasswordState extends State<ClientChangePassword> {
     }
                         },
                         child: Container(
-                          width: Get.width * 0.9,
-                          height: Get.height * 0.06,
+                          width: screenWidth * 0.9,
+                          height: screenHeight * 0.06,
                           decoration: BoxDecoration(
                             color: Color(0xff19649E),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Center(
                             child: Text(
-                              'تحديث',
+                              "update".tr(),
                               style: TextStyle(
                                 fontSize: 24,
                                 color: Colors.white,

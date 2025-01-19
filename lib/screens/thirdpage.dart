@@ -1,4 +1,5 @@
 import 'package:doctor/screens/selectionpage.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ThirdPage extends StatelessWidget {
@@ -22,9 +23,9 @@ class ThirdPage extends StatelessWidget {
               const SizedBox(height: 24.0),
 
               // النص الرئيسي
-              const Text(
-                'اختر الأخصائي الذي يفهمك',
-                style: TextStyle(
+              Text(
+                "chooseSpecialist".tr(),
+                style: const TextStyle(
                   fontSize: 20.0, // حجم الخط أصغر لتناسب التصميم
                   fontWeight: FontWeight.bold,
                 ),
@@ -33,13 +34,12 @@ class ThirdPage extends StatelessWidget {
               const SizedBox(height: 12.0),
 
               // النص الوصفي
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 32.0),
                 child: Text(
-                  'نؤمن بمتطلباتك الأساسية الفريدة. لذلك، وفرنا لك '
-                      'أفضل مختصي الصحة النفسية والجسدية لاختيارهم بسهولة.',
+                  "thirdWelcomeScreen".tr(),
                   textAlign: TextAlign.center,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14.0, // حجم الخط
                     color: Colors.black87,
                     height: 1.5,
@@ -64,10 +64,10 @@ class ThirdPage extends StatelessWidget {
                     color: const Color(0xff19649E),
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      'ابدأ',
-                      style: TextStyle(
+                      "start".tr(),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,

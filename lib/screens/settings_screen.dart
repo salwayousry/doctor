@@ -1,6 +1,7 @@
 import 'package:doctor/cubit/delete_account_cubit/delete_account_cubit.dart';
 import 'package:doctor/screens/change_language.dart';
 import 'package:doctor/screens/client_change_password.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -43,7 +44,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             mainAxisSize: MainAxisSize.min, // Adjust height to fit content
             children: [
               Text(
-                'هل تريد حذف الحساب بالفعل',
+                "confirmDeleteAccount".tr(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
@@ -69,13 +70,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Navigator.of(context).pop(); // Close the bottom sheet
                     },
                     child: Text(
-                      'إلغاء',
+                      "dismiss".tr(),
                       style: TextStyle(color: Color(0xff19649E),fontSize: 20,fontWeight: FontWeight.w600),
                     ),
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff19649E),
+                      primary: Color(0xff19649E),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
@@ -85,7 +86,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       onConfirm(); // Handle confirmation
                     },
                     child: Text(
-                      'تأكيد',
+                      "confirm".tr(),
                       style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -109,7 +110,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
 
   Widget build(BuildContext context) {
-    List<String> actions = ["تغيير اللغه", "مدير كلمات المرور"];
+    List<String> actions = ["changeLanguage".tr(), "passwordManager".tr()];
 
     // MediaQuery for responsive sizing
     double screenWidth = MediaQuery.of(context).size.width;
@@ -128,6 +129,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               UserProfileModel userProfile = state.userProfile;
               return Scaffold(
       backgroundColor: Colors.white,
+                appBar: AppBar(
+                  backgroundColor: const Color(0xff19649E),
+                  iconTheme: const IconThemeData(
+                    color: Colors.white,
+                  ),
+                  centerTitle: true,
+                  title: Text(
+                    "settings".tr(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: screenWidth * 0.06,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -138,7 +155,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 children: [
                   Container(
                     width: screenWidth,
-                    height: screenHeight * 0.3, // Adjust height proportionally
+                    height: screenHeight * 0.21, // Adjust height proportionally
                     decoration: BoxDecoration(
                       color: Color(0xff19649E),
                       borderRadius: BorderRadius.only(
@@ -146,34 +163,34 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         bottomRight: Radius.circular(30),
                       ),
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 16.0, top: 40),
-                      child: Container(
-                        width: screenWidth * 0.9,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "الاعدادات",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: screenWidth * 0.06,
-                                // Adjust font size proportionally
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(width: 120),
-                            GestureDetector(
-                                onTap: (){
-                                  Navigator.pop(context);
-                                },
-                                child: Icon(Icons.arrow_forward, color: Colors.white)),
-                          ],
-                        ),
-                      ),
-                    ),
+                    // child: Padding(
+                    //   padding: const EdgeInsets.only(right: 16.0, top: 40),
+                    //   child: Container(
+                    //     width: screenWidth * 0.9,
+                    //     child: Row(
+                    //       crossAxisAlignment: CrossAxisAlignment.start,
+                    //       mainAxisAlignment: MainAxisAlignment.end,
+                    //       children: [
+                    //         Text(
+                    //           "settings".tr(),
+                    //           textAlign: TextAlign.center,
+                    //           style: TextStyle(
+                    //             fontSize: screenWidth * 0.06,
+                    //             // Adjust font size proportionally
+                    //             color: Colors.white,
+                    //             fontWeight: FontWeight.bold,
+                    //           ),
+                    //         ),
+                    //         SizedBox(width: 120),
+                    //         // GestureDetector(
+                    //         //     onTap: (){
+                    //         //       Navigator.pop(context);
+                    //         //     },
+                    //         //     child: Icon(Icons.arrow_forward, color: Colors.white)),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ),
                   Positioned(
                     bottom: -50,
@@ -258,16 +275,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Color(0xff19649E),
-                            size: screenWidth *
-                                0.08, // Adjust icon size proportionally
-                          ),
+
                           Padding(
                             padding: EdgeInsets.only(top: 25.0),
                             child: Text(
-                              "تغيير اللغه",
+                              "changeLanguage".tr(),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenWidth * 0.05,
@@ -275,6 +287,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Color(0xff19649E),
+                            size: screenWidth *
+                                0.08, // Adjust icon size proportionally
                           ),
                         ],
                       ),
@@ -312,16 +330,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Color(0xff19649E),
-                            size: screenWidth *
-                                0.08, // Adjust icon size proportionally
-                          ),
+
                           Padding(
                             padding: EdgeInsets.only(top: 15.0),
                             child: Text(
-                              "تغيير كلمات المرور",
+                              "changePassword".tr(),
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: screenWidth * 0.05,
@@ -329,6 +342,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Color(0xff19649E),
+                            size: screenWidth *
+                                0.08, // Adjust icon size proportionally
                           ),
                         ],
                       ),
@@ -358,16 +377,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Icon(
-                            Icons.arrow_back_ios_new_rounded,
-                            color: Colors.redAccent,
-                            size: screenWidth *
-                                0.08, // Adjust icon size proportionally
-                          ),
+
                           Padding(
                             padding: EdgeInsets.only(top: 15.0),
                             child: Text(
-                              "حذف الحساب",
+                              "deleteAccount".tr(),
                               style: TextStyle(
                                 color: Colors.redAccent,
                                 fontSize: screenWidth * 0.05,
@@ -375,6 +389,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                          ),
+                          Icon(
+                            Icons.arrow_forward,
+                            color: Colors.redAccent,
+                            size: screenWidth *
+                                0.08, // Adjust icon size proportionally
                           ),
                         ],
                       ),

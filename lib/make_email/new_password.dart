@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/reset_password_cubit/reset_password_cubit.dart';
@@ -15,6 +16,7 @@ class NewPasswordPage extends StatelessWidget {
     return BlocProvider(
         create: (_) => ResetPasswordCubit(),
         child: Scaffold(
+          backgroundColor: Colors.white,
           body: SingleChildScrollView(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -32,9 +34,9 @@ class NewPasswordPage extends StatelessWidget {
                           .contain, // Ensures the image scales properly within the bounds
                     ),
                     const SizedBox(height: 20),
-                    const Text(
-                      'كلمه المرور الجديده',
-                      style: TextStyle(
+                    Text(
+                      "newPassword".tr(),
+                      style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         color: Color(0xFF19649E),
@@ -44,13 +46,13 @@ class NewPasswordPage extends StatelessWidget {
                     buildTextField(
                       validation: (String? value) {
                         value = passwordController.text;
-                        if (value == null || value.length < 6) {
-                          return "يجب أن تكون كلمة المرور 6 أحرف على الأقل";
+                        if (value == null || value.length < 8) {
+                          return "passwordLength".tr();
                         }
                         return null;
                       },
                       controller: passwordController,
-                      label: 'كلمه المرور الجديده',
+                      label: "newPassword".tr(),
                       icon: Icons.visibility_off,
                       isPassword: true,
                     ),
@@ -59,11 +61,11 @@ class NewPasswordPage extends StatelessWidget {
                       validation: (String? value) {
                         value = passwordController.text;
                         if (value != confirmPasswordController.text) {
-                          return "كلمتا المرور غير متطابقتين";
+                          return "matchPassword".tr();
                         }
                         return null;
                       },
-                      label: 'تأكيد كلمه المرور',
+                      label: "confirmPassword".tr(),
                       icon: Icons.visibility_off,
                       isPassword: true,
                       controller: confirmPasswordController,
@@ -84,17 +86,17 @@ class NewPasswordPage extends StatelessWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xFF19649E),
+                        primary: const Color(0xFF19649E),
                         minimumSize: const Size(double.infinity, 50),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8),
                         ),
                       ),
-                      child: const Text(
-                        'تأكيد',
-                        style: TextStyle(
+                      child: Text(
+                        "confirm".tr(),
+                        style: const TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.bold, color: Colors.white
                         ),
                       ),
                     ),

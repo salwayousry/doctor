@@ -57,7 +57,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
         ),
         centerTitle: true,
         title: Text(
-          "تغيير اللغة",
+          "changeLanguage".tr(),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: screenWidth * 0.06,
@@ -168,7 +168,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                           _currentPage == 0 ? Colors.white : Colors.transparent,
                         ),
                         child: Text(
-                          'العربية',
+                          "arabic".tr(),
                           style: TextStyle(
                             fontSize: 25,
                             fontWeight: FontWeight.bold,
@@ -190,7 +190,7 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                           _currentPage == 1 ? Colors.white : Colors.transparent,
                         ),
                         child: Text(
-                          'الانجليزية',
+                          "english".tr(),
                           style: TextStyle(
                               fontSize: 25,
                               fontWeight: FontWeight.bold,
@@ -210,12 +210,12 @@ class _ChangeLanguageState extends State<ChangeLanguage> {
                     },
                     style: ElevatedButton.styleFrom(
                         minimumSize: const Size(700, 50),
-                        backgroundColor: const Color(0xFF19649E),
+                        primary: const Color(0xFF19649E),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10))),
-                    child: const Text(
-                      "تحديث",
-                      style: TextStyle(
+                    child: Text(
+                      "update".tr(),
+                      style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.white),

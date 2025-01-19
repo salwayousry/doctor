@@ -1,4 +1,5 @@
 import 'package:doctor/screens/secondpage.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeScreen extends StatelessWidget {
@@ -12,13 +13,13 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           children: [
             // زر "تخطي" في أعلى الشاشة
-            const Padding(
-              padding: EdgeInsets.only(top: 10.0, right: 16.0),
+            Padding(
+              padding: const EdgeInsets.only(top: 10.0, right: 16.0),
               child: Align(
                 alignment: Alignment.topRight,
                 child: Text(
-                  'تخطي',
-                  style: TextStyle(
+                  'skip'.tr(),
+                  style: const TextStyle(
                     color: Color(0xff19649E),
                     fontSize: 16.0,
                   ),
@@ -44,9 +45,9 @@ class WelcomeScreen extends StatelessWidget {
                   const SizedBox(height: 24.0),
 
                   // نص الترحيب
-                  const Text(
-                    'أهلًا',
-                    style: TextStyle(
+                   Text(
+                    'welcome'.tr(),
+                    style: const TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -55,13 +56,12 @@ class WelcomeScreen extends StatelessWidget {
                   const SizedBox(height: 16.0),
 
                   // النص الوصفي
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 32.0),
                     child: Text(
-                      'أحيانًا، الخطوة الأولى هي الأصعب. لكن مع تطبيقنا، '
-                          'تبدأ بالسفر نحو الدعم النفسي والشخصي والراحة بخطوات بسيطة',
+                      'firstWelcomeScreen'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.black87,
                         height: 1.5,
@@ -88,7 +88,7 @@ class WelcomeScreen extends StatelessWidget {
                         border: Border.all(color: const Color(0xff19649E), width: 2),
                       ),
                       child: const Icon(
-                        Icons.arrow_back,
+                        Icons.arrow_forward,
                         color: Color(0xff19649E),
                       ),
                     ),

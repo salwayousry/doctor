@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:doctor/screens/thirdpage.dart';
 
@@ -25,9 +26,9 @@ class SecondPage extends StatelessWidget {
                   const SizedBox(height: 24.0),
 
                   // النص الرئيسي
-                  const Text(
-                    'سَهِّل على نفسك',
-                    style: TextStyle(
+                  Text(
+                    'makeItEasy'.tr(),
+                    style: const TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
                     ),
@@ -36,13 +37,12 @@ class SecondPage extends StatelessWidget {
                   const SizedBox(height: 16.0),
 
                   // النص الوصفي
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.symmetric(horizontal: 32.0),
                     child: Text(
-                      'معنا، لن تضطر للانتظار. احجز موعدك في أي وقت يناسبك، '
-                          'بسرعة وسلاسة، وبدون أي قلق',
+                      'secondWelcomeScreen'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 16.0,
                         color: Colors.black87,
                         height: 1.5,
@@ -69,7 +69,7 @@ class SecondPage extends StatelessWidget {
                         border: Border.all(color: const Color(0xff19649E), width: 2),
                       ),
                       child: const Icon(
-                        Icons.arrow_back,
+                        Icons.arrow_forward,
                         color: Color(0xff19649E),
                       ),
                     ),
@@ -86,12 +86,12 @@ class SecondPage extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ThirdPage()),
+                    MaterialPageRoute(builder: (context) => const ThirdPage()),
                   );  // Add functionality for skip if needed
                 },
-                child: const Text(
-                  'تخطي',
-                  style: TextStyle(
+                child: Text(
+                  'skip'.tr(),
+                  style: const TextStyle(
                     color: Color(0xFF007BFF),
                     fontSize: 16.0,
                   ),

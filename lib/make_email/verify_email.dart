@@ -1,4 +1,5 @@
 import 'package:doctor/make_email/new_password.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
@@ -26,9 +27,9 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
             padding: const EdgeInsets.fromLTRB(25, 0, 25, 5),
             child: ListView(children: [
               Image.asset("assets/images/verify.png"),
-              const Text(
-                "التحقق من الرمز",
-                style: TextStyle(
+              Text(
+                "verifyCode".tr(),
+                style: const TextStyle(
                     fontSize: 30,
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF19649E)),
@@ -37,9 +38,9 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                "الرجاء إدخال الرمز الذي أرسلناه للتو إلى الإيميل",
-                style: TextStyle(fontSize: 20, color: Colors.black),
+              Text(
+                "pleaseEnterCodeSentToYourEmail".tr(),
+                style: const TextStyle(fontSize: 20, color: Colors.black),
               ),
               const SizedBox(height: 50,),
 
@@ -62,23 +63,24 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  Text("notReceivedCode".tr(),
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold
+                      )),
                   TextButton(
                       onPressed: () {
 
                       },
-                      child: const Text("إعادة إرسال الرمز",
+                      child: Text("resendCode".tr(),
                           style: TextStyle(color: Color(0xFF19649E), fontWeight: FontWeight.bold, fontSize: 18))),
-                  const Text("لم تتلق الرمز؟",
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold
-                      )),
+
                 ],
               ),
               const SizedBox(height: 20,),
 
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xff19649E),
+                      primary: const Color(0xff19649E),
                       shape: RoundedRectangleBorder(
                           borderRadius:
 
@@ -88,7 +90,8 @@ class _VerifyScreenState extends State<VerifyScreenEmail> {
                     print(codeController.text);
                     BlocProvider.of<VerifyCodeCubit>(context)
                         .verifyCodeByEmail(context,widget.email,code??0);
-                  }, child: const Text("التحقق", style: TextStyle(
+                  }, 
+                  child: Text("verify".tr(), style: const TextStyle(
                   fontSize: 18, color: Colors.white, fontWeight: FontWeight.bold),)),
 
             ]))

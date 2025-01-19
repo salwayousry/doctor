@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:doctor/screens/specialist/repo/SpecialistRepository.dart';
 import 'package:doctor/screens/specialist/sign_up_specialist_spcalize_screen.dart.dart';
 import 'package:doctor/widgets/custom_text_field_for_sign_up.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,7 @@ class SignUpAsDoctorFirstScreen extends StatefulWidget {
   const SignUpAsDoctorFirstScreen({super.key});
 
   @override
-  _SignUpAsDoctorFirstScreenState createState() =>
+  State<SignUpAsDoctorFirstScreen> createState() =>
       _SignUpAsDoctorFirstScreenState();
 }
 
@@ -61,6 +62,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          toolbarHeight: 35,
           backgroundColor: Colors.white,
         ),
         body: Form(
@@ -72,12 +74,12 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.0),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: Text(
-                      "انضم إلى فريقنا من الخبراء وابدأ في تقديم استشارات المرضى بكل خصوصية",
+                      "headerAsSpecialist".tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -87,31 +89,33 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                   ),
                   const SizedBox(height: 32),
                   CustomTextField(
-                    label: "الاسم الاول",
+                    label: "firstName".tr(),
                     controller: firstNameController,
                     validator: (value) =>
-                        isSubmitted ? validateName(value, "الاسم الاول") : null,
+                        isSubmitted ? validateName(value, "firstName".tr()) : null,
                   ),
                   CustomTextField(
-                    label: "اسم العائله",
+                    label: "lastName".tr(),
                     controller: lastNameController,
                     validator: (value) =>
-                        isSubmitted ? validateName(value, "اسم العائله") : null,
+                        isSubmitted ? validateName(value, "lastName".tr(),) : null,
                   ),
+
+
                   CustomTextField(
-                    label: "البريد الإلكتروني",
+                    label: "email".tr(),
                     controller: emailController,
-                    validator: isSubmitted ? validateEmail : null,
+                    validator: (value) => isSubmitted ? validateEmail(value, "email".tr(),) : null,
                     suffixIcon: Icons.mail,
                   ),
                   CustomTextField(
-                    label: "كلمة المرور",
+                    label: "password".tr(),
                     controller: passwordController,
-                    validator: isSubmitted ? validatePassword : null,
+                    validator: (value) => isSubmitted ? validatePassword(value, "password".tr()) : null,
                     suffixIcon: Icons.remove_red_eye,
                   ),
                   CustomTextField(
-                    label: "تأكيد كلمة المرور",
+                    label: "confirmPassword".tr(),
                     controller: confirmPasswordController,
                     validator: isSubmitted
                         ? (value) => validateConfirmPassword(
@@ -121,80 +125,82 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                   ),
                   CustomTextField(
                     keyboardType: TextInputType.number,
-                    label: "رقم الهاتف",
+                    label: "phoneNumber".tr(),
                     controller: phoneController,
-                    validator: isSubmitted ? validatePhone : null,
+                    validator: (value) => isSubmitted ? validatePhone(value, "phoneNumber".tr()) : null,
                     suffixIcon: Icons.phone_android,
                   ),
                   CustomTextField(
-                    label: "الجنسية",
+                    label: "nationality".tr(),
                     controller: nationalityController,
-                    validator: isSubmitted ? validateNationality : null,
+                    validator: (value) => isSubmitted ? validateNationality(value, "nationality".tr()) : null,
                     suffixIcon: Icons.person,
                   ),
                   CustomTextField(
-                    label: "عنوان السكن",
+                    label: "homeAddress".tr(),
                     controller: homeAddressController,
                     validator: isSubmitted
-                        ? (value) => validateAddress(value, "عنوان السكن")
+                        ? (value) => validateAddress(value, "homeAddress".tr())
                         : null,
                     suffixIcon: Icons.location_city,
                   ),
                   CustomTextField(
-                    label: "العمل",
+                    label: "profession".tr(),
                     controller: workController,
                     validator: isSubmitted
-                        ? (value) => validateName(value, "العمل")
+                        ? (value) => validateName(value, "profession".tr())
                         : null,
                     suffixIcon: Icons.work,
                   ),
                   CustomTextField(
-                    label: "عنوان العمل",
+                    label: "professionAddress".tr(),
                     controller: workAddressController,
                     validator: isSubmitted
-                        ? (value) => validateAddress(value, "عنوان العمل")
+                        ? (value) => validateAddress(value, "professionAddress".tr())
                         : null,
                     suffixIcon: Icons.location_city,
                   ),
                   CustomTextField(
-                    label: "عن الأخصائي",
+                    label: "bio".tr(),
                     isMultiline: true,
                     controller: about_doctor_Controller,
                     validator: isSubmitted
-                        ? (value) => validateName(value, "عن الأخصائي")
+                        ? (value) => validateName(value, "bio".tr())
                         : null,
                     suffixIcon: Icons.work_history,
                   ),
                   CustomTextField(
                     keyboardType: TextInputType.number,
-                    label: "سنين الخبرة",
+                    label: "experience".tr(),
                     controller: exp_year_Controller,
-                    validator: isSubmitted ? validateYearsOfExperience : null,
+                    validator: (value) => isSubmitted ? validateYearsOfExperience(value, "experience".tr()) : null,
                     suffixIcon: Icons.work_history,
                   ),
                   CustomTextField(
                     keyboardType: TextInputType.number,
-                    label: "مدة الجلسة",
+                    label: "sessionDuration".tr(),
                     controller: session_time_Controller,
                     validator: isSubmitted
-                        ? (value) => validateSessionDetails(value, "مدة الجلسة")
+                        ? (value) => validateSessionDetails(value, "sessionDuration".tr())
                         : null,
                     suffixIcon: Icons.timer,
                   ),
                   CustomTextField(
                     keyboardType: TextInputType.number,
-                    label: "سعر الجلسة",
+                    label: "sessionPrice".tr(),
                     controller: session_price_Controller,
                     validator: isSubmitted
-                        ? (value) => validateSessionDetails(value, "سعر الجلسة")
+                        ? (value) => validateSessionDetails(value, "sessionPrice".tr())
                         : null,
                     suffixIcon: Icons.price_check_sharp,
                   ),
+
+
                   CustomUploadFile(
-                    label: "السيرة الذاتية",
+                    label: "cv".tr(),
                     controller: resumeController,
                     validator: (value) =>
-                        validateUpload(value, "السيرة الذاتية"),
+                        validateUpload(value, "cv".tr()),
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
                         cvFile = file;
@@ -207,10 +213,10 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     },
                   ),
                   CustomUploadFile(
-                    label: "صورة الهوية /الباسورد",
+                    label: "passportPhoto".tr(),
                     controller: idOrPassportController,
                     validator: (value) =>
-                        validateUpload(value, "صورة الهوية /الباسورد"),
+                        validateUpload(value, "passportPhoto".tr()),
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
                         idOrPassport = file;
@@ -220,9 +226,9 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     },
                   ),
                   CustomUploadFile(
-                    label: "الشهادات",
+                    label: "certificates".tr(),
                     controller: certificatesController,
-                    validator: (value) => validateUpload(value, "الشهادات"),
+                    validator: (value) => validateUpload(value, "certificates".tr()),
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
                         certificates = file;
@@ -232,9 +238,9 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     },
                   ),
                   CustomUploadFile(
-                    label: "ترخيص أو إذن مزاولة المهنة",
+                    label: "license".tr(),
                     validator: (value) =>
-                        validateUpload(value, "ترخيص أو إذن مزاولة المهنة"),
+                        validateUpload(value, "license".tr()),
                     controller: licenseController,
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
@@ -245,9 +251,9 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                     },
                   ),
                   CustomUploadFile(
-                    label: "عضوية النقابه أو الجمعيه",
+                    label: "membership".tr(),
                     validator: (value) =>
-                        validateUpload(value, "عضوية النقابه أو الجمعيه"),
+                        validateUpload(value, "membership".tr()),
                     controller: associationMembershipController,
                     onFilePicked: (PlatformFile? file) {
                       if (file != null) {
@@ -299,7 +305,7 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           customSnackBar(
                             context: context,
-                            message: "الرجاء تعبئة الحقول المطلوبة",
+                            message: "fieldsValidator".tr(),
                             backgroundColor: Colors.red,
                             icon: Icons.error,
                           ),
@@ -313,10 +319,10 @@ class _SignUpAsDoctorFirstScreenState extends State<SignUpAsDoctorFirstScreen> {
                         color: const Color(0xff19649E),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
-                          'التالي',
-                          style: TextStyle(
+                          "next".tr(),
+                          style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,

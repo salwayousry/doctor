@@ -1,93 +1,95 @@
+import 'package:easy_localization/easy_localization.dart';
+
 String? validateName(String? value, String fieldName) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال $fieldName";
+    return "generalValidator".tr()+" $fieldName";
   }
   if (value.trim().length < 2) {
-    return "$fieldName يجب أن يكون أكثر من حرفين";
+    return "$fieldName "+"moreThanTwo".tr();
   }
   return null;
 }
 
-String? validateEmail(String? value) {
+String? validateEmail(String? value, String fieldName) {
   final emailRegex =
       RegExp(r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال البريد الإلكتروني";
+    return "generalValidator".tr()+" $fieldName";
   }
   if (!emailRegex.hasMatch(value.trim())) {
-    return "يرجى إدخال بريد إلكتروني صالح";
+    return "generalValidatorFor".tr()+" $fieldName";
   }
   return null;
 }
 
-String? validatePassword(String? value) {
+String? validatePassword(String? value, String fieldName) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال كلمة المرور";
+    return "generalValidator".tr()+" $fieldName";
   }
   if (value.length < 8) {
-    return "يجب أن تكون كلمة المرور 8 أحرف على الأقل";
+    return "passwordLength".tr();
   }
   return null;
 }
 
 String? validateConfirmPassword(String? value, String originalPassword) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى تأكيد كلمة المرور";
+    return "confirmPasswordValidator".tr();
   }
   if (value != originalPassword) {
-    return "كلمتا المرور غير متطابقتين";
+    return "matchPassword".tr();
   }
   return null;
 }
 
-String? validatePhone(String? value) {
+String? validatePhone(String? value, String fieldName) {
   final phoneRegex = RegExp(r'^[0-9]{10,15}$');
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال رقم الهاتف";
+    return "generalValidator".tr()+" $fieldName";
   }
   if (!phoneRegex.hasMatch(value.trim())) {
-    return "يرجى إدخال رقم هاتف صالح (10-15 أرقام)";
+    return "phoneValidator".tr();
   }
   return null;
 }
 
-String? validateNationality(String? value) {
+String? validateNationality(String? value, String fieldName) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال الجنسية";
+    return "generalValidator".tr()+" $fieldName";
   }
   return null;
 }
 
 String? validateAddress(String? value, String fieldName) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال $fieldName";
+    return "generalValidator".tr()+" $fieldName";
   }
   return null;
 }
 
-String? validateYearsOfExperience(String? value) {
+String? validateYearsOfExperience(String? value, String fieldName) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال عدد سنوات الخبرة";
+    return "generalValidator".tr()+" $fieldName";
   }
   if (int.tryParse(value) == null || int.parse(value) < 0) {
-    return "يرجى إدخال عدد صحيح لسنوات الخبرة";
+    return "generalValidatorFor".tr()+" $fieldName";
   }
   return null;
 }
 
 String? validateSessionDetails(String? value, String fieldName) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى إدخال $fieldName";
+    return "generalValidator".tr()+" $fieldName";
   }
   if (double.tryParse(value) == null || double.parse(value) <= 0) {
-    return "يرجى إدخال قيمة صحيحة لـ $fieldName";
+    return "generalValidatorFor".tr()+" $fieldName";
   }
   return null;
 }
 
 String? validateUpload(String? value, String fieldName) {
   if (value == null || value.trim().isEmpty) {
-    return "يرجى تحميل $fieldName";
+    return "uploadValidator".tr()+" $fieldName";
   }
   return null;
 }
