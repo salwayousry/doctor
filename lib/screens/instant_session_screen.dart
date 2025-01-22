@@ -166,17 +166,15 @@ class _InstantSessionScreenState extends State<InstantSessionScreen> {
               ),
             ),
           ),
-          Container(
-            width: screenWidth* 0.9,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Color(0xff19649E),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: TextButton(
-              onPressed: () {
-                // Handle action
-              },
+          GestureDetector(
+            onTap: (){},
+            child: Container(
+              width: screenWidth* 0.9,
+              height: 48,
+              decoration: BoxDecoration(
+                color: Color(0xff19649E),
+                borderRadius: BorderRadius.circular(10),
+              ),
               child: Center(
                 child: Text(
                   'إستمرار',

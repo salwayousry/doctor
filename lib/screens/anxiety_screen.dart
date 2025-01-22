@@ -1,5 +1,11 @@
+import 'package:doctor/screens/specialists_screen.dart';
 import 'package:doctor/widgets/custom_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../cubit/add_image_to_profile/add_image_to_profile_cubit.dart';
+import '../cubit/update_user_cubit/update_user_cubit.dart';
+import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 
 class AnxietyScreen extends StatelessWidget {
   const AnxietyScreen({super.key});
@@ -293,7 +299,23 @@ class AnxietyScreen extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.05),
               GestureDetector(
-                onTap: (){},
+                onTap: (){
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MultiBlocProvider(
+                        providers: [
+                          BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                          BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                          BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                        ],
+                        child: const SpecialistsScreen(),
+                      ),
+
+                    ),
+
+                  );
+                },
                 child: Container(
                   width: screenWidth* 0.9,
                   height: 48,
@@ -301,15 +323,10 @@ class AnxietyScreen extends StatelessWidget {
                     color: Color(0xff19649E),
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: TextButton(
-                    onPressed: () {
-                      // Handle action
-                    },
-                    child: Center(
-                      child: Text(
-                        'إستمرار',
-                        style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                      ),
+                  child: Center(
+                    child: Text(
+                      'إستمرار',
+                      style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),

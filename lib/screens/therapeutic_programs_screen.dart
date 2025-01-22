@@ -11,6 +11,8 @@ import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_state.dart';
 import '../models/user_profile_model.dart';
 import '../widgets/doctor_card.dart';
+import 'anxiety_screen.dart';
+import 'depression_screen.dart';
 
 class TherapeuticProgramsScreen extends StatefulWidget {
   const TherapeuticProgramsScreen({super.key});
@@ -96,8 +98,40 @@ class _TherapeuticProgramsScreenState extends State<TherapeuticProgramsScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             _buildDisorderButton("الرهاب"),
-                            _buildDisorderButton("الاكتئاب"),
-                            _buildDisorderButton("القلق"),
+                            GestureDetector(onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                      BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                      BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                    ],
+                                    child: const DepressionScreen(),
+                                  ),
+
+                                ),
+
+                              );
+                            },child: _buildDisorderButton("الاكتئاب")),
+                            GestureDetector(onTap: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                      BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                      BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                    ],
+                                    child: const AnxietyScreen(),
+                                  ),
+
+                                ),
+
+                              );
+                            },child: _buildDisorderButton("القلق")),
                           ],
                         ),
                         SizedBox(

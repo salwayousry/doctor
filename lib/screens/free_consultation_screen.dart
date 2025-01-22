@@ -174,15 +174,10 @@ class _FreeConsultationScreenState extends State<FreeConsultationScreen> {
                               color: Color(0xff19649E),
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: TextButton(
-                              onPressed: () {
-                                // Handle action
-                              },
-                              child: Center(
-                                child: Text(
-                                  'إستمرار',
-                                  style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
-                                ),
+                            child: Center(
+                              child: Text(
+                                'إستمرار',
+                                style: TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
