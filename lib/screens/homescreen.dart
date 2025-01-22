@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'package:doctor/screens/home_second_screen.dart';
+import 'package:doctor/screens/problem_solving_screen.dart';
 import 'package:doctor/screens/psychological_disorders_screen.dart';
+import 'package:doctor/screens/psychological_prevention_screen.dart';
+import 'package:doctor/screens/rehabilitation_screen.dart';
+import 'package:doctor/screens/therapeutic_programs_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,6 +17,7 @@ import '../cubit/user_profile_cubit/user_profile_state.dart';
 import '../models/user_profile_model.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_bottom_nav_bar.dart';
+import 'childrens_disorder_screen.dart';
 import 'free_consultation_screen.dart';
 import 'home_third_screen.dart';
 import 'instant_session_screen.dart';
@@ -213,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         GestureDetector(
                           onTap: (){
-                            Navigator.pushAndRemoveUntil(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => MultiBlocProvider(
@@ -226,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
 
                               ),
-                                  (route) => false,
+
                             );
                           },
                           child: Container(
@@ -250,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         GestureDetector(
                           onTap: (){
-                            Navigator.pushAndRemoveUntil(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => MultiBlocProvider(
@@ -263,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
 
                               ),
-                                  (route) => false,
+
                             );
                           },
                           child: Container(
@@ -300,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ])
                               GestureDetector(
                                 onTap: (){
-                                  if(label=="psychologicalDisorders"){  Navigator.pushAndRemoveUntil(
+                                  if(label=="psychologicalDisorders"){  Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => MultiBlocProvider(
@@ -313,8 +318,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
 
                                     ),
-                                        (route) => false,
+
                                   );}
+                                  else if(label=="therapeuticPrograms"){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MultiBlocProvider(
+                                          providers: [
+                                            BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                            BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                            BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                          ],
+                                          child: const TherapeuticProgramsScreen(),
+                                        ),
+
+                                      ),
+
+                                    );
+                                  }
                                 },
                                 child: Container(
                                   width: MediaQuery.of(context).size.width * 0.3,
@@ -355,29 +377,64 @@ class _HomeScreenState extends State<HomeScreen> {
                               "solveProblems",
                               "childrenDisorder"
                             ])
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.3,
-                                height: 68,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: const Color(0xff69B7F3),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 2,
-                                      blurRadius: 4,
-                                      offset: const Offset(0, 2),
+                              GestureDetector(
+                                onTap: (){
+                                  if(label== "solveProblems"){  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                          BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                          BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                        ],
+                                        child: const ProblemSolvingScreen(),
+                                      ),
+
                                     ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    label.tr(),
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
+
+                                  );}
+                                  else if(label=="childrenDisorder"){  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                          BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                          BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                        ],
+                                        child: const ChildrensDisorderScreen(),
+                                      ),
+
+                                    ),
+
+                                  );}
+
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width * 0.3,
+                                  height: 68,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff69B7F3),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      label.tr(),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -392,29 +449,64 @@ class _HomeScreenState extends State<HomeScreen> {
                               "PsychologicalPreventionAndFollowUp",
                               "rehabilitation"
                             ])
-                              Container(
-                                width: MediaQuery.of(context).size.width * 0.35,
-                                height: 72,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: const Color(0xff69B7F3),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withOpacity(0.2),
-                                      spreadRadius: 2,
-                                      blurRadius: 4,
-                                      offset: const Offset(0, 2),
+                              GestureDetector(
+                                onTap: (){
+                                  if(label=="rehabilitation"){  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                          BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                          BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                        ],
+                                        child: const RehabilitationScreen(),
+                                      ),
+
                                     ),
-                                  ],
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    label.tr(),
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
+
+                                  );}
+                                  else if(label=="PsychologicalPreventionAndFollowUp"){  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MultiBlocProvider(
+                                        providers: [
+                                          BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                          BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                          BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                        ],
+                                        child: const PsychologicalPreventionScreen(),
+                                      ),
+
+                                    ),
+
+                                  );}
+
+                                },
+                                child: Container(
+                                  width: MediaQuery.of(context).size.width * 0.35,
+                                  height: 72,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: const Color(0xff69B7F3),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withOpacity(0.2),
+                                        spreadRadius: 2,
+                                        blurRadius: 4,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      label.tr(),
+                                      textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),

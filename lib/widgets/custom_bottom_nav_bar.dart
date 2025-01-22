@@ -7,6 +7,7 @@ import '../cubit/update_user_cubit/update_user_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 import '../screens/client_profile_screen.dart';
 import '../screens/home_second_screen.dart';
+import '../screens/homescreen.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   final int currentIndex;
@@ -121,7 +122,7 @@ class CustomBottomNavBar extends StatelessWidget {
               MaterialPageRoute(
                 builder: (context) => BlocProvider(
                   create: (_) => UserProfileCubit(),
-                  child: const HomeSecondScreen(),
+                  child: const HomeScreen(),
                 ),
               ),
             );

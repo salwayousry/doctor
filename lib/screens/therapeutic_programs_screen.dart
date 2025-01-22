@@ -12,14 +12,14 @@ import '../cubit/user_profile_cubit/user_profile_state.dart';
 import '../models/user_profile_model.dart';
 import '../widgets/doctor_card.dart';
 
-class PsychologicalDisordersScreen extends StatefulWidget {
-  const PsychologicalDisordersScreen({super.key});
+class TherapeuticProgramsScreen extends StatefulWidget {
+  const TherapeuticProgramsScreen({super.key});
 
   @override
-  State<PsychologicalDisordersScreen> createState() => _PsychologicalDisordersScreenState();
+  State<TherapeuticProgramsScreen> createState() => _TherapeuticProgramsScreenState();
 }
 
-class _PsychologicalDisordersScreenState extends State<PsychologicalDisordersScreen> {
+class _TherapeuticProgramsScreenState extends State<TherapeuticProgramsScreen> {
   late UserProfileCubit userProfileCubit;
 
   @override
@@ -81,7 +81,7 @@ class _PsychologicalDisordersScreenState extends State<PsychologicalDisordersScr
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              "إضطرابات نفسيه",
+                              "برامج علاجية",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
