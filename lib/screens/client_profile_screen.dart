@@ -11,7 +11,7 @@ import '../cubit/add_image_to_profile/add_image_to_profile_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_state.dart';
 import '../models/user_profile_model.dart';
-import 'home_second_screen.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
 
 class ClientProfileScreen extends StatefulWidget {
   const ClientProfileScreen({super.key});
@@ -81,70 +81,7 @@ class _ClientProfileScreenState extends State<ClientProfileScreen> {
                       color: Colors.white,
                   ),
                   ),
-                  bottomNavigationBar: BottomNavigationBar(
-                    backgroundColor: Color(0xff19649E),
-                    selectedItemColor: Colors.white,
-                    unselectedItemColor: Colors.black,
-                    showSelectedLabels: false,
-                    showUnselectedLabels: false,
-                    iconSize: 25,
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.person,
-                          size: 28,
-                        ),
-                        label: 'الملف الشخصي',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.dashboard_outlined,
-                          size: 28,
-                        ),
-                        label: 'القائمة',
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(
-                          Icons.home_outlined,
-                          size: 28,
-                        ),
-                        label: 'الرئيسية',
-                      ),
-                    ],
-                    onTap: (index) {
-                      switch (index) {
-                        case 0:
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MultiBlocProvider(
-                                providers: [
-                                  BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
-                                  BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
-                                  BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
-                                ],
-                                child: const ClientProfileScreen(),
-                              ),
-                            ),
-                          );
-                          break;
-                        case 1:
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BlocProvider(
-                                create: (_) => UserProfileCubit(),
-                                child: const HomeSecondScreen(),
-                              ),
-                            ),
-                          );
-                          break;
-                        case 2:
-                        // Stay on the current screen, no action needed for 'الرئيسية'
-                          break;
-                      }
-                    },
-                  ),
+                  bottomNavigationBar: const CustomBottomNavBar(currentIndex: 3,),
                   body: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

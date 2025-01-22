@@ -9,9 +9,13 @@ import '../cubit/update_user_cubit/update_user_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_cubit.dart';
 import '../cubit/user_profile_cubit/user_profile_state.dart';
 import '../models/user_profile_model.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/custom_bottom_nav_bar.dart';
 import 'client_profile_screen.dart';
+import 'free_consultation_screen.dart';
 import 'home_third_screen.dart';
 import 'homescreen.dart';
+import 'instant_session_screen.dart';
 
 class HomeSecondScreen extends StatefulWidget {
   const HomeSecondScreen({super.key});
@@ -113,197 +117,76 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
               return FadeTransition(
                 opacity: _fadeAnimation,
                 child: Scaffold(
-                  bottomNavigationBar: BottomNavigationBar(
-                    backgroundColor: Color(0xff19649E),
-                    selectedItemColor: Colors.white,
-                    unselectedItemColor: Colors.black,
-                    showSelectedLabels: false,
-                    showUnselectedLabels: false,
-                    iconSize: 25,
-                    currentIndex: 1,
-                    items: [
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.person_2_outlined, size: 28),
-                        label: "profile".tr(),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.dashboard_outlined, size: 28),
-                        label: "menu".tr(),
-                      ),
-                      BottomNavigationBarItem(
-                        icon: Icon(Icons.home_outlined, size: 28),
-                        label: "home".tr(),
-                      ),
-                    ],
-                    onTap: (index) {
-                      switch (index) {
-                        case 0:
-                          Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MultiBlocProvider(
-                                providers: [
-                                  BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
-                                  BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
-                                  BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
-                                ],
-                                child: const ClientProfileScreen(),
-                              ),
-
-                            ),
-                                (route) => false,
-                          );
-                          break;
-                        case 1:
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BlocProvider(
-                                create: (_) => UserProfileCubit(),
-                                child: const HomeSecondScreen(),
-                              ),
-                            ),
-                          );
-                          break;
-                        case 2:
-                        // Stay on the current screen, no action needed for 'الرئيسية'
-                          break;
-                      }
-                    },
+                  appBar: CustomAppBar(
+                    userProfile: userProfile,
+                    screenWidth: screenWidth,
+                    screenHeight: screenHeight,
                   ),
+                  bottomNavigationBar: CustomBottomNavBar(currentIndex: 1,),
                   body: Column(
                     children: [
                       // Top Container
-                      Container(
-                        height: screenHeight * 0.2,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.04, vertical: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.lightBlue[100],
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20),
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
 
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 66,
-                                  height: 66,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
+                      SizedBox(height: screenHeight * 0.01),
 
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(50), // زاوية الإطار
-                                    child: userProfile.imageUrl==""||userProfile.imageUrl==null?Image.asset("assets/images/profile.jpg",fit: BoxFit.fill,):Image.network(
-                                      userProfile.imageUrl ?? "", // رابط الصورة
-                                      fit: BoxFit.fill, // ملء الصورة
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(width: 28),
-                                Text(
-                                  "greeting".tr() + "\n${userProfile.firstName}",
-                                  textAlign: TextAlign.start,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xff19649E),
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Padding(
-                              padding: EdgeInsets.only(bottom: screenHeight * 0.05, ),
-                              child: Container(
-                                height: screenHeight * 0.1,
-                                width: screenWidth * 0.25,
-                                child: Image.asset('assets/images/img.png', fit: BoxFit.fill),
-                              ),
-                            ),
-
-                            Row(
-                              children: [
-                                Icon(Icons.notifications_none, color: Color(0xff19649E), size: screenWidth * 0.08),
-                                SizedBox(width: 12),
-                                Icon(Icons.chat_bubble_outline, color: Color(0xff19649E), size: screenWidth * 0.08),
-                              ],
-                            ),
-
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: screenHeight * 0.03),
-                      // Categories
-                      Container(
+                      // Category List
+                      SizedBox(
                         height: 32,
                         child: ListView.separated(
+                          padding: EdgeInsets.only(left: 5,right: 5),
                           itemCount: categories.length,
                           scrollDirection: Axis.horizontal,
                           separatorBuilder: (context, index) {
-                            return SizedBox(width: screenWidth * 0.03);
+                            return SizedBox(width: screenWidth * 0.02);
                           },
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
                                 setState(() {
-                                  selectedIndex = index;
+                                  if (index == categories.length - 1) {
+                                    // Do nothing if it's the last item
+                                    selectedIndex = selectedIndex; // Keep the current index
+                                  } else {
+                                    selectedIndex = index; // Update the selected index
+                                  }
                                 });
 
-                                Widget page;
+                                // Navigate only if it's not the last item
+                                if (index != categories.length - 1) {
+                                  Widget page;
 
-                                if (selectedIndex == 0) {
-                                  page = HomeScreen();
-                                } else if (selectedIndex == 1) {
-                                  page = HomeSecondScreen();
-                                } else if (selectedIndex == 2) {
-                                  page = HomeThirdScreen();
-                                } else {
-                                  page = HomeScreen();
+                                  if (selectedIndex == 0) {
+                                    page = const HomeScreen();
+                                  } else if (selectedIndex == 1) {
+                                    page = const HomeSecondScreen();
+                                  } else if (selectedIndex == 2) {
+                                    page = const HomeThirdScreen();
+                                  } else {
+                                    page = const HomeScreen();
+                                  }
+
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation, secondaryAnimation) =>
+                                          BlocProvider(
+                                            create: (_) => UserProfileCubit(),
+                                            child: page,
+                                          ),
+                                      transitionDuration: const Duration(milliseconds: 1),
+                                    ),
+                                  );
                                 }
-
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => BlocProvider(
-                              //         create: (_) => UserProfileCubit(),
-                              //         child: page,
-                              //       ),
-                              //     ),
-                              //   );
-                              // },
-
-                                Navigator.push(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                        secondaryAnimation) =>
-                                        BlocProvider(
-                                          create: (_) => UserProfileCubit(),
-                                          child: page,
-                                        ),
-                                    transitionDuration: Duration(
-                                        milliseconds:
-                                        1), // Custom animation duration
-                                  ),
-                                );
                               },
-
                               child: Container(
-                                width: 100,
+                                width: screenWidth * 0.35,
                                 height: 32,
                                 decoration: BoxDecoration(
-                                  color: selectedIndex == index
-                                      ? Color(0xff19649E)
-                                      : Color(0xffD5D5D5),
+                                  color: index == categories.length - 1
+                                      ? const Color(0xffAFDCFF) // Always blue for the last item
+                                      : (selectedIndex == index ? const Color(0xff19649E) :
+                                  const Color(0xffD5D5D5)),
+
                                   borderRadius: BorderRadius.circular(20),
                                 ),
                                 child: Center(
@@ -311,9 +194,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                                     categories[index],
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: selectedIndex == index
-                                          ? Colors.white
-                                          : Colors.white,
+                                      color: Colors.white,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),
@@ -323,7 +204,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                           },
                         ),
                       ),
-                      SizedBox(height: screenHeight * 0.03),
+                      SizedBox(height: screenHeight * 0.02),
                       // Image Carousel
                       Container(
                         height: screenHeight * 0.18,
@@ -343,38 +224,76 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Container(
-                            width: screenWidth * 0.4,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color(0xff1F78BC),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "consultation".tr(),
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                      BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                      BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                    ],
+                                    child: const FreeConsultationScreen(),
+                                  ),
+
+                                ),
+                                    (route) => false,
+                              );
+                            },
+                            child: Container(
+                              width: screenWidth * 0.46,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: const Color(0xff1F78BC),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "consultation".tr(),
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                          Container(
-                            width: screenWidth * 0.4,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Color(0xff1F78BC),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "instantSession".tr(),
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                          GestureDetector(
+                            onTap: (){
+                              Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MultiBlocProvider(
+                                    providers: [
+                                      BlocProvider<UserProfileCubit>(create: (_) => UserProfileCubit()),
+                                      BlocProvider<AddImageToProfileCubit>(create: (_) => AddImageToProfileCubit()),
+                                      BlocProvider<UpdateUserCubit>(create: (_) => UpdateUserCubit()),
+                                    ],
+                                    child: const InstantSessionScreen(),
+                                  ),
+
+                                ),
+                                    (route) => false,
+                              );
+                            },
+                            child: Container(
+                              width: screenWidth * 0.45,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: const Color(0xff1F78BC),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  "instantSession".tr(),
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
@@ -389,8 +308,8 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Container(
-                                width: 100,
-                                height: 68,
+                      width: MediaQuery.of(context).size.width * 0.3,
+                    height: 68,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: Color(0xff69B7F3),
@@ -405,6 +324,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                                 ),
                                 child: Center(
                                   child: Text(
+                                textAlign: TextAlign.center,
                                     "HealthCare".tr(),
                                     style: TextStyle(
                                       fontSize: 16,
@@ -415,7 +335,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                                 ),
                               ),
                               Container(
-                                width: 100,
+                                width: MediaQuery.of(context).size.width * 0.3,
                                 height: 68,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
@@ -431,6 +351,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                                 ),
                                 child: Center(
                                   child: Text(
+                                    textAlign: TextAlign.center,
                                     "SportsSystem".tr(),
                                     style: TextStyle(
                                       fontSize: 16,
@@ -441,7 +362,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                                 ),
                               ),
                               Container(
-                                width: 100,
+                                width: MediaQuery.of(context).size.width * 0.3,
                                 height: 68,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
@@ -457,6 +378,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                                 ),
                                 child: Center(
                                   child: Text(
+                                    textAlign: TextAlign.center,
                                     "diet".tr(),
                                     style: TextStyle(
                                       fontSize: 16,
@@ -470,7 +392,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                           ),
                           SizedBox(height: screenHeight * 0.03),
                           Container(
-                            width: 100,
+                            width: MediaQuery.of(context).size.width * 0.3,
                             height: 68,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
@@ -486,6 +408,7 @@ class _HomeSecondScreenState extends State<HomeSecondScreen>
                             ),
                             child: Center(
                               child: Text(
+                                textAlign: TextAlign.center,
                                 "examinations".tr(),
                                 style: TextStyle(
                                   fontSize: 16,
