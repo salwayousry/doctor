@@ -17,28 +17,11 @@ class DoctorCard extends StatelessWidget {
               color: Color(0xFF19649E), // Background color for the top section
               child: Row(
                 children: [
-                  // Image Container with 3D effect and zoom
-                  Flexible(
-                    child: Container(
-                      height: 220, // Height for the image
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8), // Rounded corners for the image
-                      ),
-                      child: Transform.translate(
-                        offset: Offset(0, -14), // Move the image upwards by 14 units
-                        child: Transform.scale(
-                          scale: 1.4, // Scale the image to give a zoom effect
-                          child: Image.asset('assets/images/doctor3dlat.png', fit: BoxFit.contain), // Displaying the image
-                        ),
-                      ),
-                    ),
-                  ),
-
                   // Right side section displaying the doctor's information
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end, // Align the text to the right
+                      crossAxisAlignment: CrossAxisAlignment.start, // Align the text to the right
                       children: [
                         const Text(
                           'د. محمود محمد', // Doctor's name
@@ -69,6 +52,25 @@ class DoctorCard extends StatelessWidget {
                       ],
                     ),
                   ),
+                  // Image Container with 3D effect and zoom
+                  Flexible(
+                    child: Container(
+                      height: 220, // Height for the image
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8), // Rounded corners for the image
+                      ),
+                      child: Transform.translate(
+                        offset: Offset(0, -14), // Move the image upwards by 14 units
+                        child: Transform.scale(
+                          scale: 1.25, // Scale the image to give a zoom effect
+                          child: Image.asset('assets/images/doctor.png', fit: BoxFit.contain), // Displaying the image
+                        ),
+                      ),
+                    ),
+                  ),
+
+
+
                 ],
               ),
             ),
@@ -90,15 +92,9 @@ class DoctorCard extends StatelessWidget {
   // Method to build each info row (e.g., type, availability, etc.)
   Widget buildInfoRow(String icon, String text) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end, // Align the row to the right
+      mainAxisAlignment: MainAxisAlignment.start, // Align the row to the right
       crossAxisAlignment: CrossAxisAlignment.end, // Align the row elements to the bottom
       children: [
-        Text(
-          text,
-          style: TextStyle(fontSize: 16, color: Colors.white), // Styling the text
-          textAlign: TextAlign.right, // Align text to the right
-        ),
-        const SizedBox(width: 8), // Space between the text and the icon
         Container(
           width: 21.19,
           height: 19,
@@ -109,6 +105,13 @@ class DoctorCard extends StatelessWidget {
             height: 19,
             color: Colors.white, // Icon color is white
           ),
+        ),
+
+        const SizedBox(width: 8), // Space between the text and the icon
+        Text(
+          text,
+          style: TextStyle(fontSize: 16, color: Colors.white), // Styling the text
+          textAlign: TextAlign.right, // Align text to the right
         ),
       ],
     );
@@ -122,24 +125,26 @@ class DoctorCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end, // Align the row to the bottom
         mainAxisAlignment: MainAxisAlignment.spaceBetween, // Space between the elements
         children: [
-          Text(
-            value,
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black), // Styling the value text
-          ),
-          const SizedBox(width: 4), // Space between the text and the icon
           Row(
             children: [
-              Text(
-                title,
-                style: TextStyle(color: Colors.black, fontSize: 14), // Styling the title text
-              ),
-              const SizedBox(width: 8), // Space between the title and the icon
+
               Container(
                 width: 19,
                 height: 19,
                 child: Image.asset(icon, fit: BoxFit.fill), // Displaying the icon
               ),
+              const SizedBox(width: 8), // Space between the title and the icon
+              Text(
+                title,
+                style: TextStyle(color: Colors.black, fontSize: 14), // Styling the title text
+              ),
             ],
+          ),
+
+          const SizedBox(width: 4), // Space between the text and the icon
+          Text(
+            value,
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.black), // Styling the value text
           ),
         ],
       ),
